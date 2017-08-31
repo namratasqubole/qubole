@@ -1,0 +1,477 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n## Quick Start Using Python\n* Using a Databricks notebook to showcase RDD operations using Python\n* Reference http://spark.apache.org/docs/latest/quick-start.html",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:30 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091647991_-2134422529",
+      "id": "20170830-111407-306198181",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eQuick Start Using Python\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003eUsing a Databricks notebook to showcase RDD operations using Python\u003c/li\u003e\n\u003cli\u003eReference http://spark.apache.org/docs/latest/quick-start.html\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:14:07 AM",
+      "dateStarted": "Aug 30, 2017 11:57:30 AM",
+      "dateFinished": "Aug 30, 2017 11:57:30 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# Take a look at the file system\ndisplay(dbutils.fs.ls(\"/databricks-datasets/samples/docs/\"))",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:30 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091647991_-2134422529",
+      "id": "20170830-111407-328449024",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027display\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:14:07 AM",
+      "dateStarted": "Aug 30, 2017 11:57:30 AM",
+      "dateFinished": "Aug 30, 2017 11:57:30 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# Setup the textFile RDD to read the README.md file\n#   Note this is lazy \ntextFile \u003d sc.textFile(\"/databricks-datasets/samples/docs/README.md\")",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:30 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091647991_-2134422529",
+      "id": "20170830-111407-671451223",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 30, 2017 11:14:07 AM",
+      "dateStarted": "Aug 30, 2017 11:57:30 AM",
+      "dateFinished": "Aug 30, 2017 11:57:30 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nRDDs have ***actions***, which return values, and ***transformations***, which return pointers to new RDDs.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:30 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091647991_-2134422529",
+      "id": "20170830-111407-1033009761",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eRDDs have \u003cstrong\u003e\u003cem\u003eactions\u003c/em\u003e\u003c/strong\u003e, which return values, and \u003cstrong\u003e\u003cem\u003etransformations\u003c/em\u003e\u003c/strong\u003e, which return pointers to new RDDs.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:14:07 AM",
+      "dateStarted": "Aug 30, 2017 11:57:30 AM",
+      "dateFinished": "Aug 30, 2017 11:57:30 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# When performing an action (like a count) this is when the textFile is read and aggregate calculated\n#    Click on [View] to see the stages and executors\ntextFile.count()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:30 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091647991_-2134422529",
+      "id": "20170830-111407-487557828",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 1040, in count\n    return self.mapPartitions(lambda i: [sum(1 for _ in i)]).sum()\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 1031, in sum\n    return self.mapPartitions(lambda x: [sum(x)]).fold(0, operator.add)\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 905, in fold\n    vals \u003d self.mapPartitions(func).collect()\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 808, in collect\n    port \u003d self.ctx._jvm.PythonRDD.collectAndServe(self._jrdd.rdd())\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py\", line 1133, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/usr/lib/spark/python/pyspark/sql/utils.py\", line 63, in deco\n    return f(*a, **kw)\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/protocol.py\", line 319, in get_return_value\n    format(target_id, \".\", name), value)\nPy4JJavaError: An error occurred while calling z:org.apache.spark.api.python.PythonRDD.collectAndServe.\n: java.io.FileNotFoundException: File does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/databricks-datasets/samples/docs/README.md\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1122)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystemLinkResolver.resolve(FileSystemLinkResolver.java:81)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.getFileStatus(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystem.resolvePath(FileSystem.java:756)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$16.\u003cinit\u003e(DistributedFileSystem.java:779)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.listLocatedStatus(DistributedFileSystem.java:770)\n\tat org.apache.hadoop.mapred.InputPathProcessor.perPathComputation(InputPathProcessor.java:251)\n\tat org.apache.hadoop.mapred.InputPathProcessor.access$000(InputPathProcessor.java:28)\n\tat org.apache.hadoop.mapred.InputPathProcessor$2.run(InputPathProcessor.java:354)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:14:07 AM",
+      "dateStarted": "Aug 30, 2017 11:57:30 AM",
+      "dateFinished": "Aug 30, 2017 11:57:30 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\n## Python Count (Job)\n![Python Count - Job](https://sparkhub.databricks.com/wp-content/uploads/2015/12/Python-Count-Job.png)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:30 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091647992_-2136346274",
+      "id": "20170830-111407-1142389020",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003ePython Count (Job)\u003c/h2\u003e\n\u003cp\u003e\u003cimg src\u003d\"https://sparkhub.databricks.com/wp-content/uploads/2015/12/Python-Count-Job.png\" alt\u003d\"Python Count - Job\" /\u003e\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:14:07 AM",
+      "dateStarted": "Aug 30, 2017 11:57:30 AM",
+      "dateFinished": "Aug 30, 2017 11:57:30 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\n## Python Count (Stages)\n* Notice how the file is read during the *.count()* action\n* Many Spark operations are lazy and executed upon some action\n\n![Python Count - Stages](https://sparkhub.databricks.com/wp-content/uploads/2015/12/Python-Count-Stages.png)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:30 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091647992_-2136346274",
+      "id": "20170830-111407-1450082098",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003ePython Count (Stages)\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003eNotice how the file is read during the \u003cem\u003e.count()\u003c/em\u003e action\u003c/li\u003e\n\u003cli\u003eMany Spark operations are lazy and executed upon some action\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e\u003cimg src\u003d\"https://sparkhub.databricks.com/wp-content/uploads/2015/12/Python-Count-Stages.png\" alt\u003d\"Python Count - Stages\" /\u003e\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:14:07 AM",
+      "dateStarted": "Aug 30, 2017 11:57:30 AM",
+      "dateFinished": "Aug 30, 2017 11:57:30 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# Output the first line from the text file\ntextFile.first()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:30 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091647992_-2136346274",
+      "id": "20170830-111407-1192634732",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 1360, in first\n    rs \u003d self.take(1)\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 1312, in take\n    totalParts \u003d self.getNumPartitions()\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 384, in getNumPartitions\n    return self._jrdd.partitions().size()\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py\", line 1133, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/usr/lib/spark/python/pyspark/sql/utils.py\", line 63, in deco\n    return f(*a, **kw)\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/protocol.py\", line 319, in get_return_value\n    format(target_id, \".\", name), value)\nPy4JJavaError: An error occurred while calling o349.partitions.\n: java.io.FileNotFoundException: File does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/databricks-datasets/samples/docs/README.md\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1122)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystemLinkResolver.resolve(FileSystemLinkResolver.java:81)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.getFileStatus(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystem.resolvePath(FileSystem.java:756)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$16.\u003cinit\u003e(DistributedFileSystem.java:779)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.listLocatedStatus(DistributedFileSystem.java:770)\n\tat org.apache.hadoop.mapred.InputPathProcessor.perPathComputation(InputPathProcessor.java:251)\n\tat org.apache.hadoop.mapred.InputPathProcessor.access$000(InputPathProcessor.java:28)\n\tat org.apache.hadoop.mapred.InputPathProcessor$2.run(InputPathProcessor.java:354)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:14:07 AM",
+      "dateStarted": "Aug 30, 2017 11:57:30 AM",
+      "dateFinished": "Aug 30, 2017 11:57:30 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\nNow we\u0027re using a filter ***transformation*** to return a new RDD with a subset of the items in the file.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:30 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091647992_-2136346274",
+      "id": "20170830-111407-1488073260",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eNow we\u0027re using a filter \u003cstrong\u003e\u003cem\u003etransformation\u003c/em\u003e\u003c/strong\u003e to return a new RDD with a subset of the items in the file.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:14:07 AM",
+      "dateStarted": "Aug 30, 2017 11:57:30 AM",
+      "dateFinished": "Aug 30, 2017 11:57:30 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# Filter all of the lines wihtin the RDD and output the first five rows\nlinesWithSpark \u003d textFile.filter(lambda line: \"Spark\" in line)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:30 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091647992_-2136346274",
+      "id": "20170830-111407-1308235638",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 30, 2017 11:14:07 AM",
+      "dateStarted": "Aug 30, 2017 11:57:30 AM",
+      "dateFinished": "Aug 30, 2017 11:57:30 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nNotice that this completes quickly because it is a transformation but lacks any action.  \n* But when performing the actions below (e.g. count, take) then you will see the executions.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:30 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091647992_-2136346274",
+      "id": "20170830-111407-384456061",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eNotice that this completes quickly because it is a transformation but lacks any action.\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eBut when performing the actions below (e.g. count, take) then you will see the executions.\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:14:07 AM",
+      "dateStarted": "Aug 30, 2017 11:57:30 AM",
+      "dateFinished": "Aug 30, 2017 11:57:30 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# Perform a count (action) \nlinesWithSpark.count()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:30 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091647992_-2136346274",
+      "id": "20170830-111407-91148929",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 1040, in count\n    return self.mapPartitions(lambda i: [sum(1 for _ in i)]).sum()\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 1031, in sum\n    return self.mapPartitions(lambda x: [sum(x)]).fold(0, operator.add)\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 905, in fold\n    vals \u003d self.mapPartitions(func).collect()\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 808, in collect\n    port \u003d self.ctx._jvm.PythonRDD.collectAndServe(self._jrdd.rdd())\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py\", line 1133, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/usr/lib/spark/python/pyspark/sql/utils.py\", line 63, in deco\n    return f(*a, **kw)\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/protocol.py\", line 319, in get_return_value\n    format(target_id, \".\", name), value)\nPy4JJavaError: An error occurred while calling z:org.apache.spark.api.python.PythonRDD.collectAndServe.\n: java.io.FileNotFoundException: File does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/databricks-datasets/samples/docs/README.md\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1122)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystemLinkResolver.resolve(FileSystemLinkResolver.java:81)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.getFileStatus(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystem.resolvePath(FileSystem.java:756)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$16.\u003cinit\u003e(DistributedFileSystem.java:779)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.listLocatedStatus(DistributedFileSystem.java:770)\n\tat org.apache.hadoop.mapred.InputPathProcessor.perPathComputation(InputPathProcessor.java:251)\n\tat org.apache.hadoop.mapred.InputPathProcessor.access$000(InputPathProcessor.java:28)\n\tat org.apache.hadoop.mapred.InputPathProcessor$2.run(InputPathProcessor.java:354)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:14:07 AM",
+      "dateStarted": "Aug 30, 2017 11:57:30 AM",
+      "dateFinished": "Aug 30, 2017 11:57:30 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# Filter all of the lines within the RDD and output the first five rows\nlinesWithSpark.take(5)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:30 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091647992_-2136346274",
+      "id": "20170830-111407-666220659",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 1312, in take\n    totalParts \u003d self.getNumPartitions()\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 2425, in getNumPartitions\n    return self._prev_jrdd.partitions().size()\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py\", line 1133, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/usr/lib/spark/python/pyspark/sql/utils.py\", line 63, in deco\n    return f(*a, **kw)\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/protocol.py\", line 319, in get_return_value\n    format(target_id, \".\", name), value)\nPy4JJavaError: An error occurred while calling o349.partitions.\n: java.io.FileNotFoundException: File does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/databricks-datasets/samples/docs/README.md\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1122)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystemLinkResolver.resolve(FileSystemLinkResolver.java:81)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.getFileStatus(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystem.resolvePath(FileSystem.java:756)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$16.\u003cinit\u003e(DistributedFileSystem.java:779)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.listLocatedStatus(DistributedFileSystem.java:770)\n\tat org.apache.hadoop.mapred.InputPathProcessor.perPathComputation(InputPathProcessor.java:251)\n\tat org.apache.hadoop.mapred.InputPathProcessor.access$000(InputPathProcessor.java:28)\n\tat org.apache.hadoop.mapred.InputPathProcessor$2.run(InputPathProcessor.java:354)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:14:07 AM",
+      "dateStarted": "Aug 30, 2017 11:57:30 AM",
+      "dateFinished": "Aug 30, 2017 11:57:30 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504094250448_1063825685",
+      "id": "20170830-115730_509803289",
+      "dateCreated": "Aug 30, 2017 11:57:30 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Quick Start Using Python",
+  "id": "CTPBT46JE41504091647",
+  "angularObjects": {
+    "2CRCTH5N681503309548868:shared_process": [],
+    "2CRT9SRAF81503309548905:shared_process": [],
+    "2CTE9GBET81503309548913:shared_process": [],
+    "2CS1RRBTB81503309548897:shared_process": []
+  },
+  "config": {
+    "isDashboard": false
+  },
+  "info": {},
+  "source": "FCN"
+}
