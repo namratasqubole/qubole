@@ -1,0 +1,1022 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n# Population vs. Median Home Prices\n#### *Linear Regression with Single Variable*",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:38 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500100_-437512361",
+      "id": "20170830-091459-1187555188",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch1\u003ePopulation vs. Median Home Prices\u003c/h1\u003e\n\u003ch4\u003e\u003cem\u003eLinear Regression with Single Variable\u003c/em\u003e\u003c/h4\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:38 AM",
+      "dateFinished": "Aug 30, 2017 9:16:38 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n*Note, this notebook requires Spark 1.6+*",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:38 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500100_-437512361",
+      "id": "20170830-091459-902976709",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003e\u003cem\u003eNote, this notebook requires Spark 1.6+\u003c/em\u003e\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:38 AM",
+      "dateFinished": "Aug 30, 2017 9:16:38 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nif (org.apache.spark.BuildInfo.sparkBranch \u003c \"1.6\") sys.error(\"Attach this notebook to a cluster running Spark 1.6+\")",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:38 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500100_-437512361",
+      "id": "20170830-091459-564849597",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:26: error: object BuildInfo is not a member of package org.apache.spark\n       if (org.apache.spark.BuildInfo.sparkBranch \u003c \"1.6\") sys.error(\"Attach this notebook to a cluster running Spark 1.6+\")\n                            ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:38 AM",
+      "dateFinished": "Aug 30, 2017 9:16:38 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Load and parse the data",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:38 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500100_-437512361",
+      "id": "20170830-091459-707591147",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eLoad and parse the data\u003c/h3\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:38 AM",
+      "dateFinished": "Aug 30, 2017 9:16:38 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# Use the Spark CSV datasource with options specifying:\n#  - First line of file is a header\n#  - Automatically infer the schema of the data\ndata \u003d sqlContext.read.format(\"com.databricks.spark.csv\")\\\n  .option(\"header\", \"true\")\\\n  .option(\"inferSchema\", \"true\")\\\n  .load(\"/databricks-datasets/samples/population-vs-price/data_geo.csv\")\ndata.cache()  # Cache data for faster reuse\ndata.count()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:38 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500100_-437512361",
+      "id": "20170830-091459-153235451",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 4, in \u003cmodule\u003e\n  File \"/usr/lib/spark/python/pyspark/sql/readwriter.py\", line 149, in load\n    return self._df(self._jreader.load(path))\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py\", line 1133, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/usr/lib/spark/python/pyspark/sql/utils.py\", line 69, in deco\n    raise AnalysisException(s.split(\u0027: \u0027, 1)[1], stackTrace)\nAnalysisException: u\u0027Path does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/databricks-datasets/samples/population-vs-price/data_geo.csv;\u0027\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:38 AM",
+      "dateFinished": "Aug 30, 2017 9:16:39 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ndisplay(data)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:38 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500100_-437512361",
+      "id": "20170830-091459-1221767634",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027display\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:39 AM",
+      "dateFinished": "Aug 30, 2017 9:16:39 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ndata \u003d data.dropna()  # drop rows with missing values\ndata.count()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:39 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500100_-437512361",
+      "id": "20170830-091459-219939479",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027data\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:39 AM",
+      "dateFinished": "Aug 30, 2017 9:16:39 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# This will let us access the table from our SQL notebook!\ndata.registerTempTable(\"data_geo\")",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:39 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500100_-437512361",
+      "id": "20170830-091459-1447408677",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027data\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:39 AM",
+      "dateFinished": "Aug 30, 2017 9:16:39 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Limit data to Population vs. Price\n(for our ML example)\n\nWe also use `LabeledPoint` to convert the feature (population) to a Vector type, to prep the data for ML algorithms.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:39 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500100_-437512361",
+      "id": "20170830-091459-103416633",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eLimit data to Population vs. Price\u003c/h2\u003e\n\u003cp\u003e(for our ML example)\u003c/p\u003e\n\u003cp\u003eWe also use \u003ccode\u003eLabeledPoint\u003c/code\u003e to convert the feature (population) to a Vector type, to prep the data for ML algorithms.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:39 AM",
+      "dateFinished": "Aug 30, 2017 9:16:39 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nfrom pyspark.mllib.regression import LabeledPoint  # convenience for specifying schema\ndata \u003d data.select(\"2014 Population estimate\", \"2015 median sales price\")\\\n  .map(lambda r: LabeledPoint(r[1], [r[0]]))\\\n  .toDF()\ndisplay(data)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:39 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500100_-437512361",
+      "id": "20170830-091459-619801280",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 2, in \u003cmodule\u003e\nNameError: name \u0027data\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:39 AM",
+      "dateFinished": "Aug 30, 2017 9:16:40 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Scatterplot of the data using ggplot",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:39 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500100_-437512361",
+      "id": "20170830-091459-906554344",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eScatterplot of the data using ggplot\u003c/h2\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:39 AM",
+      "dateFinished": "Aug 30, 2017 9:16:39 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nx \u003d data.map(lambda p: (p.features[0])).collect()\ny \u003d data.map(lambda p: (p.label)).collect()\n\nfrom pandas import *\nfrom ggplot import *\npydf \u003d DataFrame({\u0027pop\u0027:x,\u0027price\u0027:y})\np \u003d ggplot(pydf, aes(\u0027pop\u0027,\u0027price\u0027)) + \\\n    geom_point(color\u003d\u0027blue\u0027) \ndisplay(p)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:39 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500101_-437897110",
+      "id": "20170830-091459-1100747931",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 2, in \u003cmodule\u003e\nImportError: No module named matplotlib.pyplot\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:39 AM",
+      "dateFinished": "Aug 30, 2017 9:16:40 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Linear Regression\n\n**Goal**\n* Predict y \u003d 2015 Median Housing Price\n* Using feature x \u003d 2014 Population Estimate\n\n**References**\n* [MLlib LinearRegression user guide](http://spark.apache.org/docs/latest/ml-classification-regression.html#linear-regression)\n* [PySpark LinearRegression API](http://spark.apache.org/docs/latest/api/python/pyspark.ml.html#pyspark.ml.regression.LinearRegression)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:39 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500101_-437897110",
+      "id": "20170830-091459-957302611",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eLinear Regression\u003c/h2\u003e\n\u003cp\u003e\u003cstrong\u003eGoal\u003c/strong\u003e\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003ePredict y \u003d 2015 Median Housing Price\u003c/li\u003e\n\u003cli\u003eUsing feature x \u003d 2014 Population Estimate\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e\u003cstrong\u003eReferences\u003c/strong\u003e\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ca href\u003d\"http://spark.apache.org/docs/latest/ml-classification-regression.html#linear-regression\"\u003eMLlib LinearRegression user guide\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href\u003d\"http://spark.apache.org/docs/latest/api/python/pyspark.ml.html#pyspark.ml.regression.LinearRegression\"\u003ePySpark LinearRegression API\u003c/a\u003e\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:39 AM",
+      "dateFinished": "Aug 30, 2017 9:16:39 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# Import LinearRegression class\nfrom pyspark.ml.regression import LinearRegression",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:39 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500101_-437897110",
+      "id": "20170830-091459-442156186",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:40 AM",
+      "dateFinished": "Aug 30, 2017 9:16:40 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# Define LinearRegression algorithm\nlr \u003d LinearRegression()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:39 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500101_-437897110",
+      "id": "20170830-091459-510793571",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:40 AM",
+      "dateFinished": "Aug 30, 2017 9:16:40 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# Fit 2 models, using different regularization parameters\nmodelA \u003d lr.fit(data, {lr.regParam:0.0})\nmodelB \u003d lr.fit(data, {lr.regParam:100.0})",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:39 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500101_-437897110",
+      "id": "20170830-091459-704417531",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027data\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:40 AM",
+      "dateFinished": "Aug 30, 2017 9:16:40 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nprint \"\u003e\u003e\u003e\u003e ModelA intercept: %r, coefficient: %r\" % (modelA.intercept, modelA.coefficients[0])",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:39 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500101_-437897110",
+      "id": "20170830-091459-121006477",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027modelA\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:40 AM",
+      "dateFinished": "Aug 30, 2017 9:16:40 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nprint \"\u003e\u003e\u003e\u003e ModelB intercept: %r, coefficient: %r\" % (modelB.intercept, modelB.coefficients[0])",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:39 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500101_-437897110",
+      "id": "20170830-091459-981159687",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027modelB\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:40 AM",
+      "dateFinished": "Aug 30, 2017 9:16:40 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Make predictions\n\nCalling `transform()` on data adds a new column of predictions.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:39 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500101_-437897110",
+      "id": "20170830-091459-361706430",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eMake predictions\u003c/h2\u003e\n\u003cp\u003eCalling \u003ccode\u003etransform()\u003c/code\u003e on data adds a new column of predictions.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:39 AM",
+      "dateFinished": "Aug 30, 2017 9:16:39 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# Make predictions\npredictionsA \u003d modelA.transform(data)\ndisplay(predictionsA)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:39 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500101_-437897110",
+      "id": "20170830-091459-1480176541",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027modelA\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:40 AM",
+      "dateFinished": "Aug 30, 2017 9:16:40 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Evaluate the Model\n#### Predicted vs. True label",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:39 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500101_-437897110",
+      "id": "20170830-091459-1119351155",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eEvaluate the Model\u003c/h2\u003e\n\u003ch4\u003ePredicted vs. True label\u003c/h4\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:39 AM",
+      "dateFinished": "Aug 30, 2017 9:16:39 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nfrom pyspark.ml.evaluation import RegressionEvaluator\nevaluator \u003d RegressionEvaluator(metricName\u003d\"rmse\")\nRMSE \u003d evaluator.evaluate(predictionsA)\nprint(\"ModelA: Root Mean Squared Error \u003d \" + str(RMSE))",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:39 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500101_-437897110",
+      "id": "20170830-091459-1300236746",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 3, in \u003cmodule\u003e\nNameError: name \u0027predictionsA\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:40 AM",
+      "dateFinished": "Aug 30, 2017 9:16:40 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\npredictionsB \u003d modelB.transform(data)\nRMSE \u003d evaluator.evaluate(predictionsB)\nprint(\"ModelB: Root Mean Squared Error \u003d \" + str(RMSE))",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:39 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500101_-437897110",
+      "id": "20170830-091459-690791575",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027modelB\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:40 AM",
+      "dateFinished": "Aug 30, 2017 9:16:40 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# Linear Regression Plots",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:39 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500101_-437897110",
+      "id": "20170830-091459-740224990",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch1\u003eLinear Regression Plots\u003c/h1\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:40 AM",
+      "dateFinished": "Aug 30, 2017 9:16:40 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nimport numpy as np\nfrom pandas import *\nfrom ggplot import *\n\npop \u003d data.map(lambda p: (p.features[0])).collect()\nprice \u003d data.map(lambda p: (p.label)).collect()\npredA \u003d predictionsA.select(\"prediction\").map(lambda r: r[0]).collect()\npredB \u003d predictionsB.select(\"prediction\").map(lambda r: r[0]).collect()\n\npydf \u003d DataFrame({\u0027pop\u0027:pop,\u0027price\u0027:price,\u0027predA\u0027:predA, \u0027predB\u0027:predB})",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:18:27 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500101_-437897110",
+      "id": "20170830-091459-1299452722",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 3, in \u003cmodule\u003e\nImportError: No module named ggplot\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:18:27 AM",
+      "dateFinished": "Aug 30, 2017 9:18:27 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## View the Python Pandas DataFrame (pydf)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:40 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500101_-437897110",
+      "id": "20170830-091459-636601357",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eView the Python Pandas DataFrame (pydf)\u003c/h2\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:40 AM",
+      "dateFinished": "Aug 30, 2017 9:16:40 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\npydf",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:40 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500101_-437897110",
+      "id": "20170830-091459-32173915",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027pydf\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:41 AM",
+      "dateFinished": "Aug 30, 2017 9:16:42 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## ggplot figure\nNow that the Python Pandas DataFrame (pydf), use ggplot and display the scatterplot and the two regression models",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:40 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500101_-437897110",
+      "id": "20170830-091459-579377494",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eggplot figure\u003c/h2\u003e\n\u003cp\u003eNow that the Python Pandas DataFrame (pydf), use ggplot and display the scatterplot and the two regression models\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:40 AM",
+      "dateFinished": "Aug 30, 2017 9:16:40 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\np \u003d ggplot(pydf, aes(\u0027pop\u0027,\u0027price\u0027)) + \\\n    geom_point(color\u003d\u0027blue\u0027) + \\\n    geom_line(pydf, aes(\u0027pop\u0027,\u0027predA\u0027), color\u003d\u0027red\u0027) + \\\n    geom_line(pydf, aes(\u0027pop\u0027,\u0027predB\u0027), color\u003d\u0027green\u0027) + \\\n    scale_x_log10() + scale_y_log10()\ndisplay(p)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:16:40 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084500101_-437897110",
+      "id": "20170830-091459-179827837",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 5, in \u003cmodule\u003e\nNameError: name \u0027ggplot\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:15:00 AM",
+      "dateStarted": "Aug 30, 2017 9:16:42 AM",
+      "dateFinished": "Aug 30, 2017 9:16:42 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084600293_-1677588715",
+      "id": "20170830-091640_471780304",
+      "dateCreated": "Aug 30, 2017 9:16:40 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Pop. vs. Price LR",
+  "id": "H2T1548R3T1504084499",
+  "angularObjects": {
+    "2CRCTH5N681503309548868:shared_process": [],
+    "2CRT9SRAF81503309548905:shared_process": [],
+    "2CTE9GBET81503309548913:shared_process": [],
+    "2CS1RRBTB81503309548897:shared_process": []
+  },
+  "config": {
+    "isDashboard": false
+  },
+  "info": {},
+  "source": "FCN"
+}
