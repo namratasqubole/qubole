@@ -1,0 +1,919 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\nThe second way, which is probably the most common way, is to create a DataFrame/Dataset by referencing some files on external storage systems.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917328_-719923585",
+      "id": "20170830-110156-1480460170",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eThe second way, which is probably the most common way, is to create a DataFrame/Dataset by referencing some files on external storage systems.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:18 AM",
+      "dateFinished": "Aug 30, 2017 11:03:18 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// range(100) creates a Dataset with 100 elements, from 0 to 99.\nval range100 \u003d spark.range(100)\nrange100.collect()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917328_-719923585",
+      "id": "20170830-110156-1299393428",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\nrange100: org.apache.spark.sql.Dataset[Long] \u003d [id: bigint]\n\nres10: Array[Long] \u003d Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99)\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:18 AM",
+      "dateFinished": "Aug 30, 2017 11:03:22 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ndisplay(jsonData)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917328_-719923585",
+      "id": "20170830-110156-1297031004",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:31: error: not found: value display\n       display(jsonData)\n       ^\n\n\n\n\u003cconsole\u003e:31: error: not found: value jsonData\n       display(jsonData)\n               ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:18 AM",
+      "dateFinished": "Aug 30, 2017 11:03:22 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Read the data in as a DataFrame\nval jsonData \u003d spark.read.json(\"/home/webinar/person.json\")",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917328_-719923585",
+      "id": "20170830-110156-1227108626",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\n\n\n\n\n\n\n\n\n\norg.apache.spark.sql.AnalysisException: Path does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/home/webinar/person.json;\n  at org.apache.spark.sql.execution.datasources.DataSource$$anonfun$14.apply(DataSource.scala:382)\n  at org.apache.spark.sql.execution.datasources.DataSource$$anonfun$14.apply(DataSource.scala:370)\n  at scala.collection.TraversableLike$$anonfun$flatMap$1.apply(TraversableLike.scala:241)\n  at scala.collection.TraversableLike$$anonfun$flatMap$1.apply(TraversableLike.scala:241)\n  at scala.collection.immutable.List.foreach(List.scala:381)\n  at scala.collection.TraversableLike$class.flatMap(TraversableLike.scala:241)\n  at scala.collection.immutable.List.flatMap(List.scala:344)\n  at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:370)\n  at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:152)\n  at org.apache.spark.sql.DataFrameReader.json(DataFrameReader.scala:298)\n  at org.apache.spark.sql.DataFrameReader.json(DataFrameReader.scala:251)\n  ... 46 elided\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:22 AM",
+      "dateFinished": "Aug 30, 2017 11:03:23 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# Dataset API\n\nIn this notebook, we demonstrate the new Dataset API in Spark 2.0, using a very simple JSON file.\n\nTo read the companion blog post, click here: https://databricks.com/blog/2016/05/11/spark-2-0-technical-preview-easier-faster-and-smarter.html",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917328_-719923585",
+      "id": "20170830-110156-542591630",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch1\u003eDataset API\u003c/h1\u003e\n\u003cp\u003eIn this notebook, we demonstrate the new Dataset API in Spark 2.0, using a very simple JSON file.\u003c/p\u003e\n\u003cp\u003eTo read the companion blog post, click here: https://databricks.com/blog/2016/05/11/spark-2-0-technical-preview-easier-faster-and-smarter.html\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:18 AM",
+      "dateFinished": "Aug 30, 2017 11:03:18 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Creating DataFrames and Datasets\n\nStarting Spark 2.0, a DataFrame is simply a type alias for Dataset of Row. There are many ways to create DataFrames and Datasets.\n\nThe first way, used primarily in testing and demos, uses the range function available on SparkSession.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917328_-719923585",
+      "id": "20170830-110156-376640135",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eCreating DataFrames and Datasets\u003c/h3\u003e\n\u003cp\u003eStarting Spark 2.0, a DataFrame is simply a type alias for Dataset of Row. There are many ways to create DataFrames and Datasets.\u003c/p\u003e\n\u003cp\u003eThe first way, used primarily in testing and demos, uses the range function available on SparkSession.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:18 AM",
+      "dateFinished": "Aug 30, 2017 11:03:18 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Take a look at the content of the file\ndbutils.fs.head(\"/home/webinar/person.json\")",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917328_-719923585",
+      "id": "20170830-110156-65070238",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:32: error: not found: value dbutils\n       dbutils.fs.head(\"/home/webinar/person.json\")\n       ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:23 AM",
+      "dateFinished": "Aug 30, 2017 11:03:23 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Metadata operations\n\nThere are a few metadata operations that are very handy for Datasets.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917328_-719923585",
+      "id": "20170830-110156-531536083",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eMetadata operations\u003c/h3\u003e\n\u003cp\u003eThere are a few metadata operations that are very handy for Datasets.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:18 AM",
+      "dateFinished": "Aug 30, 2017 11:03:18 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// First, define my domain specific class\ncase class Person(email: String, iq: Long, name: String)\n\n// Turn a generic DataFrame into a Dataset of Person\nval ds \u003d spark.read.json(\"/home/webinar/person.json\").as[Person]",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917328_-719923585",
+      "id": "20170830-110156-1466085167",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\ndefined class Person\n\n\n\n\n\n\n\n\n\n\n\n\n\norg.apache.spark.sql.AnalysisException: Path does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/home/webinar/person.json;\n  at org.apache.spark.sql.execution.datasources.DataSource$$anonfun$14.apply(DataSource.scala:382)\n  at org.apache.spark.sql.execution.datasources.DataSource$$anonfun$14.apply(DataSource.scala:370)\n  at scala.collection.TraversableLike$$anonfun$flatMap$1.apply(TraversableLike.scala:241)\n  at scala.collection.TraversableLike$$anonfun$flatMap$1.apply(TraversableLike.scala:241)\n  at scala.collection.immutable.List.foreach(List.scala:381)\n  at scala.collection.TraversableLike$class.flatMap(TraversableLike.scala:241)\n  at scala.collection.immutable.List.flatMap(List.scala:344)\n  at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:370)\n  at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:152)\n  at org.apache.spark.sql.DataFrameReader.json(DataFrameReader.scala:298)\n  at org.apache.spark.sql.DataFrameReader.json(DataFrameReader.scala:251)\n  ... 46 elided\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:23 AM",
+      "dateFinished": "Aug 30, 2017 11:03:25 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Get the schema of the underlying data structure.\nds.schema",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917328_-719923585",
+      "id": "20170830-110156-342876032",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:32: error: not found: value ds\n       ds.schema\n       ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:23 AM",
+      "dateFinished": "Aug 30, 2017 11:03:25 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Get the list of columns\nds.columns",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917328_-719923585",
+      "id": "20170830-110156-746813007",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:32: error: not found: value ds\n       ds.columns\n       ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:25 AM",
+      "dateFinished": "Aug 30, 2017 11:03:25 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nDatabricks\u0027 display works on both DataFrames and Datasets.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917328_-719923585",
+      "id": "20170830-110156-694810583",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eDatabricks\u0027 display works on both DataFrames and Datasets.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:18 AM",
+      "dateFinished": "Aug 30, 2017 11:03:18 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// DataFrame is just an alias for Dataset[Row]\nimport org.apache.spark.sql.Dataset\nval jsonDataset: Dataset[Row] \u003d jsonData",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917328_-719923585",
+      "id": "20170830-110156-175677184",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nimport org.apache.spark.sql.Dataset\n\n\n\n\u003cconsole\u003e:31: error: not found: type Row\n       val jsonDataset: Dataset[Row] \u003d jsonData\n                                ^\n\n\n\n\u003cconsole\u003e:31: error: not found: value jsonData\n       val jsonDataset: Dataset[Row] \u003d jsonData\n                                       ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:25 AM",
+      "dateFinished": "Aug 30, 2017 11:03:25 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nDataFrame (or Dataset of Row) is great, but sometimes I want compile-time type safety and we would to be able to work with my own domain-specific objects. Here we demonstrate how to turn an untyped Dataset into a typed Dataset.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917328_-719923585",
+      "id": "20170830-110156-301038966",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eDataFrame (or Dataset of Row) is great, but sometimes I want compile-time type safety and we would to be able to work with my own domain-specific objects. Here we demonstrate how to turn an untyped Dataset into a typed Dataset.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:19 AM",
+      "dateFinished": "Aug 30, 2017 11:03:19 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ndisplay(jsonDataset)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917328_-719923585",
+      "id": "20170830-110156-879959374",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:32: error: not found: value display\n       display(jsonDataset)\n       ^\n\n\n\n\u003cconsole\u003e:32: error: not found: value jsonDataset\n       display(jsonDataset)\n               ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:25 AM",
+      "dateFinished": "Aug 30, 2017 11:03:25 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Untyped Dataset API (a.k.a. DataFrame API)\n\nDataset also includes untyped functions that return results in the form of DataFrames (i.e. Dataset[Row]). This API is available in all programming languages (Java/Scala/Python/R).",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917328_-719923585",
+      "id": "20170830-110156-1390056532",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eUntyped Dataset API (a.k.a. DataFrame API)\u003c/h3\u003e\n\u003cp\u003eDataset also includes untyped functions that return results in the form of DataFrames (i.e. Dataset[Row]). This API is available in all programming languages (Java/Scala/Python/R).\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:19 AM",
+      "dateFinished": "Aug 30, 2017 11:03:19 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Can also run agregations to compute total IQ and average IQ grouped by some key\n// In this case we are just grouping by a constant 0, i.e. all records get grouped together\nimport org.apache.spark.sql.expressions.scala.typed\nds.groupByKey(_ \u003d\u003e 0).agg(typed.sum(_.iq), typed.avg(_.iq)).collect()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917328_-719923585",
+      "id": "20170830-110156-196751720",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:33: error: object scala is not a member of package org.apache.spark.sql.expressions\n       import org.apache.spark.sql.expressions.scala.typed\n                                               ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:25 AM",
+      "dateFinished": "Aug 30, 2017 11:03:25 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Run some aggregations: note that we are using groupBy, which is different from the type safe groupByKey\nimport org.apache.spark.sql.functions.{sum, avg}\nds.groupBy().agg(sum(\"iq\"), avg(\"iq\")).collect()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917328_-719923585",
+      "id": "20170830-110156-671660211",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nimport org.apache.spark.sql.functions.{sum, avg}\n\n\n\n\u003cconsole\u003e:33: error: not found: value ds\n       ds.groupBy().agg(sum(\"iq\"), avg(\"iq\")).collect()\n       ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:25 AM",
+      "dateFinished": "Aug 30, 2017 11:03:26 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// The select function is similar to the map function, but is not typed (i.e. it returns a DataFrame)\nds.select(\"name\").collect()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917328_-719923585",
+      "id": "20170830-110156-299099187",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:34: error: not found: value ds\n       ds.select(\"name\").collect()\n       ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:26 AM",
+      "dateFinished": "Aug 30, 2017 11:03:26 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Typed Dataset API\n\nDataset includes a typed functional API similar to RDDs and Scala\u0027s own collection library. This API is available in Scala/Java, but not Python/R.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917328_-719923585",
+      "id": "20170830-110156-934570649",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eTyped Dataset API\u003c/h3\u003e\n\u003cp\u003eDataset includes a typed functional API similar to RDDs and Scala\u0027s own collection library. This API is available in Scala/Java, but not Python/R.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:19 AM",
+      "dateFinished": "Aug 30, 2017 11:03:19 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Explain the logical and physical query plan to compute the Dataset.\nds.explain(true)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917328_-719923585",
+      "id": "20170830-110156-1142253984",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:34: error: not found: value ds\n       ds.explain(true)\n       ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:26 AM",
+      "dateFinished": "Aug 30, 2017 11:03:26 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Run a filter\nds.filter(_.iq \u003e 140).collect()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917329_-720308334",
+      "id": "20170830-110156-378461176",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:34: error: not found: value ds\n       ds.filter(_.iq \u003e 140).collect()\n       ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:26 AM",
+      "dateFinished": "Aug 30, 2017 11:03:26 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Run a map\nds.map(_.name).collect()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917329_-720308334",
+      "id": "20170830-110156-719441548",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:34: error: not found: value ds\n       ds.map(_.name).collect()\n       ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:26 AM",
+      "dateFinished": "Aug 30, 2017 11:03:26 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nds.rdd",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917329_-720308334",
+      "id": "20170830-110156-310845884",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:33: error: not found: value ds\n       ds.rdd\n       ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:26 AM",
+      "dateFinished": "Aug 30, 2017 11:03:26 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Interoperate with RDDs\n\nA Dataset can be easily turned into an RDD.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917329_-720308334",
+      "id": "20170830-110156-1422952626",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eInteroperate with RDDs\u003c/h3\u003e\n\u003cp\u003eA Dataset can be easily turned into an RDD.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:19 AM",
+      "dateFinished": "Aug 30, 2017 11:03:19 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nAgain, to read the companion blog post, click here: https://databricks.com/blog/2016/05/11/spark-2-0-technical-preview-easier-faster-and-smarter.html",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090917329_-720308334",
+      "id": "20170830-110156-287440767",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eAgain, to read the companion blog post, click here: https://databricks.com/blog/2016/05/11/spark-2-0-technical-preview-easier-faster-and-smarter.html\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:01:57 AM",
+      "dateStarted": "Aug 30, 2017 11:03:19 AM",
+      "dateFinished": "Aug 30, 2017 11:03:19 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090999639_763991626",
+      "id": "20170830-110319_1712921136",
+      "dateCreated": "Aug 30, 2017 11:03:19 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Dataset",
+  "id": "6GZ7V7EVNE1504090916",
+  "angularObjects": {
+    "2CRCTH5N681503309548868:shared_process": [],
+    "2CRT9SRAF81503309548905:shared_process": [],
+    "2CTE9GBET81503309548913:shared_process": [],
+    "2CS1RRBTB81503309548897:shared_process": []
+  },
+  "config": {
+    "isDashboard": false
+  },
+  "info": {},
+  "source": "FCN"
+}
