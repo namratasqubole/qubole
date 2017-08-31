@@ -1,0 +1,885 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n# Advertising Technology Sample Notebook (Part 1)\nThe purpose of this notebook is to provide example code to make sense of advertising-based web logs.  This notebook does the following:\n* Setup the connection to your S3 bucket to access the web logs\n* Create an external table against these web logs including the use of regular expression to parse the logs\n* Identity Country (ISO-3166-1 Three Letter ISO Country Codes) based on IP address by calling a REST Web service API\n* Identify Browser and OS information based on the User Agent string within the web logs using the user-agents PyPi package.\n* Convert the Apache web logs date information, create a userid, and join back to the Browser and OS information\n",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:27 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231597_-446329293",
+      "id": "20170830-091031-991448942",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch1\u003eAdvertising Technology Sample Notebook (Part 1)\u003c/h1\u003e\n\u003cp\u003eThe purpose of this notebook is to provide example code to make sense of advertising-based web logs.  This notebook does the following:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eSetup the connection to your S3 bucket to access the web logs\u003c/li\u003e\n\u003cli\u003eCreate an external table against these web logs including the use of regular expression to parse the logs\u003c/li\u003e\n\u003cli\u003eIdentity Country (ISO-3166-1 Three Letter ISO Country Codes) based on IP address by calling a REST Web service API\u003c/li\u003e\n\u003cli\u003eIdentify Browser and OS information based on the User Agent string within the web logs using the user-agents PyPi package.\u003c/li\u003e\n\u003cli\u003eConvert the Apache web logs date information, create a userid, and join back to the Browser and OS information\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:27 AM",
+      "dateFinished": "Aug 30, 2017 9:11:27 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Setup Instructions\n* Please refer to the [Databricks Data Import How-To Guide](https://databricks.com/wp-content/uploads/2015/08/Databricks-how-to-data-import.pdf) on how to import data into S3 for use with Databricks notebooks.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:27 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231597_-446329293",
+      "id": "20170830-091031-323522575",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eSetup Instructions\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003ePlease refer to the \u003ca href\u003d\"https://databricks.com/wp-content/uploads/2015/08/Databricks-how-to-data-import.pdf\"\u003eDatabricks Data Import How-To Guide\u003c/a\u003e on how to import data into S3 for use with Databricks notebooks.\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:27 AM",
+      "dateFinished": "Aug 30, 2017 9:11:27 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# Setup AWS configuration\nimport urllib\nACCESS_KEY \u003d \"[REPLACE_WITH_ACCESS_KEY]\"\nSECRET_KEY \u003d \"[REPLACE_WITH_SECRET_KEY]\"\nENCODED_SECRET_KEY \u003d urllib.quote(SECRET_KEY, \"\")\nAWS_BUCKET_NAME \u003d \"[REPLACE_WITH_BUCKET_NAME]\"\nMOUNT_NAME \u003d \"mdl\"\n\n# Mount S3 bucket\ndbutils.fs.mount(\"s3n://%s:%s@%s/\" % (ACCESS_KEY, ENCODED_SECRET_KEY, AWS_BUCKET_NAME), \"/mnt/%s\" % MOUNT_NAME)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:27 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231597_-446329293",
+      "id": "20170830-091031-1118516772",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 7, in \u003cmodule\u003e\nNameError: name \u0027dbutils\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:27 AM",
+      "dateFinished": "Aug 30, 2017 9:11:27 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# View the log files within the mdl mount\ndisplay(dbutils.fs.ls(\"/mnt/mdl/accesslogs/\"))",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:27 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231597_-446329293",
+      "id": "20170830-091031-265476246",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027display\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:28 AM",
+      "dateFinished": "Aug 30, 2017 9:11:28 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# Count the number of rows within the sample Apache Access logs\nmyAccessLogs \u003d sc.textFile(\"/mnt/mdl/accesslogs/\")\nmyAccessLogs.count()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:28 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231598_-445175046",
+      "id": "20170830-091031-724887742",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 2, in \u003cmodule\u003e\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 1040, in count\n    return self.mapPartitions(lambda i: [sum(1 for _ in i)]).sum()\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 1031, in sum\n    return self.mapPartitions(lambda x: [sum(x)]).fold(0, operator.add)\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 905, in fold\n    vals \u003d self.mapPartitions(func).collect()\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 808, in collect\n    port \u003d self.ctx._jvm.PythonRDD.collectAndServe(self._jrdd.rdd())\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py\", line 1133, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/usr/lib/spark/python/pyspark/sql/utils.py\", line 63, in deco\n    return f(*a, **kw)\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/protocol.py\", line 319, in get_return_value\n    format(target_id, \".\", name), value)\nPy4JJavaError: An error occurred while calling z:org.apache.spark.api.python.PythonRDD.collectAndServe.\n: java.io.FileNotFoundException: File does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/mnt/mdl/accesslogs\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1122)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystemLinkResolver.resolve(FileSystemLinkResolver.java:81)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.getFileStatus(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystem.resolvePath(FileSystem.java:756)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$16.\u003cinit\u003e(DistributedFileSystem.java:779)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.listLocatedStatus(DistributedFileSystem.java:770)\n\tat org.apache.hadoop.mapred.InputPathProcessor.perPathComputation(InputPathProcessor.java:251)\n\tat org.apache.hadoop.mapred.InputPathProcessor.access$000(InputPathProcessor.java:28)\n\tat org.apache.hadoop.mapred.InputPathProcessor$2.run(InputPathProcessor.java:354)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:28 AM",
+      "dateFinished": "Aug 30, 2017 9:11:28 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:28 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231598_-445175046",
+      "id": "20170830-091031-1113676813",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:28 AM",
+      "dateFinished": "Aug 30, 2017 9:11:28 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Create External Table\n* Create an external table against the access log data where we define a regular expression format as part of the serializer/deserializer (SerDe) definition.  \n* Instead of writing ETL logic to do this, our table definition handles this.\n* Original Format: %s %s %s [%s] \\\"%s %s HTTP/1.1\\\" %s %s\n* Example Web Log Row \n * 10.0.0.213 - 2185662 [14/Aug/2015:00:05:15 -0800] \"GET /Hurricane+Ridge/rss.xml HTTP/1.1\" 200 288",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:28 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231598_-445175046",
+      "id": "20170830-091031-1296440842",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eCreate External Table\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003eCreate an external table against the access log data where we define a regular expression format as part of the serializer/deserializer (SerDe) definition.\u003c/li\u003e\n\u003cli\u003eInstead of writing ETL logic to do this, our table definition handles this.\u003c/li\u003e\n\u003cli\u003eOriginal Format: %s %s %s [%s] \"%s %s HTTP/1.1\" %s %s\u003c/li\u003e\n\u003cli\u003eExample Web Log Row\u003c/li\u003e\n\u003cli\u003e10.0.0.213 - 2185662 [14/Aug/2015:00:05:15 -0800] \u0026ldquo;GET /Hurricane+Ridge/rss.xml HTTP/1.1\u0026rdquo; 200 288\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:28 AM",
+      "dateFinished": "Aug 30, 2017 9:11:28 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nDROP TABLE IF EXISTS accesslog;\nCREATE EXTERNAL TABLE accesslog (\n  ipaddress STRING,\n  clientidentd STRING,\n  userid STRING,\n  datetime STRING,\n  method STRING,\n  endpoint STRING,\n  protocol STRING,\n  responseCode INT,\n  contentSize BIGINT,\n  referrer STRING,\n  agent STRING,\n  duration STRING,\n  ip1 STRING,\n  ip2 STRING,\n  ip3 STRING,\n  ip4 STRING\n)\nROW FORMAT\n  SERDE \u0027org.apache.hadoop.hive.serde2.RegexSerDe\u0027\nWITH SERDEPROPERTIES (\n  \"input.regex\" \u003d \u0027^(\\\\S+) (\\\\S+) (\\\\S+) \\\\[([\\\\w:/]+\\\\s[+\\\\-]\\\\d{4})\\\\]  \\\\\"(\\\\S+) (\\\\S+) (\\\\S+)\\\\\" (\\\\d{3}) (\\\\d+) \\\\\"(.*)\\\\\" \\\\\"(.*)\\\\\" (\\\\S+) \\\\\"(\\\\S+), (\\\\S+), (\\\\S+), (\\\\S+)\\\\\"\u0027\n)\nLOCATION \n  \"/mnt/mdl/accesslogs/\"",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:28 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231598_-445175046",
+      "id": "20170830-091031-20793239",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nmismatched input \u0027;\u0027 expecting \u003cEOF\u003e(line 1, pos 30)\n\n\u003d\u003d SQL \u003d\u003d\nDROP TABLE IF EXISTS accesslog;\n------------------------------^^^\nCREATE EXTERNAL TABLE accesslog (\n  ipaddress STRING,\n  clientidentd STRING,\n  userid STRING,\n  datetime STRING,\n  method STRING,\n  endpoint STRING,\n  protocol STRING,\n  responseCode INT,\n  contentSize BIGINT,\n  referrer STRING,\n  agent STRING,\n  duration STRING,\n  ip1 STRING,\n  ip2 STRING,\n  ip3 STRING,\n  ip4 STRING\n)\nROW FORMAT\n  SERDE \u0027org.apache.hadoop.hive.serde2.RegexSerDe\u0027\nWITH SERDEPROPERTIES (\n  \"input.regex\" \u003d \u0027^(\\\\S+) (\\\\S+) (\\\\S+) \\\\[([\\\\w:/]+\\\\s[+\\\\-]\\\\d{4})\\\\]  \\\\\"(\\\\S+) (\\\\S+) (\\\\S+)\\\\\" (\\\\d{3}) (\\\\d+) \\\\\"(.*)\\\\\" \\\\\"(.*)\\\\\" (\\\\S+) \\\\\"(\\\\S+), (\\\\S+), (\\\\S+), (\\\\S+)\\\\\"\u0027\n)\nLOCATION \n  \"/mnt/mdl/accesslogs/\"\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:28 AM",
+      "dateFinished": "Aug 30, 2017 9:11:28 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect agent from accesslog limit 10;",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:28 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231598_-445175046",
+      "id": "20170830-091031-1395877415",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nextraneous input \u0027;\u0027 expecting {\u003cEOF\u003e, \u0027.\u0027, \u0027[\u0027, \u0027OR\u0027, \u0027AND\u0027, \u0027IN\u0027, NOT, \u0027BETWEEN\u0027, \u0027LIKE\u0027, RLIKE, \u0027IS\u0027, EQ, \u0027\u003c\u003d\u003e\u0027, \u0027\u003c\u003e\u0027, \u0027!\u003d\u0027, \u0027\u003c\u0027, LTE, \u0027\u003e\u0027, GTE, \u0027+\u0027, \u0027-\u0027, \u0027*\u0027, \u0027/\u0027, \u0027%\u0027, \u0027DIV\u0027, \u0027\u0026\u0027, \u0027|\u0027, \u0027^\u0027}(line 1, pos 36)\n\n\u003d\u003d SQL \u003d\u003d\nselect agent from accesslog limit 10;\n------------------------------------^^^\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:28 AM",
+      "dateFinished": "Aug 30, 2017 9:11:28 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Obtain ISO-3166-1 Three Letter Country Codes from IP address\n* Extract out the distinct set of IP addresses from the Apache Access logs\n* Make a REST web service call to freegeoip.net to get the two-letter country codes based on the IP address\n * This creates the **mappedIP2** DataFrame where the schema is encoded.\n* Create a DataFrame to extract out a mapping between 2-letter code, 3-letter code, and country name\n * This creates the **countryCodesDF** DataFrame where the schema is inferred\n* Join these two data frames together and select out only the four columns needed to create the **mappedIP3** DataFrame",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:28 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231598_-445175046",
+      "id": "20170830-091031-800370776",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eObtain ISO-3166-1 Three Letter Country Codes from IP address\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003eExtract out the distinct set of IP addresses from the Apache Access logs\u003c/li\u003e\n\u003cli\u003eMake a REST web service call to freegeoip.net to get the two-letter country codes based on the IP address\u003c/li\u003e\n\u003cli\u003eThis creates the \u003cstrong\u003emappedIP2\u003c/strong\u003e DataFrame where the schema is encoded.\u003c/li\u003e\n\u003cli\u003eCreate a DataFrame to extract out a mapping between 2-letter code, 3-letter code, and country name\u003c/li\u003e\n\u003cli\u003eThis creates the \u003cstrong\u003ecountryCodesDF\u003c/strong\u003e DataFrame where the schema is inferred\u003c/li\u003e\n\u003cli\u003eJoin these two data frames together and select out only the four columns needed to create the \u003cstrong\u003emappedIP3\u003c/strong\u003e DataFrame\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:28 AM",
+      "dateFinished": "Aug 30, 2017 9:11:28 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# Obtain location based on IP address\nimport urllib2\nfrom pyspark.sql import SQLContext, Row\nfrom pyspark.sql.types import *\n\n# Obtain the unique agents from the accesslog table\nipaddresses \u003d sqlContext.sql(\"select distinct ip1 from accesslog where ip1 is not null\").rdd\n\n# Convert None to Empty String\ndef xstr(s): \n  if s is None: \n    return \u0027\u0027 \n  return str(s)\n\n# getCCA2: Obtains two letter country code based on IP address\ndef getCCA2(ip):\n  # Obtain CCA2 code from FreeGeoIP\n  url \u003d \u0027http://freegeoip.net/csv/\u0027 + ip\n  str \u003d urllib2.urlopen(url).read()\n  cca2 \u003d str.split(\",\")[1]\n  \n  # return\n  return cca2\n\n# Loop through distinct IP addresses and obtain two-letter country codes\nmappedIPs \u003d ipaddresses.map(lambda x: (x[0], getCCA2(x[0])))\n\n# mappedIP2: contains the IP address and CCA2 codes\n# The schema is encoded in a string.\nschemaString \u003d \"ip cca2\"\nfields \u003d [StructField(field_name, StringType(), True) for field_name in schemaString.split()]\nschema \u003d StructType(fields)\n\n# Create DataFrame with schema\nmappedIP2 \u003d sqlContext.createDataFrame(mappedIPs, schema)\n\n# Obtain the Country Codes \nfields \u003d sc.textFile(\"/mnt/tardis6/countrycodes/\").map(lambda l: l.split(\",\"))\ncountrycodes \u003d fields.map(lambda x: Row(cn\u003dx[0], cca2\u003dx[1], cca3\u003dx[2]))\n\n# Country Codes DataFrame:\n#   Create DataFrame (inferring schema using reflection)\ncountryCodesDF \u003d sqlContext.createDataFrame(countrycodes)\n\n# Join countrycodes with mappedIPsDF so we can have IP address and three-letter ISO country codes\nmappedIP3 \u003d mappedIP2 \\\n  .join(countryCodesDF, mappedIP2.cca2 \u003d\u003d countryCodesDF.cca2, \"left_outer\") \\\n  .select(mappedIP2.ip, mappedIP2.cca2, countryCodesDF.cca3, countryCodesDF.cn)\n  \n# Register the mapping table\nmappedIP3.registerTempTable(\"mappedIP3\")",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:28 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231598_-445175046",
+      "id": "20170830-091031-842585308",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 4, in \u003cmodule\u003e\n  File \"/usr/lib/spark/python/pyspark/sql/context.py\", line 384, in sql\n    return self.sparkSession.sql(sqlQuery)\n  File \"/usr/lib/spark/python/pyspark/sql/session.py\", line 545, in sql\n    return DataFrame(self._jsparkSession.sql(sqlQuery), self._wrapped)\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py\", line 1133, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/usr/lib/spark/python/pyspark/sql/utils.py\", line 69, in deco\n    raise AnalysisException(s.split(\u0027: \u0027, 1)[1], stackTrace)\nAnalysisException: u\u0027Table or view not found: accesslog; line 1 pos 25\u0027\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:28 AM",
+      "dateFinished": "Aug 30, 2017 9:11:28 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect * from mappedIP3 limit 20;",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:28 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231598_-445175046",
+      "id": "20170830-091031-1131341636",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nextraneous input \u0027;\u0027 expecting {\u003cEOF\u003e, \u0027.\u0027, \u0027[\u0027, \u0027OR\u0027, \u0027AND\u0027, \u0027IN\u0027, NOT, \u0027BETWEEN\u0027, \u0027LIKE\u0027, RLIKE, \u0027IS\u0027, EQ, \u0027\u003c\u003d\u003e\u0027, \u0027\u003c\u003e\u0027, \u0027!\u003d\u0027, \u0027\u003c\u0027, LTE, \u0027\u003e\u0027, GTE, \u0027+\u0027, \u0027-\u0027, \u0027*\u0027, \u0027/\u0027, \u0027%\u0027, \u0027DIV\u0027, \u0027\u0026\u0027, \u0027|\u0027, \u0027^\u0027}(line 1, pos 32)\n\n\u003d\u003d SQL \u003d\u003d\nselect * from mappedIP3 limit 20;\n--------------------------------^^^\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:28 AM",
+      "dateFinished": "Aug 30, 2017 9:11:28 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:28 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231598_-445175046",
+      "id": "20170830-091031-1421069924",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:29 AM",
+      "dateFinished": "Aug 30, 2017 9:11:29 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Identity the Browser and OS information \n* Extract out the distinct set of user agents from the Apache Access logs\n* Use the Python Package [user-agents](https://pypi.python.org/pypi/user-agents) to extract out Browser and OS information from the User Agent strring\n* For more information on installing pypi packages in Databricks, refer to [Databricks Guide \u003e Product Overview \u003e Libraries](https://docs.cloud.databricks.com/docs/latest/databricks_guide/index.html#02%20Product%20Overview/07%20Libraries.html)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:28 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231598_-445175046",
+      "id": "20170830-091031-189133422",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eIdentity the Browser and OS information\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003eExtract out the distinct set of user agents from the Apache Access logs\u003c/li\u003e\n\u003cli\u003eUse the Python Package \u003ca href\u003d\"https://pypi.python.org/pypi/user-agents\"\u003euser-agents\u003c/a\u003e to extract out Browser and OS information from the User Agent strring\u003c/li\u003e\n\u003cli\u003eFor more information on installing pypi packages in Databricks, refer to \u003ca href\u003d\"https://docs.cloud.databricks.com/docs/latest/databricks_guide/index.html#02%20Product%20Overview/07%20Libraries.html\"\u003eDatabricks Guide \u003e Product Overview \u003e Libraries\u003c/a\u003e\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:28 AM",
+      "dateFinished": "Aug 30, 2017 9:11:28 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nfrom user_agents import parse\nfrom pyspark.sql.types import StringType\nfrom pyspark.sql.functions import udf\n\n# Convert None to Empty String\ndef xstr(s): \n  if s is None: \n    return \u0027\u0027 \n  return str(s)\n\n# Create UDFs to extract out Browser Family and OS Family information\ndef browserFamily(ua_string) : return xstr(parse(xstr(ua_string)).browser.family)\ndef osFamily(ua_string) : return xstr(parse(xstr(ua_string)).os.family)\nudfBrowserFamily \u003d udf(browserFamily, StringType())\nudfOSFamily \u003d udf(osFamily, StringType())\n\n# Obtain the unique agents from the accesslog table\nuserAgentTbl \u003d sqlContext.sql(\"select distinct agent from accesslog\")\n\n# Add new columns to the UserAgentInfo DataFrame containing browser and OS information\nuserAgentInfo \u003d userAgentTbl.withColumn(\u0027browserFamily\u0027, udfBrowserFamily(userAgentTbl.agent))\nuserAgentInfo \u003d userAgentInfo.withColumn(\u0027OSFamily\u0027, udfOSFamily(userAgentTbl.agent))\n\n# Register the DataFrame as a table\nuserAgentInfo.registerTempTable(\"UserAgentInfo\")",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:28 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231598_-445175046",
+      "id": "20170830-091031-471629906",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nImportError: No module named user_agents\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:29 AM",
+      "dateFinished": "Aug 30, 2017 9:11:29 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# Review the top 10 rows from the UserAgentInfo DataFrame\ndisplay(sqlContext.sql(\"SELECT browserFamily, OSFamily, agent FROM UserAgentInfo LIMIT 10\"))",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:29 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231599_-445559795",
+      "id": "20170830-091031-1337893424",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027display\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:29 AM",
+      "dateFinished": "Aug 30, 2017 9:11:29 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:29 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231599_-445559795",
+      "id": "20170830-091031-841704564",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:29 AM",
+      "dateFinished": "Aug 30, 2017 9:11:29 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## UserID, Date, and Joins\nTo make finish basic preparation of these web logs, we will do the following: \n* Convert the Apache web logs date information\n* Create a userid based on the IP address and User Agent (these logs do not have a UserID)\n * We are generating the UserID (a way to uniquify web site visitors) by combining these two columns\n* Join back to the Browser and OS information as well as Country (based on IP address) information\n* Also include call to udfWeblog2Time function to convert the Apache web log date into a Spark SQL / Hive friendly format (for session calculations below)\n\n",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:29 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231599_-445559795",
+      "id": "20170830-091031-484495579",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eUserID, Date, and Joins\u003c/h2\u003e\n\u003cp\u003eTo make finish basic preparation of these web logs, we will do the following:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eConvert the Apache web logs date information\u003c/li\u003e\n\u003cli\u003eCreate a userid based on the IP address and User Agent (these logs do not have a UserID)\u003c/li\u003e\n\u003cli\u003eWe are generating the UserID (a way to uniquify web site visitors) by combining these two columns\u003c/li\u003e\n\u003cli\u003eJoin back to the Browser and OS information as well as Country (based on IP address) information\u003c/li\u003e\n\u003cli\u003eAlso include call to udfWeblog2Time function to convert the Apache web log date into a Spark SQL / Hive friendly format (for session calculations below)\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:29 AM",
+      "dateFinished": "Aug 30, 2017 9:11:29 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nfrom pyspark.sql.types import DateType\nfrom pyspark.sql.functions import udf\nimport time\n\n# weblog2Time function\n#   Input: 04/Nov/2015:08:15:00 +0000\n#   Output: 2015-11-04 08:15:00\ndef weblog2Time(weblog_timestr):\n  weblog_time \u003d time.strptime(weblog_timestr, \"%d/%b/%Y:%H:%M:%S +0000\")\n  weblog_t \u003d time.mktime(weblog_time)\n  return time.strftime(\"%Y-%m-%d %H:%M:%S\", time.gmtime(weblog_t))\n\n# Define UDF\nudfWeblog2Time \u003d udf(weblog2Time, DateType())\n\n# Register the UDF\nsqlContext.registerFunction(\"udfWeblog2Time\", lambda x: weblog2Time(x))\n\n# Create the UserID and Join back to the UserAgentInfo DataFrame and mappedIP3 DataFrame\naccessLogsPrime \u003d sqlContext.sql(\"select hash(a.ip1, a.agent) as UserId, m.cca3, udfWeblog2Time(a.datetime) as datetime, u.browserFamily, u.OSFamily, a.endpoint, a.referrer, a.method, a.responsecode, a.contentsize from accesslog a join UserAgentInfo u on u.agent \u003d a.agent join mappedIP3 m on m.ip \u003d a.ip1\")\n\n# Register the DataFrame as a table\naccessLogsPrime.registerTempTable(\"accessLogsPrime\")",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:29 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231599_-445559795",
+      "id": "20170830-091031-1161326020",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 10, in \u003cmodule\u003e\n  File \"/usr/lib/spark/python/pyspark/sql/context.py\", line 384, in sql\n    return self.sparkSession.sql(sqlQuery)\n  File \"/usr/lib/spark/python/pyspark/sql/session.py\", line 545, in sql\n    return DataFrame(self._jsparkSession.sql(sqlQuery), self._wrapped)\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py\", line 1133, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/usr/lib/spark/python/pyspark/sql/utils.py\", line 69, in deco\n    raise AnalysisException(s.split(\u0027: \u0027, 1)[1], stackTrace)\nAnalysisException: u\u0027Table or view not found: accesslog; line 1 pos 185\u0027\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:29 AM",
+      "dateFinished": "Aug 30, 2017 9:11:29 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n\n-- Cache the table for faster queries\ncache table accessLogsPrime",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:29 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231599_-445559795",
+      "id": "20170830-091031-920771855",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Table or view \u0027accesslogsprime\u0027 not found in database \u0027default\u0027;\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:29 AM",
+      "dateFinished": "Aug 30, 2017 9:11:29 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n\n-- Review the top 10 rows from this table\nselect UserId, datetime, cca3, browserFamily, OSFamily, method, responseCode, contentSize from accessLogsPrime limit 10;\n",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:29 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231599_-445559795",
+      "id": "20170830-091031-952692884",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nextraneous input \u0027;\u0027 expecting {\u003cEOF\u003e, \u0027.\u0027, \u0027[\u0027, \u0027OR\u0027, \u0027AND\u0027, \u0027IN\u0027, NOT, \u0027BETWEEN\u0027, \u0027LIKE\u0027, RLIKE, \u0027IS\u0027, EQ, \u0027\u003c\u003d\u003e\u0027, \u0027\u003c\u003e\u0027, \u0027!\u003d\u0027, \u0027\u003c\u0027, LTE, \u0027\u003e\u0027, GTE, \u0027+\u0027, \u0027-\u0027, \u0027*\u0027, \u0027/\u0027, \u0027%\u0027, \u0027DIV\u0027, \u0027\u0026\u0027, \u0027|\u0027, \u0027^\u0027}(line 2, pos 119)\n\n\u003d\u003d SQL \u003d\u003d\n-- Review the top 10 rows from this table\nselect UserId, datetime, cca3, browserFamily, OSFamily, method, responseCode, contentSize from accessLogsPrime limit 10;\n-----------------------------------------------------------------------------------------------------------------------^^^\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:29 AM",
+      "dateFinished": "Aug 30, 2017 9:11:29 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect browserFamily, count(distinct UserID) as Users, count(1) as Events from accessLogsPrime group by browserFamily order by Users desc limit 10;",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:29 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231599_-445559795",
+      "id": "20170830-091031-1170606171",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nextraneous input \u0027;\u0027 expecting {\u003cEOF\u003e, \u0027.\u0027, \u0027[\u0027, \u0027OR\u0027, \u0027AND\u0027, \u0027IN\u0027, NOT, \u0027BETWEEN\u0027, \u0027LIKE\u0027, RLIKE, \u0027IS\u0027, EQ, \u0027\u003c\u003d\u003e\u0027, \u0027\u003c\u003e\u0027, \u0027!\u003d\u0027, \u0027\u003c\u0027, LTE, \u0027\u003e\u0027, GTE, \u0027+\u0027, \u0027-\u0027, \u0027*\u0027, \u0027/\u0027, \u0027%\u0027, \u0027DIV\u0027, \u0027\u0026\u0027, \u0027|\u0027, \u0027^\u0027}(line 1, pos 146)\n\n\u003d\u003d SQL \u003d\u003d\nselect browserFamily, count(distinct UserID) as Users, count(1) as Events from accessLogsPrime group by browserFamily order by Users desc limit 10;\n--------------------------------------------------------------------------------------------------------------------------------------------------^^^\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:30 AM",
+      "dateFinished": "Aug 30, 2017 9:11:30 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect hour(datetime) as Hour, count(1) as events from accessLogsPrime group by hour(datetime) order by hour(datetime)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:29 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231599_-445559795",
+      "id": "20170830-091031-664061815",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Table or view not found: accessLogsPrime; line 1 pos 55\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:30 AM",
+      "dateFinished": "Aug 30, 2017 9:11:30 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect OSFamily, count(distinct UserID) as Users from accessLogsPrime group by OSFamily order by Users desc limit 10;",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:29 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231599_-445559795",
+      "id": "20170830-091031-209845530",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nextraneous input \u0027;\u0027 expecting {\u003cEOF\u003e, \u0027.\u0027, \u0027[\u0027, \u0027OR\u0027, \u0027AND\u0027, \u0027IN\u0027, NOT, \u0027BETWEEN\u0027, \u0027LIKE\u0027, RLIKE, \u0027IS\u0027, EQ, \u0027\u003c\u003d\u003e\u0027, \u0027\u003c\u003e\u0027, \u0027!\u003d\u0027, \u0027\u003c\u0027, LTE, \u0027\u003e\u0027, GTE, \u0027+\u0027, \u0027-\u0027, \u0027*\u0027, \u0027/\u0027, \u0027%\u0027, \u0027DIV\u0027, \u0027\u0026\u0027, \u0027|\u0027, \u0027^\u0027}(line 1, pos 116)\n\n\u003d\u003d SQL \u003d\u003d\nselect OSFamily, count(distinct UserID) as Users from accessLogsPrime group by OSFamily order by Users desc limit 10;\n--------------------------------------------------------------------------------------------------------------------^^^\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:30 AM",
+      "dateFinished": "Aug 30, 2017 9:11:30 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect cca3, count(distinct UserID) as users from accessLogsPrime group by cca3",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:11:29 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084231599_-445559795",
+      "id": "20170830-091031-681314117",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Table or view not found: accessLogsPrime; line 1 pos 50\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:10:31 AM",
+      "dateStarted": "Aug 30, 2017 9:11:30 AM",
+      "dateFinished": "Aug 30, 2017 9:11:30 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084289732_40069938",
+      "id": "20170830-091129_2016559816",
+      "dateCreated": "Aug 30, 2017 9:11:29 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "AdTech Sample Notebook Part 1",
+  "id": "EDFXGFVJUV1504084231",
+  "angularObjects": {
+    "2CRCTH5N681503309548868:shared_process": [],
+    "2CRT9SRAF81503309548905:shared_process": [],
+    "2CTE9GBET81503309548913:shared_process": [],
+    "2CS1RRBTB81503309548897:shared_process": []
+  },
+  "config": {
+    "isDashboard": false
+  },
+  "info": {},
+  "source": "FCN"
+}
