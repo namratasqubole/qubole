@@ -1,0 +1,644 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n## 2015 Median Home Price by State\n\n#### Setup",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:20:04 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084791568_1342562101",
+      "id": "20170830-091950-248673315",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003e2015 Median Home Price by State\u003c/h2\u003e\n\u003ch4\u003eSetup\u003c/h4\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:19:51 AM",
+      "dateStarted": "Aug 30, 2017 9:20:04 AM",
+      "dateFinished": "Aug 30, 2017 9:20:04 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# Use the Spark CSV datasource with options specifying:\n#  - First line of file is a header\n#  - Automatically infer the schema of the data\ndata \u003d sqlContext.read.format(\"com.databricks.spark.csv\")\\\n  .option(\"header\", \"true\")\\\n  .option(\"inferSchema\", \"true\")\\\n  .load(\"/databricks-datasets/samples/population-vs-price/data_geo.csv\")\n  \ndata.cache()  # Cache data for faster reuse\ndata \u003d data.dropna() # drop rows with missing values\n\n# Register table so it is accessible via SQL Context \n#  For Apache Spark \u003c\u003d 1.6\n#  data.registerTempTable(\"data_geo\")  \n# For Apache Spark \u003e\u003d 2.0\ndata.createOrReplaceTempView(\"data_geo\")  \n",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:20:04 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084791568_1342562101",
+      "id": "20170830-091950-599014040",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 4, in \u003cmodule\u003e\n  File \"/usr/lib/spark/python/pyspark/sql/readwriter.py\", line 149, in load\n    return self._df(self._jreader.load(path))\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py\", line 1133, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/usr/lib/spark/python/pyspark/sql/utils.py\", line 69, in deco\n    raise AnalysisException(s.split(\u0027: \u0027, 1)[1], stackTrace)\nAnalysisException: u\u0027Path does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/databricks-datasets/samples/population-vs-price/data_geo.csv;\u0027\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:19:51 AM",
+      "dateStarted": "Aug 30, 2017 9:20:04 AM",
+      "dateFinished": "Aug 30, 2017 9:20:04 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n#### Hover over the state for 2015 Median Home Prices",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:20:04 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084791568_1342562101",
+      "id": "20170830-091950-424546710",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch4\u003eHover over the state for 2015 Median Home Prices\u003c/h4\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:19:51 AM",
+      "dateStarted": "Aug 30, 2017 9:20:04 AM",
+      "dateFinished": "Aug 30, 2017 9:20:04 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect `State Code`, `2015 median sales price` from data_geo",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:20:04 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084791568_1342562101",
+      "id": "20170830-091950-20979634",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Table or view not found: data_geo; line 1 pos 52\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:19:51 AM",
+      "dateStarted": "Aug 30, 2017 9:20:04 AM",
+      "dateFinished": "Aug 30, 2017 9:20:05 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Top 10 Cities by 2015 Median Sales Price",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:20:04 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084791568_1342562101",
+      "id": "20170830-091950-1195172531",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eTop 10 Cities by 2015 Median Sales Price\u003c/h2\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:19:51 AM",
+      "dateStarted": "Aug 30, 2017 9:20:05 AM",
+      "dateFinished": "Aug 30, 2017 9:20:05 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect City, `2014 Population estimate`/1000 as `2014 Population Estimate (1000s)`, `2015 median sales price` as `2015 Median Sales Price (1000s)` from data_geo order by `2015 median sales price` desc limit 10;",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:20:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084791568_1342562101",
+      "id": "20170830-091950-137164780",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nextraneous input \u0027;\u0027 expecting {\u003cEOF\u003e, \u0027.\u0027, \u0027[\u0027, \u0027OR\u0027, \u0027AND\u0027, \u0027IN\u0027, NOT, \u0027BETWEEN\u0027, \u0027LIKE\u0027, RLIKE, \u0027IS\u0027, EQ, \u0027\u003c\u003d\u003e\u0027, \u0027\u003c\u003e\u0027, \u0027!\u003d\u0027, \u0027\u003c\u0027, LTE, \u0027\u003e\u0027, GTE, \u0027+\u0027, \u0027-\u0027, \u0027*\u0027, \u0027/\u0027, \u0027%\u0027, \u0027DIV\u0027, \u0027\u0026\u0027, \u0027|\u0027, \u0027^\u0027}(line 1, pos 209)\n\n\u003d\u003d SQL \u003d\u003d\nselect City, `2014 Population estimate`/1000 as `2014 Population Estimate (1000s)`, `2015 median sales price` as `2015 Median Sales Price (1000s)` from data_geo order by `2015 median sales price` desc limit 10;\n-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------^^^\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:19:51 AM",
+      "dateStarted": "Aug 30, 2017 9:20:05 AM",
+      "dateFinished": "Aug 30, 2017 9:20:05 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## 2014 Population Estimates in Washington State\n",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:20:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084791568_1342562101",
+      "id": "20170830-091950-1187975083",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003e2014 Population Estimates in Washington State\u003c/h2\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:19:51 AM",
+      "dateStarted": "Aug 30, 2017 9:20:05 AM",
+      "dateFinished": "Aug 30, 2017 9:20:05 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect City, `2014 Population estimate` from data_geo where `State Code` \u003d \u0027WA\u0027;",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:20:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084791568_1342562101",
+      "id": "20170830-091950-333480854",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nextraneous input \u0027;\u0027 expecting {\u003cEOF\u003e, \u0027.\u0027, \u0027[\u0027, \u0027GROUP\u0027, \u0027ORDER\u0027, \u0027HAVING\u0027, \u0027LIMIT\u0027, \u0027OR\u0027, \u0027AND\u0027, \u0027IN\u0027, NOT, \u0027BETWEEN\u0027, \u0027LIKE\u0027, RLIKE, \u0027IS\u0027, \u0027WINDOW\u0027, \u0027UNION\u0027, \u0027EXCEPT\u0027, \u0027MINUS\u0027, \u0027INTERSECT\u0027, EQ, \u0027\u003c\u003d\u003e\u0027, \u0027\u003c\u003e\u0027, \u0027!\u003d\u0027, \u0027\u003c\u0027, LTE, \u0027\u003e\u0027, GTE, \u0027+\u0027, \u0027-\u0027, \u0027*\u0027, \u0027/\u0027, \u0027%\u0027, \u0027DIV\u0027, \u0027\u0026\u0027, \u0027|\u0027, \u0027^\u0027, \u0027SORT\u0027, \u0027CLUSTER\u0027, \u0027DISTRIBUTE\u0027, STRING}(line 1, pos 79)\n\n\u003d\u003d SQL \u003d\u003d\nselect City, `2014 Population estimate` from data_geo where `State Code` \u003d \u0027WA\u0027;\n-------------------------------------------------------------------------------^^^\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:19:51 AM",
+      "dateStarted": "Aug 30, 2017 9:20:05 AM",
+      "dateFinished": "Aug 30, 2017 9:20:05 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## 2015 Median Sales Price Box Plot\n\nBox plot shows means + variation of prices.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:20:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084791568_1342562101",
+      "id": "20170830-091950-1343658895",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003e2015 Median Sales Price Box Plot\u003c/h2\u003e\n\u003cp\u003eBox plot shows means + variation of prices.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:19:51 AM",
+      "dateStarted": "Aug 30, 2017 9:20:05 AM",
+      "dateFinished": "Aug 30, 2017 9:20:05 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect `State Code`, `2015 median sales price` from data_geo order by `2015 median sales price` desc;",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:20:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084791568_1342562101",
+      "id": "20170830-091950-1396173309",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nextraneous input \u0027;\u0027 expecting {\u003cEOF\u003e, \u0027,\u0027, \u0027LIMIT\u0027, \u0027WINDOW\u0027, \u0027SORT\u0027, \u0027CLUSTER\u0027, \u0027DISTRIBUTE\u0027}(line 1, pos 100)\n\n\u003d\u003d SQL \u003d\u003d\nselect `State Code`, `2015 median sales price` from data_geo order by `2015 median sales price` desc;\n----------------------------------------------------------------------------------------------------^^^\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:19:51 AM",
+      "dateStarted": "Aug 30, 2017 9:20:05 AM",
+      "dateFinished": "Aug 30, 2017 9:20:05 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## 2015 Median Sales Price by State Histogram\n",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:20:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084791568_1342562101",
+      "id": "20170830-091950-1239820585",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003e2015 Median Sales Price by State Histogram\u003c/h2\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:19:51 AM",
+      "dateStarted": "Aug 30, 2017 9:20:05 AM",
+      "dateFinished": "Aug 30, 2017 9:20:05 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect `State Code`, `2015 median sales price` from data_geo order by `2015 median sales price` desc;",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:20:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084791569_1342177352",
+      "id": "20170830-091950-1182862824",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nextraneous input \u0027;\u0027 expecting {\u003cEOF\u003e, \u0027,\u0027, \u0027LIMIT\u0027, \u0027WINDOW\u0027, \u0027SORT\u0027, \u0027CLUSTER\u0027, \u0027DISTRIBUTE\u0027}(line 1, pos 100)\n\n\u003d\u003d SQL \u003d\u003d\nselect `State Code`, `2015 median sales price` from data_geo order by `2015 median sales price` desc;\n----------------------------------------------------------------------------------------------------^^^\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:19:51 AM",
+      "dateStarted": "Aug 30, 2017 9:20:05 AM",
+      "dateFinished": "Aug 30, 2017 9:20:05 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## 2015 Median Sales Price by State Quantile Plot \u003e\u003d $ 300,000\n\nQuantile plots help describe distributions (in this case, the distribution of sales prices across cities) and highlight aspects such as skewed distributions.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:20:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084791569_1342177352",
+      "id": "20170830-091950-347646879",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003e2015 Median Sales Price by State Quantile Plot \u003e\u003d $ 300,000\u003c/h2\u003e\n\u003cp\u003eQuantile plots help describe distributions (in this case, the distribution of sales prices across cities) and highlight aspects such as skewed distributions.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:19:51 AM",
+      "dateStarted": "Aug 30, 2017 9:20:05 AM",
+      "dateFinished": "Aug 30, 2017 9:20:05 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect `State Code`, `2015 median sales price` from data_geo where `2015 median sales price` \u003e\u003d 300;",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:20:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084791569_1342177352",
+      "id": "20170830-091950-1264759328",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nextraneous input \u0027;\u0027 expecting {\u003cEOF\u003e, \u0027.\u0027, \u0027[\u0027, \u0027GROUP\u0027, \u0027ORDER\u0027, \u0027HAVING\u0027, \u0027LIMIT\u0027, \u0027OR\u0027, \u0027AND\u0027, \u0027IN\u0027, NOT, \u0027BETWEEN\u0027, \u0027LIKE\u0027, RLIKE, \u0027IS\u0027, \u0027WINDOW\u0027, \u0027UNION\u0027, \u0027EXCEPT\u0027, \u0027MINUS\u0027, \u0027INTERSECT\u0027, EQ, \u0027\u003c\u003d\u003e\u0027, \u0027\u003c\u003e\u0027, \u0027!\u003d\u0027, \u0027\u003c\u0027, LTE, \u0027\u003e\u0027, GTE, \u0027+\u0027, \u0027-\u0027, \u0027*\u0027, \u0027/\u0027, \u0027%\u0027, \u0027DIV\u0027, \u0027\u0026\u0027, \u0027|\u0027, \u0027^\u0027, \u0027SORT\u0027, \u0027CLUSTER\u0027, \u0027DISTRIBUTE\u0027}(line 1, pos 99)\n\n\u003d\u003d SQL \u003d\u003d\nselect `State Code`, `2015 median sales price` from data_geo where `2015 median sales price` \u003e\u003d 300;\n---------------------------------------------------------------------------------------------------^^^\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:19:51 AM",
+      "dateStarted": "Aug 30, 2017 9:20:05 AM",
+      "dateFinished": "Aug 30, 2017 9:20:05 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Cities with 2015 Median Sales Price \u003e\u003d $ 300,000\n",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:20:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084791569_1342177352",
+      "id": "20170830-091950-1317860881",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eCities with 2015 Median Sales Price \u003e\u003d $ 300,000\u003c/h2\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:19:51 AM",
+      "dateStarted": "Aug 30, 2017 9:20:05 AM",
+      "dateFinished": "Aug 30, 2017 9:20:05 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect `City`, `State Code`, `2015 median sales price` from data_geo where `2015 median sales price` \u003e\u003d 300 limit 20;",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:20:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084791569_1342177352",
+      "id": "20170830-091950-1069601214",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nextraneous input \u0027;\u0027 expecting {\u003cEOF\u003e, \u0027.\u0027, \u0027[\u0027, \u0027OR\u0027, \u0027AND\u0027, \u0027IN\u0027, NOT, \u0027BETWEEN\u0027, \u0027LIKE\u0027, RLIKE, \u0027IS\u0027, EQ, \u0027\u003c\u003d\u003e\u0027, \u0027\u003c\u003e\u0027, \u0027!\u003d\u0027, \u0027\u003c\u0027, LTE, \u0027\u003e\u0027, GTE, \u0027+\u0027, \u0027-\u0027, \u0027*\u0027, \u0027/\u0027, \u0027%\u0027, \u0027DIV\u0027, \u0027\u0026\u0027, \u0027|\u0027, \u0027^\u0027}(line 1, pos 116)\n\n\u003d\u003d SQL \u003d\u003d\nselect `City`, `State Code`, `2015 median sales price` from data_geo where `2015 median sales price` \u003e\u003d 300 limit 20;\n--------------------------------------------------------------------------------------------------------------------^^^\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:19:51 AM",
+      "dateStarted": "Aug 30, 2017 9:20:05 AM",
+      "dateFinished": "Aug 30, 2017 9:20:05 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## 2015 Median Sales Price Q-Q Plot\n\nQ-Q plots provide yet another view of distributions.  See [Wikipedia on Q-Q Plots](https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot) for more background.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:20:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084791569_1342177352",
+      "id": "20170830-091950-967111816",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003e2015 Median Sales Price Q-Q Plot\u003c/h2\u003e\n\u003cp\u003eQ-Q plots provide yet another view of distributions.  See \u003ca href\u003d\"https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot\"\u003eWikipedia on Q-Q Plots\u003c/a\u003e for more background.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:19:51 AM",
+      "dateStarted": "Aug 30, 2017 9:20:05 AM",
+      "dateFinished": "Aug 30, 2017 9:20:05 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect `State Code`, case when `2015 median sales price` \u003e\u003d 300 then \u0027\u003e\u003d300K\u0027 when `2015 median sales price` \u003c 300 then \u0027\u003c 300K\u0027 end as `Category`, `2015 median sales price` from data_geo order by `2015 median sales price` desc;",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:01:23 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084791569_1342177352",
+      "id": "20170830-091950-942949479",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nextraneous input \u0027;\u0027 expecting {\u003cEOF\u003e, \u0027,\u0027, \u0027LIMIT\u0027, \u0027WINDOW\u0027, \u0027SORT\u0027, \u0027CLUSTER\u0027, \u0027DISTRIBUTE\u0027}(line 1, pos 227)\n\n\u003d\u003d SQL \u003d\u003d\nselect `State Code`, case when `2015 median sales price` \u003e\u003d 300 then \u0027\u003e\u003d300K\u0027 when `2015 median sales price` \u003c 300 then \u0027\u003c 300K\u0027 end as `Category`, `2015 median sales price` from data_geo order by `2015 median sales price` desc;\n-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------^^^\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:19:51 AM",
+      "dateStarted": "Aug 30, 2017 10:01:23 AM",
+      "dateFinished": "Aug 30, 2017 10:02:00 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084805853_-1533035854",
+      "id": "20170830-092005_509289278",
+      "dateCreated": "Aug 30, 2017 9:20:05 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Pop vs. Price SQL",
+  "id": "N68WPM73291504084790",
+  "angularObjects": {
+    "2CRCTH5N681503309548868:shared_process": [],
+    "2CRT9SRAF81503309548905:shared_process": [],
+    "2CTE9GBET81503309548913:shared_process": [],
+    "2CS1RRBTB81503309548897:shared_process": []
+  },
+  "config": {
+    "isDashboard": false
+  },
+  "info": {},
+  "source": "FCN"
+}
