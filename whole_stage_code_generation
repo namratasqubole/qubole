@@ -1,0 +1,681 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n# Whole-stage code generation: Spark 2.0\u0027s Tungsten engine\n\nThis notebook demonstrates the power of whole-stage code generation, a technique that blends state-of-the-art from modern compilers and MPP databases. In order to compare the performance with Spark 1.6, we turn off whole-stage code generation in Spark 2.0, which would result in using a similar code path as in Spark 1.6.\n\nTo read the companion blog posts, click the following:\n- https://databricks.com/blog/2016/05/11/spark-2-0-technical-preview-easier-faster-and-smarter.html\n- https://databricks.com/blog/2016/05/23/apache-spark-as-a-compiler-joining-a-billion-rows-per-second-on-a-laptop.html",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:34 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091070395_1018366489",
+      "id": "20170830-110429-150155418",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch1\u003eWhole-stage code generation: Spark 2.0\u0027s Tungsten engine\u003c/h1\u003e\n\u003cp\u003eThis notebook demonstrates the power of whole-stage code generation, a technique that blends state-of-the-art from modern compilers and MPP databases. In order to compare the performance with Spark 1.6, we turn off whole-stage code generation in Spark 2.0, which would result in using a similar code path as in Spark 1.6.\u003c/p\u003e\n\u003cp\u003eTo read the companion blog posts, click the following:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003ehttps://databricks.com/blog/2016/05/11/spark-2-0-technical-preview-easier-faster-and-smarter.html\u003c/li\u003e\n\u003cli\u003ehttps://databricks.com/blog/2016/05/23/apache-spark-as-a-compiler-joining-a-billion-rows-per-second-on-a-laptop.html\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:04:30 AM",
+      "dateStarted": "Aug 30, 2017 11:59:34 AM",
+      "dateFinished": "Aug 30, 2017 11:59:34 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### First, let\u0027s do some benchmark setup",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:34 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091070395_1018366489",
+      "id": "20170830-110429-403600797",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eFirst, let\u0027s do some benchmark setup\u003c/h3\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:04:30 AM",
+      "dateStarted": "Aug 30, 2017 11:59:34 AM",
+      "dateFinished": "Aug 30, 2017 11:59:34 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Define a simple benchmark util function\ndef benchmark(name: String)(f: \u003d\u003e Unit) {\n  val startTime \u003d System.nanoTime\n  f\n  val endTime \u003d System.nanoTime\n  println(s\"Time taken in $name: \" + (endTime - startTime).toDouble / 1000000000 + \" seconds\")\n}",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:34 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091070395_1018366489",
+      "id": "20170830-110429-476948168",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\nbenchmark: (name: String)(f: \u003d\u003e Unit)Unit\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:04:30 AM",
+      "dateStarted": "Aug 30, 2017 11:59:38 AM",
+      "dateFinished": "Aug 30, 2017 11:59:38 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nThis \"cluster\" has only a single node, with 3 cores allocated. The CPU is Intel(R) Xeon(R) CPU E5-2670 v2 @ 2.50GHz.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:34 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091070395_1018366489",
+      "id": "20170830-110429-890574118",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eThis \u0026ldquo;cluster\u0026rdquo; has only a single node, with 3 cores allocated. The CPU is Intel\u0026reg; Xeon\u0026reg; CPU E5-2670 v2 @ 2.50GHz.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:04:30 AM",
+      "dateStarted": "Aug 30, 2017 11:59:34 AM",
+      "dateFinished": "Aug 30, 2017 11:59:34 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### How fast can Spark 1.6 sum up 1 billion numbers?",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:34 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091070395_1018366489",
+      "id": "20170830-110429-289148618",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eHow fast can Spark 1.6 sum up 1 billion numbers?\u003c/h3\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:04:30 AM",
+      "dateStarted": "Aug 30, 2017 11:59:34 AM",
+      "dateFinished": "Aug 30, 2017 11:59:34 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// This config turns off whole stage code generation, effectively changing the execution path to be similar to Spark 1.6.\nspark.conf.set(\"spark.sql.codegen.wholeStage\", false)\n\nbenchmark(\"Spark 1.6\") {\n  spark.range(1000L * 1000 * 1000).selectExpr(\"sum(id)\").show()\n}",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:34 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091070395_1018366489",
+      "id": "20170830-110429-42607717",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+------------------+\n|           sum(id)|\n+------------------+\n|499999999500000000|\n+------------------+\n\nTime taken in Spark 1.6: 6.324818715 seconds\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:04:30 AM",
+      "dateStarted": "Aug 30, 2017 11:59:38 AM",
+      "dateFinished": "Aug 30, 2017 11:59:46 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### How fast can Spark 2.0 sum up 1 billion numbers?",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:34 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091070395_1018366489",
+      "id": "20170830-110429-602683718",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eHow fast can Spark 2.0 sum up 1 billion numbers?\u003c/h3\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:04:30 AM",
+      "dateStarted": "Aug 30, 2017 11:59:34 AM",
+      "dateFinished": "Aug 30, 2017 11:59:34 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nspark.conf.set(\"spark.sql.codegen.wholeStage\", true)\n\nbenchmark(\"Spark 2.0\") {\n  spark.range(1000L * 1000 * 1000).selectExpr(\"sum(id)\").show()\n}",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:34 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091070395_1018366489",
+      "id": "20170830-110429-254690638",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+------------------+\n|           sum(id)|\n+------------------+\n|499999999500000000|\n+------------------+\n\nTime taken in Spark 2.0: 0.895070885 seconds\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:04:30 AM",
+      "dateStarted": "Aug 30, 2017 11:59:38 AM",
+      "dateFinished": "Aug 30, 2017 11:59:48 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nWoot - that\u0027s pretty good. From ~ 8 seconds to 0.7 seconds to sum up 1 billion numbers.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091070395_1018366489",
+      "id": "20170830-110429-815338061",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eWoot - that\u0027s pretty good. From ~ 8 seconds to 0.7 seconds to sum up 1 billion numbers.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:04:30 AM",
+      "dateStarted": "Aug 30, 2017 11:59:35 AM",
+      "dateFinished": "Aug 30, 2017 11:59:35 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### How fast can Spark 1.6 join 1 billion records?",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091070395_1018366489",
+      "id": "20170830-110429-953752252",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eHow fast can Spark 1.6 join 1 billion records?\u003c/h3\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:04:30 AM",
+      "dateStarted": "Aug 30, 2017 11:59:35 AM",
+      "dateFinished": "Aug 30, 2017 11:59:35 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// This config turns off whole stage code generation, effectively changing the execution path to be similar to Spark 1.6.\nspark.conf.set(\"spark.sql.codegen.wholeStage\", false)\n\nbenchmark(\"Spark 1.6\") {\n  spark.range(1000L * 1000 * 1000).join(spark.range(1000L).toDF(), \"id\").count()\n}",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091070396_1016442744",
+      "id": "20170830-110429-631357363",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "Time taken in Spark 1.6: 10.916797544 seconds\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:04:30 AM",
+      "dateStarted": "Aug 30, 2017 11:59:46 AM",
+      "dateFinished": "Aug 30, 2017 12:00:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nspark.range(1000L * 1000 * 1000).join(spark.range(1000L).toDF(), \"id\").selectExpr(\"count(*)\").explain(true)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091070396_1016442744",
+      "id": "20170830-110429-1087285631",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\u003d\u003d Parsed Logical Plan \u003d\u003d\n\u0027Project [unresolvedalias(\u0027count(1), Some(\u003cfunction1\u003e))]\n+- Project [id#90L]\n   +- Join Inner, (id#90L \u003d id#93L)\n      :- Range (0, 1000000000, step\u003d1, splits\u003dSome(4))\n      +- Range (0, 1000, step\u003d1, splits\u003dSome(4))\n\n\u003d\u003d Analyzed Logical Plan \u003d\u003d\ncount(1): bigint\nAggregate [count(1) AS count(1)#106L]\n+- Project [id#90L]\n   +- Join Inner, (id#90L \u003d id#93L)\n      :- Range (0, 1000000000, step\u003d1, splits\u003dSome(4))\n      +- Range (0, 1000, step\u003d1, splits\u003dSome(4))\n\n\u003d\u003d Optimized Logical Plan \u003d\u003d\nAggregate [count(1) AS count(1)#106L]\n+- Project\n   +- Join Inner, (id#90L \u003d id#93L)\n      :- Range (0, 1000000000, step\u003d1, splits\u003dSome(4))\n      +- Range (0, 1000, step\u003d1, splits\u003dSome(4))\n\n\u003d\u003d Physical Plan \u003d\u003d\nHashAggregate(keys\u003d[], functions\u003d[count(1)], output\u003d[count(1)#106L])\n+- Exchange SinglePartition\n   +- HashAggregate(keys\u003d[], functions\u003d[partial_count(1)], output\u003d[count#108L])\n      +- Project\n         +- BroadcastHashJoin [id#90L], [id#93L], Inner, BuildRight\n            :- Range (0, 1000000000, step\u003d1, splits\u003dSome(4))\n            +- BroadcastExchange HashedRelationBroadcastMode(List(input[0, bigint, false]))\n               +- Range (0, 1000, step\u003d1, splits\u003dSome(4))\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:04:30 AM",
+      "dateStarted": "Aug 30, 2017 11:59:48 AM",
+      "dateFinished": "Aug 30, 2017 12:00:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### How fast can Spark 2.0 join 1 billion records?",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091070396_1016442744",
+      "id": "20170830-110429-1333563255",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eHow fast can Spark 2.0 join 1 billion records?\u003c/h3\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:04:30 AM",
+      "dateStarted": "Aug 30, 2017 11:59:35 AM",
+      "dateFinished": "Aug 30, 2017 11:59:35 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nspark.conf.set(\"spark.sql.codegen.wholeStage\", true)\n\nbenchmark(\"Spark 2.0\") {\n  spark.range(1000L * 1000 * 1005).join(spark.range(1040L).toDF(), \"id\").count()\n}",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091070396_1016442744",
+      "id": "20170830-110429-1216720810",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "Time taken in Spark 2.0: 1.497201383 seconds\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:04:30 AM",
+      "dateStarted": "Aug 30, 2017 12:00:00 PM",
+      "dateFinished": "Aug 30, 2017 12:00:03 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nThis is even better. From ~ 60 seconds to 0.8 seconds to join 1 billion numbers.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091070396_1016442744",
+      "id": "20170830-110429-1152291145",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eThis is even better. From ~ 60 seconds to 0.8 seconds to join 1 billion numbers.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:04:30 AM",
+      "dateStarted": "Aug 30, 2017 11:59:35 AM",
+      "dateFinished": "Aug 30, 2017 11:59:35 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Why are we doing these stupid benchmarks?\n\nThis is an excellent question. While the benchmarks look simple, they actually measure many of the fundamental core primitives in real data processing. For example, aggregation is a very common pattern, and joining integers is one of the most widely used patterns in a well defined star-schema data warehouse (e.g. fact table and dimension table joins).",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091070396_1016442744",
+      "id": "20170830-110429-855967066",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eWhy are we doing these stupid benchmarks?\u003c/h3\u003e\n\u003cp\u003eThis is an excellent question. While the benchmarks look simple, they actually measure many of the fundamental core primitives in real data processing. For example, aggregation is a very common pattern, and joining integers is one of the most widely used patterns in a well defined star-schema data warehouse (e.g. fact table and dimension table joins).\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:04:30 AM",
+      "dateStarted": "Aug 30, 2017 11:59:35 AM",
+      "dateFinished": "Aug 30, 2017 11:59:35 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Other primitive operations\n\nWe have also benchmarked the efficiency of other primitive operations under whole-stage code generation. The table below summarizes the result:\n\nThe way we benchmark is to to measure the cost per row, in nanoseconds.\n\nRuntime: Intel Haswell i7 4960HQ 2.6GHz, HotSpot 1.8.0_60-b27, Mac OS X 10.11\n\n|                       | Spark 1.6 | Spark 2.0 |\n|:---------------------:|:---------:|:---------:|\n|         filter        |   15 ns   |   1.1 ns  |\n|     sum w/o group     |   14 ns   |   0.9 ns  |\n|      sum w/ group     |   79 ns   |  10.7 ns  |\n|       hash join       |   115 ns  |   4.0 ns  |\n|  sort (8 bit entropy) |   620 ns  |   5.3 ns  |\n| sort (64 bit entropy) |   620 ns  |   40 ns   |\n|    sort-merge join    |   750 ns  |   700 ns  |\n\n\nAgain, to read the companion blog post, click here: https://databricks.com/blog/2016/05/11/spark-2-0-technical-preview-easier-faster-and-smarter.html",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091070396_1016442744",
+      "id": "20170830-110429-744002030",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eOther primitive operations\u003c/h3\u003e\n\u003cp\u003eWe have also benchmarked the efficiency of other primitive operations under whole-stage code generation. The table below summarizes the result:\u003c/p\u003e\n\u003cp\u003eThe way we benchmark is to to measure the cost per row, in nanoseconds.\u003c/p\u003e\n\u003cp\u003eRuntime: Intel Haswell i7 4960HQ 2.6GHz, HotSpot 1.8.0_60-b27, Mac OS X 10.11\u003c/p\u003e\n\u003cp\u003e|                       | Spark 1.6 | Spark 2.0 |\n\u003cbr  /\u003e|:\u0026mdash;\u0026mdash;\u0026mdash;\u0026mdash;\u0026mdash;\u0026mdash;\u0026mdash;:|:\u0026mdash;\u0026mdash;\u0026mdash;:|:\u0026mdash;\u0026mdash;\u0026mdash;:|\n\u003cbr  /\u003e|         filter        |   15 ns   |   1.1 ns  |\n\u003cbr  /\u003e|     sum w/o group     |   14 ns   |   0.9 ns  |\n\u003cbr  /\u003e|      sum w/ group     |   79 ns   |  10.7 ns  |\n\u003cbr  /\u003e|       hash join       |   115 ns  |   4.0 ns  |\n\u003cbr  /\u003e|  sort (8 bit entropy) |   620 ns  |   5.3 ns  |\n\u003cbr  /\u003e| sort (64 bit entropy) |   620 ns  |   40 ns   |\n\u003cbr  /\u003e|    sort-merge join    |   750 ns  |   700 ns  |\u003c/p\u003e\n\u003cp\u003eAgain, to read the companion blog post, click here: https://databricks.com/blog/2016/05/11/spark-2-0-technical-preview-easier-faster-and-smarter.html\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:04:30 AM",
+      "dateStarted": "Aug 30, 2017 11:59:35 AM",
+      "dateFinished": "Aug 30, 2017 11:59:35 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Understanding the execution plan\n\nThe explain function has been extended for whole-stage code generation. When an operator has a star around it (*), whole-stage code generation is enabled. In the following case, Range, Filter, and the two Aggregates are both running with whole-stage code generation. Exchange does not have whole-stage code generation because it is sending data across the network.\n\nThis query plan has two \"stages\" (divided by Exchange). In the first stage, three operators (Range, Filter, Aggregate) are collapsed into a single function. In the second stage, there is only a single operator (Aggregate).",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091070396_1016442744",
+      "id": "20170830-110429-387733596",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eUnderstanding the execution plan\u003c/h3\u003e\n\u003cp\u003eThe explain function has been extended for whole-stage code generation. When an operator has a star around it (*), whole-stage code generation is enabled. In the following case, Range, Filter, and the two Aggregates are both running with whole-stage code generation. Exchange does not have whole-stage code generation because it is sending data across the network.\u003c/p\u003e\n\u003cp\u003eThis query plan has two \u0026ldquo;stages\u0026rdquo; (divided by Exchange). In the first stage, three operators (Range, Filter, Aggregate) are collapsed into a single function. In the second stage, there is only a single operator (Aggregate).\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:04:30 AM",
+      "dateStarted": "Aug 30, 2017 11:59:35 AM",
+      "dateFinished": "Aug 30, 2017 11:59:35 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nspark.range(1000).filter(\"id \u003e 100\").selectExpr(\"sum(id)\").explain()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091070396_1016442744",
+      "id": "20170830-110429-393416875",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\u003d\u003d Physical Plan \u003d\u003d\n*HashAggregate(keys\u003d[], functions\u003d[sum(id#127L)])\n+- Exchange SinglePartition\n   +- *HashAggregate(keys\u003d[], functions\u003d[partial_sum(id#127L)])\n      +- *Filter (id#127L \u003e 100)\n         +- *Range (0, 1000, step\u003d1, splits\u003dSome(4))\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:04:30 AM",
+      "dateStarted": "Aug 30, 2017 12:00:00 PM",
+      "dateFinished": "Aug 30, 2017 12:00:05 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504094375400_-422658530",
+      "id": "20170830-115935_1489213659",
+      "dateCreated": "Aug 30, 2017 11:59:35 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Whole-stage code generation",
+  "id": "XES657VHK61504091069",
+  "angularObjects": {
+    "2CRCTH5N681503309548868:shared_process": [],
+    "2CRT9SRAF81503309548905:shared_process": [],
+    "2CTE9GBET81503309548913:shared_process": [],
+    "2CS1RRBTB81503309548897:shared_process": []
+  },
+  "config": {
+    "isDashboard": false
+  },
+  "info": {},
+  "source": "FCN"
+}
