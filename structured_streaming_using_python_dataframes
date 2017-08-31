@@ -1,0 +1,1118 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n# Structured Streaming using Python DataFrames API\n\nApache Spark 2.0 adds the first version of a new higher-level stream processing API, Structured Streaming. In this notebook we are going to take a quick look at how to use DataFrame API to build Structured Streaming applications. We want to compute real-time metrics like running counts and windowed counts on a stream of timestamped actions (e.g. Open, Close, etc).\n\nTo run this notebook, import it to Databricks Community Edition and attach it to a **Spark 2.0 (Scala 2.10)** cluster.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:58 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522030_-428582179",
+      "id": "20170830-111201-1005722551",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch1\u003eStructured Streaming using Python DataFrames API\u003c/h1\u003e\n\u003cp\u003eApache Spark 2.0 adds the first version of a new higher-level stream processing API, Structured Streaming. In this notebook we are going to take a quick look at how to use DataFrame API to build Structured Streaming applications. We want to compute real-time metrics like running counts and windowed counts on a stream of timestamped actions (e.g. Open, Close, etc).\u003c/p\u003e\n\u003cp\u003eTo run this notebook, import it to Databricks Community Edition and attach it to a \u003cstrong\u003eSpark 2.0 (Scala 2.10)\u003c/strong\u003e cluster.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:58:58 AM",
+      "dateFinished": "Aug 30, 2017 11:58:58 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# To make sure that this notebook is being run on a Spark 2.0 cluster, let\u0027s see if we can access the SparkSession - the new entry point of Apache Spark 2.0.\n# If this fails, then you are not connected to a Spark 2.0 cluster. Please recreate your cluster and select the version to be \"Spark 2.0 (Scala 2.10)\".\nspark",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:58 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522030_-428582179",
+      "id": "20170830-111201-649262907",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\u003cpyspark.sql.session.SparkSession object at 0x7f757283d7d0\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:58:58 AM",
+      "dateFinished": "Aug 30, 2017 11:58:58 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Sample Data\nWe have some sample action data as files in `/databricks-datasets/structured-streaming/events/` which we are going to use to build this appication. Let\u0027s take a look at the contents of this directory.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:58 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522030_-428582179",
+      "id": "20170830-111201-1405828321",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eSample Data\u003c/h2\u003e\n\u003cp\u003eWe have some sample action data as files in \u003ccode\u003e/databricks-datasets/structured-streaming/events/\u003c/code\u003e which we are going to use to build this appication. Let\u0027s take a look at the contents of this directory.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:58:58 AM",
+      "dateFinished": "Aug 30, 2017 11:58:58 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%fs\nls /databricks-datasets/structured-streaming/events/",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:58 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522031_-428966928",
+      "id": "20170830-111201-443937557",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "status": "ERROR",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nThere are about 50 JSON files in the directory. Let\u0027s see what each JSON file contains.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:58 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522031_-428966928",
+      "id": "20170830-111201-975723118",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eThere are about 50 JSON files in the directory. Let\u0027s see what each JSON file contains.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:58:58 AM",
+      "dateFinished": "Aug 30, 2017 11:58:58 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%fs\nhead /databricks-datasets/structured-streaming/events/file-0.json",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:58 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522031_-428966928",
+      "id": "20170830-111201-1485164719",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "status": "ERROR",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\nEach line in the file contains JSON record with two fields - `time` and `action`. Let\u0027s try to analyze these files interactively.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:58 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522031_-428966928",
+      "id": "20170830-111201-586773507",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eEach line in the file contains JSON record with two fields - \u003ccode\u003etime\u003c/code\u003e and \u003ccode\u003eaction\u003c/code\u003e. Let\u0027s try to analyze these files interactively.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:58:59 AM",
+      "dateFinished": "Aug 30, 2017 11:58:59 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Batch/Interactive Processing\nThe usual first step in attempting to process the data is to interactively query the data. Let\u0027s define a static DataFrame on the files, and give it a table name.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:59 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522031_-428966928",
+      "id": "20170830-111201-1116371765",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eBatch/Interactive Processing\u003c/h2\u003e\n\u003cp\u003eThe usual first step in attempting to process the data is to interactively query the data. Let\u0027s define a static DataFrame on the files, and give it a table name.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:58:59 AM",
+      "dateFinished": "Aug 30, 2017 11:58:59 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nfrom pyspark.sql.types import *\n\ninputPath \u003d \"/databricks-datasets/structured-streaming/events/\"\n\n# Since we know the data format already, let\u0027s define the schema to speed up processing (no need for Spark to infer schema)\njsonSchema \u003d StructType([ StructField(\"time\", TimestampType(), True), StructField(\"action\", StringType(), True) ])\n\n# Static DataFrame representing data in the JSON files\nstaticInputDF \u003d (\n  spark\n    .read\n    .schema(jsonSchema)\n    .json(inputPath)\n)\n\ndisplay(staticInputDF)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:59 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522031_-428966928",
+      "id": "20170830-111201-598644755",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 8, in \u003cmodule\u003e\n  File \"/usr/lib/spark/python/pyspark/sql/readwriter.py\", line 232, in json\n    return self._df(self._jreader.json(self._spark._sc._jvm.PythonUtils.toSeq(path)))\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py\", line 1133, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/usr/lib/spark/python/pyspark/sql/utils.py\", line 69, in deco\n    raise AnalysisException(s.split(\u0027: \u0027, 1)[1], stackTrace)\nAnalysisException: u\u0027Path does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/databricks-datasets/structured-streaming/events;\u0027\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:58:59 AM",
+      "dateFinished": "Aug 30, 2017 11:58:59 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nNow we can compute the number of \"open\" and \"close\" actions with one hour windows. To do this, we will group by the `action` column and 1 hour windows over the `time` column.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:59 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522031_-428966928",
+      "id": "20170830-111201-23040900",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eNow we can compute the number of \u0026ldquo;open\u0026rdquo; and \u0026ldquo;close\u0026rdquo; actions with one hour windows. To do this, we will group by the \u003ccode\u003eaction\u003c/code\u003e column and 1 hour windows over the \u003ccode\u003etime\u003c/code\u003e column.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:58:59 AM",
+      "dateFinished": "Aug 30, 2017 11:58:59 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nfrom pyspark.sql.functions import *      # for window() function\n\nstaticCountsDF \u003d (\n  staticInputDF\n    .groupBy(\n       staticInputDF.action, \n       window(staticInputDF.time, \"1 hour\"))    \n    .count()\n)\nstaticCountsDF.cache()\n\n# Register the DataFrame as table \u0027static_counts\u0027\nstaticCountsDF.createOrReplaceTempView(\"static_counts\")",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:59 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522031_-428966928",
+      "id": "20170830-111201-603199859",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 3, in \u003cmodule\u003e\nNameError: name \u0027staticInputDF\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:58:59 AM",
+      "dateFinished": "Aug 30, 2017 11:58:59 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nNow we can directly use SQL to query the table. For example, here are the total counts across all the hours.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:59 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522031_-428966928",
+      "id": "20170830-111201-174264807",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eNow we can directly use SQL to query the table. For example, here are the total counts across all the hours.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:58:59 AM",
+      "dateFinished": "Aug 30, 2017 11:58:59 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect action, sum(count) as total_count from static_counts group by action",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:59 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522031_-428966928",
+      "id": "20170830-111201-1145928413",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Table or view not found: static_counts; line 1 pos 46\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:58:59 AM",
+      "dateFinished": "Aug 30, 2017 11:58:59 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nHow about a timeline of windowed counts?",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:59 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522031_-428966928",
+      "id": "20170830-111201-536080348",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eHow about a timeline of windowed counts?\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:58:59 AM",
+      "dateFinished": "Aug 30, 2017 11:58:59 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect action, date_format(window.end, \"MMM-dd HH:mm\") as time, count from static_counts order by time, action",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:59 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522031_-428966928",
+      "id": "20170830-111201-994974751",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Table or view not found: static_counts; line 1 pos 75\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:58:59 AM",
+      "dateFinished": "Aug 30, 2017 11:58:59 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nNote the two ends of the graph. The close actions are generated such that they are after the corresponding open actions, so there are more \"opens\" in the beginning and more \"closes\" in the end.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:59 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522031_-428966928",
+      "id": "20170830-111201-808661719",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eNote the two ends of the graph. The close actions are generated such that they are after the corresponding open actions, so there are more \u0026ldquo;opens\u0026rdquo; in the beginning and more \u0026ldquo;closes\u0026rdquo; in the end.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:58:59 AM",
+      "dateFinished": "Aug 30, 2017 11:58:59 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Stream Processing \nNow that we have analyzed the data interactively, let\u0027s convert this to a streaming query that continuously updates as data comes. Since we just have a static set of files, we are going to emulate a stream from them by reading one file at a time, in the chronological order they were created. The query we have to write is pretty much the same as the interactive query above.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:59 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522032_-418578708",
+      "id": "20170830-111201-562223812",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eStream Processing\u003c/h2\u003e\n\u003cp\u003eNow that we have analyzed the data interactively, let\u0027s convert this to a streaming query that continuously updates as data comes. Since we just have a static set of files, we are going to emulate a stream from them by reading one file at a time, in the chronological order they were created. The query we have to write is pretty much the same as the interactive query above.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:58:59 AM",
+      "dateFinished": "Aug 30, 2017 11:58:59 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nfrom pyspark.sql.functions import *\n\n# Similar to definition of staticInputDF above, just using `readStream` instead of `read`\nstreamingInputDF \u003d (\n  spark\n    .readStream                       \n    .schema(jsonSchema)               # Set the schema of the JSON data\n    .option(\"maxFilesPerTrigger\", 1)  # Treat a sequence of files as a stream by picking one file at a time\n    .json(inputPath)\n)\n\n# Same query as staticInputDF\nstreamingCountsDF \u003d (                 \n  streamingInputDF\n    .groupBy(\n      streamingInputDF.action, \n      window(streamingInputDF.time, \"1 hour\"))\n    .count()\n)\n\n# Is this DF actually a streaming DF?\nstreamingCountsDF.isStreaming",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:59 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522032_-418578708",
+      "id": "20170830-111201-353185720",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 7, in \u003cmodule\u003e\n  File \"/usr/lib/spark/python/pyspark/sql/streaming.py\", line 499, in json\n    return self._df(self._jreader.json(path))\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py\", line 1133, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/usr/lib/spark/python/pyspark/sql/utils.py\", line 69, in deco\n    raise AnalysisException(s.split(\u0027: \u0027, 1)[1], stackTrace)\nAnalysisException: u\u0027Path does not exist: /databricks-datasets/structured-streaming/events/;\u0027\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:58:59 AM",
+      "dateFinished": "Aug 30, 2017 11:58:59 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nAs you can see, `streamingCountsDF` is a streaming Dataframe (`streamingCountsDF.isStreaming` was `true`). You can start streaming computation, by defining the sink and starting it. \nIn our case, we want to interactively query the counts (same queries as above), so we will set the complete set of 1 hour counts to be a in a in-memory table (note that this for testing purpose only in Spark 2.0).",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:59 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522032_-418578708",
+      "id": "20170830-111201-13356699",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eAs you can see, \u003ccode\u003estreamingCountsDF\u003c/code\u003e is a streaming Dataframe (\u003ccode\u003estreamingCountsDF.isStreaming\u003c/code\u003e was \u003ccode\u003etrue\u003c/code\u003e). You can start streaming computation, by defining the sink and starting it.\n\u003cbr  /\u003eIn our case, we want to interactively query the counts (same queries as above), so we will set the complete set of 1 hour counts to be a in a in-memory table (note that this for testing purpose only in Spark 2.0).\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:59:00 AM",
+      "dateFinished": "Aug 30, 2017 11:59:00 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nspark.conf.set(\"spark.sql.shuffle.partitions\", \"2\")  # keep the size of shuffles small\n\nquery \u003d (\n  streamingCountsDF\n    .writeStream\n    .format(\"memory\")        # memory \u003d store in-memory table (for testing only in Spark 2.0)\n    .queryName(\"counts\")     # counts \u003d name of the in-memory table\n    .outputMode(\"complete\")  # complete \u003d all the counts should be in the table\n    .start()\n)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:00 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522032_-418578708",
+      "id": "20170830-111201-83045823",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 3, in \u003cmodule\u003e\nNameError: name \u0027streamingCountsDF\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:59:00 AM",
+      "dateFinished": "Aug 30, 2017 11:59:00 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\n`query` is a handle to the streaming query that is running in the background. This query is continuously picking up files and updating the windowed counts. \n\nNote the status of query in the above cell. Both the `Status: ACTIVE` and the progress bar shows that the query is active. \nFurthermore, if you expand the `\u003eDetails` above, you will find the number of files they have already processed. \n\nLet\u0027s wait a bit for a few files to be processed and then interactively query the in-memory `counts` table.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:00 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522032_-418578708",
+      "id": "20170830-111201-180766646",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003e\u003ccode\u003equery\u003c/code\u003e is a handle to the streaming query that is running in the background. This query is continuously picking up files and updating the windowed counts.\u003c/p\u003e\n\u003cp\u003eNote the status of query in the above cell. Both the \u003ccode\u003eStatus: ACTIVE\u003c/code\u003e and the progress bar shows that the query is active.\n\u003cbr  /\u003eFurthermore, if you expand the \u003ccode\u003e\u0026gt;Details\u003c/code\u003e above, you will find the number of files they have already processed.\u003c/p\u003e\n\u003cp\u003eLet\u0027s wait a bit for a few files to be processed and then interactively query the in-memory \u003ccode\u003ecounts\u003c/code\u003e table.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:59:00 AM",
+      "dateFinished": "Aug 30, 2017 11:59:00 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nfrom time import sleep\nsleep(5)  # wait a bit for computation to start",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:00 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522032_-418578708",
+      "id": "20170830-111201-684248092",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:59:00 AM",
+      "dateFinished": "Aug 30, 2017 11:59:05 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect action, date_format(window.end, \"MMM-dd HH:mm\") as time, count from counts order by time, action",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:00 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522032_-418578708",
+      "id": "20170830-111201-340465561",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Table or view not found: counts; line 1 pos 75\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:59:00 AM",
+      "dateFinished": "Aug 30, 2017 11:59:00 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nWe see the timeline of windowed counts (similar to the static one ealrier) building up. If we keep running this interactive query repeatedly, we will see the latest updated counts which the streaming query is updating in the background.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:00 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522032_-418578708",
+      "id": "20170830-111201-109801291",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eWe see the timeline of windowed counts (similar to the static one ealrier) building up. If we keep running this interactive query repeatedly, we will see the latest updated counts which the streaming query is updating in the background.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:59:00 AM",
+      "dateFinished": "Aug 30, 2017 11:59:00 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nsleep(5)  # wait a bit more for more data to be computed",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:00 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522032_-418578708",
+      "id": "20170830-111201-1495059370",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:59:00 AM",
+      "dateFinished": "Aug 30, 2017 11:59:10 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect action, date_format(window.end, \"MMM-dd HH:mm\") as time, count from counts order by time, action",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:00 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522032_-418578708",
+      "id": "20170830-111201-153474935",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Table or view not found: counts; line 1 pos 75\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:59:05 AM",
+      "dateFinished": "Aug 30, 2017 11:59:05 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nsleep(5)  # wait a bit more for more data to be computed",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:00 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522032_-418578708",
+      "id": "20170830-111201-154558701",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:59:06 AM",
+      "dateFinished": "Aug 30, 2017 11:59:15 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect action, date_format(window.end, \"MMM-dd HH:mm\") as time, count from counts order by time, action",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:00 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522032_-418578708",
+      "id": "20170830-111201-1335964905",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Table or view not found: counts; line 1 pos 75\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:59:10 AM",
+      "dateFinished": "Aug 30, 2017 11:59:10 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nAlso, let\u0027s see the total number of \"opens\" and \"closes\".",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:00 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522032_-418578708",
+      "id": "20170830-111201-1279088054",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eAlso, let\u0027s see the total number of \u0026ldquo;opens\u0026rdquo; and \u0026ldquo;closes\u0026rdquo;.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:59:00 AM",
+      "dateFinished": "Aug 30, 2017 11:59:00 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect action, sum(count) as total_count from counts group by action order by action",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:00 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522033_-418963457",
+      "id": "20170830-111201-147459028",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Table or view not found: counts; line 1 pos 46\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:59:10 AM",
+      "dateFinished": "Aug 30, 2017 11:59:10 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\nIf you keep running the above query repeatedly, you will always find that the number of \"opens\" is more than the number of \"closes\", as expected in a data stream where a \"close\" always appear after corresponding \"open\". This shows that Structured Streaming ensures **prefix integrity**. Read the blog posts linked below if you want to know more.\n\nNote that there are only a few files, so consuming all of them there will be no updates to the counts. Rerun the query if you want to interact with the streaming query again.\n\nFinally, you can stop the query running in the background, either by clicking on the \u0027Cancel\u0027 link in the cell of the query, or by executing `query.stop()`. Either way, when the query is stopped, the status of the corresponding cell above will automatically update to `TERMINATED`.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:00 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522033_-418963457",
+      "id": "20170830-111201-1013829533",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eIf you keep running the above query repeatedly, you will always find that the number of \u0026ldquo;opens\u0026rdquo; is more than the number of \u0026ldquo;closes\u0026rdquo;, as expected in a data stream where a \u0026ldquo;close\u0026rdquo; always appear after corresponding \u0026ldquo;open\u0026rdquo;. This shows that Structured Streaming ensures \u003cstrong\u003eprefix integrity\u003c/strong\u003e. Read the blog posts linked below if you want to know more.\u003c/p\u003e\n\u003cp\u003eNote that there are only a few files, so consuming all of them there will be no updates to the counts. Rerun the query if you want to interact with the streaming query again.\u003c/p\u003e\n\u003cp\u003eFinally, you can stop the query running in the background, either by clicking on the \u0027Cancel\u0027 link in the cell of the query, or by executing \u003ccode\u003equery.stop()\u003c/code\u003e. Either way, when the query is stopped, the status of the corresponding cell above will automatically update to \u003ccode\u003eTERMINATED\u003c/code\u003e.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:59:00 AM",
+      "dateFinished": "Aug 30, 2017 11:59:00 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n##What\u0027s next?\nIf you want to learn more about Structured Streaming, here are a few pointers.\n\n- Databricks blog posts on Structured Streaming and Continuous Applications\n  - Blog post 1: [Continuous Applications: Evolving Streaming in Apache Spark 2.0](https://databricks.com/blog/2016/07/28/continuous-applications-evolving-streaming-in-apache-spark-2-0.html)\n  - Blog post 2: [Structured Streaming in Apache Spark]( https://databricks.com/blog/2016/07/28/structured-streaming-in-apache-spark.html)\n\n- [Structured Streaming Programming Guide](http://spark.apache.org/docs/latest/structured-streaming-programming-guide.html)\n\n- Spark Summit 2016 Talks\n  - [Structuring Spark: Dataframes, Datasets And Streaming](https://spark-summit.org/2016/events/structuring-spark-dataframes-datasets-and-streaming/)\n  - [A Deep Dive Into Structured Streaming](https://spark-summit.org/2016/events/a-deep-dive-into-structured-streaming/)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:59:00 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091522033_-418963457",
+      "id": "20170830-111201-321594781",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eWhat\u0027s next?\u003c/h2\u003e\n\u003cp\u003eIf you want to learn more about Structured Streaming, here are a few pointers.\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003cp\u003eDatabricks blog posts on Structured Streaming and Continuous Applications\u003c/p\u003e\n\u003c/li\u003e\n\u003cli\u003e\u003cp\u003eBlog post 1: \u003ca href\u003d\"https://databricks.com/blog/2016/07/28/continuous-applications-evolving-streaming-in-apache-spark-2-0.html\"\u003eContinuous Applications: Evolving Streaming in Apache Spark 2.0\u003c/a\u003e\u003c/p\u003e\n\u003c/li\u003e\n\u003cli\u003e\u003cp\u003eBlog post 2: \u003ca href\u003d\"https://databricks.com/blog/2016/07/28/structured-streaming-in-apache-spark.html\"\u003eStructured Streaming in Apache Spark\u003c/a\u003e\u003c/p\u003e\n\u003c/li\u003e\n\u003cli\u003e\u003cp\u003e\u003ca href\u003d\"http://spark.apache.org/docs/latest/structured-streaming-programming-guide.html\"\u003eStructured Streaming Programming Guide\u003c/a\u003e\u003c/p\u003e\n\u003c/li\u003e\n\u003cli\u003e\u003cp\u003eSpark Summit 2016 Talks\u003c/p\u003e\n\u003c/li\u003e\n\u003cli\u003e\u003cp\u003e\u003ca href\u003d\"https://spark-summit.org/2016/events/structuring-spark-dataframes-datasets-and-streaming/\"\u003eStructuring Spark: Dataframes, Datasets And Streaming\u003c/a\u003e\u003c/p\u003e\n\u003c/li\u003e\n\u003cli\u003e\u003cp\u003e\u003ca href\u003d\"https://spark-summit.org/2016/events/a-deep-dive-into-structured-streaming/\"\u003eA Deep Dive Into Structured Streaming\u003c/a\u003e\u003c/p\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:12:02 AM",
+      "dateStarted": "Aug 30, 2017 11:59:00 AM",
+      "dateFinished": "Aug 30, 2017 11:59:00 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504094340782_-1759706931",
+      "id": "20170830-115900_1207791660",
+      "dateCreated": "Aug 30, 2017 11:59:00 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Structured Streaming using Python DataFrames API",
+  "id": "KCHU6366WY1504091521",
+  "angularObjects": {
+    "2CRCTH5N681503309548868:shared_process": [],
+    "2CRT9SRAF81503309548905:shared_process": [],
+    "2CTE9GBET81503309548913:shared_process": [],
+    "2CS1RRBTB81503309548897:shared_process": []
+  },
+  "config": {
+    "isDashboard": false
+  },
+  "info": {},
+  "source": "FCN"
+}
