@@ -1,0 +1,477 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n## Quick Start Using Scala\n* Using a Databricks notebook to showcase RDD operations using Scala\n* Reference http://spark.apache.org/docs/latest/quick-start.html",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091773947_1876016115",
+      "id": "20170830-111613-1127804432",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eQuick Start Using Scala\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003eUsing a Databricks notebook to showcase RDD operations using Scala\u003c/li\u003e\n\u003cli\u003eReference http://spark.apache.org/docs/latest/quick-start.html\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:16:13 AM",
+      "dateStarted": "Aug 30, 2017 11:57:53 AM",
+      "dateFinished": "Aug 30, 2017 11:57:53 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Setup the textFile RDD to read the README.md file\n//   Note this is lazy \nval textFile \u003d sc.textFile(\"/databricks-datasets/samples/docs/README.md\")",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091773948_1874092371",
+      "id": "20170830-111613-635198054",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\ntextFile: org.apache.spark.rdd.RDD[String] \u003d /databricks-datasets/samples/docs/README.md MapPartitionsRDD[18] at textFile at \u003cconsole\u003e:66\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:16:13 AM",
+      "dateStarted": "Aug 30, 2017 11:57:53 AM",
+      "dateFinished": "Aug 30, 2017 11:57:53 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Take a look at the file system\ndisplay(dbutils.fs.ls(\"/databricks-datasets/samples/docs/\"))",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091773948_1874092371",
+      "id": "20170830-111613-674304351",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:64: error: not found: value display\n       display(dbutils.fs.ls(\"/databricks-datasets/samples/docs/\"))\n       ^\n\n\n\n\u003cconsole\u003e:64: error: not found: value dbutils\n       display(dbutils.fs.ls(\"/databricks-datasets/samples/docs/\"))\n               ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:16:13 AM",
+      "dateStarted": "Aug 30, 2017 11:57:53 AM",
+      "dateFinished": "Aug 30, 2017 11:57:53 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\nNow we\u0027re using a filter ***transformation*** to return a new RDD with a subset of the items in the file.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091773948_1874092371",
+      "id": "20170830-111613-201228106",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eNow we\u0027re using a filter \u003cstrong\u003e\u003cem\u003etransformation\u003c/em\u003e\u003c/strong\u003e to return a new RDD with a subset of the items in the file.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:16:13 AM",
+      "dateStarted": "Aug 30, 2017 11:57:53 AM",
+      "dateFinished": "Aug 30, 2017 11:57:53 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Output the first line from the text file\ntextFile.first()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091773948_1874092371",
+      "id": "20170830-111613-345909637",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\njava.io.FileNotFoundException: File does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/databricks-datasets/samples/docs/README.md\n  at org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1122)\n  at org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1114)\n  at org.apache.hadoop.fs.FileSystemLinkResolver.resolve(FileSystemLinkResolver.java:81)\n  at org.apache.hadoop.hdfs.DistributedFileSystem.getFileStatus(DistributedFileSystem.java:1114)\n  at org.apache.hadoop.fs.FileSystem.resolvePath(FileSystem.java:756)\n  at org.apache.hadoop.hdfs.DistributedFileSystem$16.\u003cinit\u003e(DistributedFileSystem.java:779)\n  at org.apache.hadoop.hdfs.DistributedFileSystem.listLocatedStatus(DistributedFileSystem.java:770)\n  at org.apache.hadoop.mapred.InputPathProcessor.perPathComputation(InputPathProcessor.java:251)\n  at org.apache.hadoop.mapred.InputPathProcessor.access$000(InputPathProcessor.java:28)\n  at org.apache.hadoop.mapred.InputPathProcessor$2.run(InputPathProcessor.java:354)\n  at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n  at java.util.concurrent.FutureTask.run(FutureTask.java:262)\n  at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n  at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n  at java.lang.Thread.run(Thread.java:745)\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:16:13 AM",
+      "dateStarted": "Aug 30, 2017 11:57:53 AM",
+      "dateFinished": "Aug 30, 2017 11:57:54 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nNotice that this completes quickly because it is a transformation but lacks any action.  \n* But when performing the actions below (e.g. count, take) then you will see the executions.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091773948_1874092371",
+      "id": "20170830-111613-163559744",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eNotice that this completes quickly because it is a transformation but lacks any action.\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eBut when performing the actions below (e.g. count, take) then you will see the executions.\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:16:13 AM",
+      "dateStarted": "Aug 30, 2017 11:57:53 AM",
+      "dateFinished": "Aug 30, 2017 11:57:53 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Filter all of the lines wihtin the RDD and output the first five rows\nval linesWithSpark \u003d textFile.filter(line \u003d\u003e line.contains(\"Spark\"))",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091773948_1874092371",
+      "id": "20170830-111613-223472551",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\nlinesWithSpark: org.apache.spark.rdd.RDD[String] \u003d MapPartitionsRDD[19] at filter at \u003cconsole\u003e:67\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:16:13 AM",
+      "dateStarted": "Aug 30, 2017 11:57:54 AM",
+      "dateFinished": "Aug 30, 2017 11:57:55 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// When performing an action (like a count) this is when the textFile is read and aggregate calculated\n//    Click on [View] to see the stages and executors\ntextFile.count()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091773948_1874092371",
+      "id": "20170830-111613-776982443",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\njava.io.FileNotFoundException: File does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/databricks-datasets/samples/docs/README.md\n  at org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1122)\n  at org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1114)\n  at org.apache.hadoop.fs.FileSystemLinkResolver.resolve(FileSystemLinkResolver.java:81)\n  at org.apache.hadoop.hdfs.DistributedFileSystem.getFileStatus(DistributedFileSystem.java:1114)\n  at org.apache.hadoop.fs.FileSystem.resolvePath(FileSystem.java:756)\n  at org.apache.hadoop.hdfs.DistributedFileSystem$16.\u003cinit\u003e(DistributedFileSystem.java:779)\n  at org.apache.hadoop.hdfs.DistributedFileSystem.listLocatedStatus(DistributedFileSystem.java:770)\n  at org.apache.hadoop.mapred.InputPathProcessor.perPathComputation(InputPathProcessor.java:251)\n  at org.apache.hadoop.mapred.InputPathProcessor.access$000(InputPathProcessor.java:28)\n  at org.apache.hadoop.mapred.InputPathProcessor$2.run(InputPathProcessor.java:354)\n  at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n  at java.util.concurrent.FutureTask.run(FutureTask.java:262)\n  at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n  at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n  at java.lang.Thread.run(Thread.java:745)\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:16:13 AM",
+      "dateStarted": "Aug 30, 2017 11:57:55 AM",
+      "dateFinished": "Aug 30, 2017 11:57:55 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nRDDs have ***actions***, which return values, and ***transformations***, which return pointers to new RDDs.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091773948_1874092371",
+      "id": "20170830-111613-1111218883",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eRDDs have \u003cstrong\u003e\u003cem\u003eactions\u003c/em\u003e\u003c/strong\u003e, which return values, and \u003cstrong\u003e\u003cem\u003etransformations\u003c/em\u003e\u003c/strong\u003e, which return pointers to new RDDs.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:16:13 AM",
+      "dateStarted": "Aug 30, 2017 11:57:53 AM",
+      "dateFinished": "Aug 30, 2017 11:57:53 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Scala Count (Stages)\n* Notice how the file is read during the *.count()* action\n* Many Spark operations are lazy and executed upon some action\n![Scala Count Jobs](https://sparkhub.databricks.com/wp-content/uploads/2015/12/Scala-Count-Stages-e1450067376679.png)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091773948_1874092371",
+      "id": "20170830-111613-237597305",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eScala Count (Stages)\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003eNotice how the file is read during the \u003cem\u003e.count()\u003c/em\u003e action\u003c/li\u003e\n\u003cli\u003eMany Spark operations are lazy and executed upon some action\n\u003cbr  /\u003e\u003cimg src\u003d\"https://sparkhub.databricks.com/wp-content/uploads/2015/12/Scala-Count-Stages-e1450067376679.png\" alt\u003d\"Scala Count Jobs\" /\u003e\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:16:13 AM",
+      "dateStarted": "Aug 30, 2017 11:57:53 AM",
+      "dateFinished": "Aug 30, 2017 11:57:53 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Scala Count (Jobs)\n![Scala Count Jobs](https://sparkhub.databricks.com/wp-content/uploads/2015/12/Scala-Count-Jobs-e1450067391785.png)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091773948_1874092371",
+      "id": "20170830-111613-553296625",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eScala Count (Jobs)\u003c/h2\u003e\n\u003cp\u003e\u003cimg src\u003d\"https://sparkhub.databricks.com/wp-content/uploads/2015/12/Scala-Count-Jobs-e1450067391785.png\" alt\u003d\"Scala Count Jobs\" /\u003e\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:16:13 AM",
+      "dateStarted": "Aug 30, 2017 11:57:53 AM",
+      "dateFinished": "Aug 30, 2017 11:57:53 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Filter all of the lines wihtin the RDD and output the first five rows\nlinesWithSpark.collect().take(5).foreach(println)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091773948_1874092371",
+      "id": "20170830-111613-426501361",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\njava.io.FileNotFoundException: File does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/databricks-datasets/samples/docs/README.md\n  at org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1122)\n  at org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1114)\n  at org.apache.hadoop.fs.FileSystemLinkResolver.resolve(FileSystemLinkResolver.java:81)\n  at org.apache.hadoop.hdfs.DistributedFileSystem.getFileStatus(DistributedFileSystem.java:1114)\n  at org.apache.hadoop.fs.FileSystem.resolvePath(FileSystem.java:756)\n  at org.apache.hadoop.hdfs.DistributedFileSystem$16.\u003cinit\u003e(DistributedFileSystem.java:779)\n  at org.apache.hadoop.hdfs.DistributedFileSystem.listLocatedStatus(DistributedFileSystem.java:770)\n  at org.apache.hadoop.mapred.InputPathProcessor.perPathComputation(InputPathProcessor.java:251)\n  at org.apache.hadoop.mapred.InputPathProcessor.access$000(InputPathProcessor.java:28)\n  at org.apache.hadoop.mapred.InputPathProcessor$2.run(InputPathProcessor.java:354)\n  at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n  at java.util.concurrent.FutureTask.run(FutureTask.java:262)\n  at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n  at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n  at java.lang.Thread.run(Thread.java:745)\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:16:13 AM",
+      "dateStarted": "Aug 30, 2017 11:57:55 AM",
+      "dateFinished": "Aug 30, 2017 11:57:56 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Perform a count (action) \nlinesWithSpark.count()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:57:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091773948_1874092371",
+      "id": "20170830-111613-1193597670",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\njava.io.FileNotFoundException: File does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/databricks-datasets/samples/docs/README.md\n  at org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1122)\n  at org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1114)\n  at org.apache.hadoop.fs.FileSystemLinkResolver.resolve(FileSystemLinkResolver.java:81)\n  at org.apache.hadoop.hdfs.DistributedFileSystem.getFileStatus(DistributedFileSystem.java:1114)\n  at org.apache.hadoop.fs.FileSystem.resolvePath(FileSystem.java:756)\n  at org.apache.hadoop.hdfs.DistributedFileSystem$16.\u003cinit\u003e(DistributedFileSystem.java:779)\n  at org.apache.hadoop.hdfs.DistributedFileSystem.listLocatedStatus(DistributedFileSystem.java:770)\n  at org.apache.hadoop.mapred.InputPathProcessor.perPathComputation(InputPathProcessor.java:251)\n  at org.apache.hadoop.mapred.InputPathProcessor.access$000(InputPathProcessor.java:28)\n  at org.apache.hadoop.mapred.InputPathProcessor$2.run(InputPathProcessor.java:354)\n  at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n  at java.util.concurrent.FutureTask.run(FutureTask.java:262)\n  at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n  at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n  at java.lang.Thread.run(Thread.java:745)\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:16:13 AM",
+      "dateStarted": "Aug 30, 2017 11:57:56 AM",
+      "dateFinished": "Aug 30, 2017 11:57:57 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504094273421_125639301",
+      "id": "20170830-115753_1221692577",
+      "dateCreated": "Aug 30, 2017 11:57:53 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Quick Start Using Scala",
+  "id": "19AEF2JGB41504091773",
+  "angularObjects": {
+    "2CRCTH5N681503309548868:shared_process": [],
+    "2CRT9SRAF81503309548905:shared_process": [],
+    "2CTE9GBET81503309548913:shared_process": [],
+    "2CS1RRBTB81503309548897:shared_process": []
+  },
+  "config": {
+    "isDashboard": false
+  },
+  "info": {},
+  "source": "FCN"
+}
