@@ -1,0 +1,1425 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n**If you see ![](http://training.databricks.com/databricks_guide/ImportNotebookIcon3.png) at the top, click on the link to import this notebook in order to run it.** ",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740454_-1494365636",
+      "id": "20170830-102539-425520748",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003e\u003cstrong\u003eIf you see \u003cimg src\u003d\"http://training.databricks.com/databricks_guide/ImportNotebookIcon3.png\" alt\u003d\"\" /\u003e at the top, click on the link to import this notebook in order to run it.\u003c/strong\u003e\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:53 AM",
+      "dateFinished": "Aug 30, 2017 10:25:53 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# Machine Learning (ML) Pipelines\n## Analyzing a bike sharing dataset\n\nThis Python notebook demonstrates creating an ML Pipeline to preprocess a dataset, train a Machine Learning model, and make predictions.\n\n**Data**: The dataset contains bike rental info from 2011 and 2012 in the Capital bikeshare system, plus additional relevant information such as weather.  This dataset is from Fanaee-T and Gama (2013) and is hosted by the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Bike+Sharing+Dataset).\n\n**Goal**: We want to learn to predict bike rental counts (per hour) from information such as day of the week, weather, season, etc.  Having good predictions of customer demand allows a business or service to prepare and increase supply as needed.\n\n**Approach**: We will use Spark ML Pipelines, which help users piece together parts of a workflow such as feature processing and model training.  We will also demonstrate [model selection (a.k.a. hyperparameter tuning)](https://en.wikipedia.org/wiki/Model_selection) using [Cross Validation](https://en.wikipedia.org/wiki/Cross-validation_\u0026#40;statistics\u0026#41;) in order to fine-tune and improve our ML model.\n",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740454_-1494365636",
+      "id": "20170830-102539-188690491",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch1\u003eMachine Learning (ML) Pipelines\u003c/h1\u003e\n\u003ch2\u003eAnalyzing a bike sharing dataset\u003c/h2\u003e\n\u003cp\u003eThis Python notebook demonstrates creating an ML Pipeline to preprocess a dataset, train a Machine Learning model, and make predictions.\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eData\u003c/strong\u003e: The dataset contains bike rental info from 2011 and 2012 in the Capital bikeshare system, plus additional relevant information such as weather.  This dataset is from Fanaee-T and Gama (2013) and is hosted by the \u003ca href\u003d\"http://archive.ics.uci.edu/ml/datasets/Bike+Sharing+Dataset\"\u003eUCI Machine Learning Repository\u003c/a\u003e.\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eGoal\u003c/strong\u003e: We want to learn to predict bike rental counts (per hour) from information such as day of the week, weather, season, etc.  Having good predictions of customer demand allows a business or service to prepare and increase supply as needed.\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eApproach\u003c/strong\u003e: We will use Spark ML Pipelines, which help users piece together parts of a workflow such as feature processing and model training.  We will also demonstrate \u003ca href\u003d\"https://en.wikipedia.org/wiki/Model_selection\"\u003emodel selection (a.k.a. hyperparameter tuning)\u003c/a\u003e using \u003ca href\u003d\"https://en.wikipedia.org/wiki/Cross-validation_\u0026amp;#40;statistics\u0026amp;#41;\"\u003eCross Validation\u003c/a\u003e in order to fine-tune and improve our ML model.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:53 AM",
+      "dateFinished": "Aug 30, 2017 10:25:53 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Load and understand the data\n\nWe begin by loading our data, which is stored in [Comma-Separated Value (CSV) format](https://en.wikipedia.org/wiki/Comma-separated_values).  For that, we use the [CSV datasource for Spark](http://spark-packages.org/package/databricks/spark-csv), which creates a [Spark DataFrame](http://spark.apache.org/docs/latest/sql-programming-guide.html) containing the dataset.  We also cache the data so that we only read it from disk once.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740454_-1494365636",
+      "id": "20170830-102539-798775291",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eLoad and understand the data\u003c/h2\u003e\n\u003cp\u003eWe begin by loading our data, which is stored in \u003ca href\u003d\"https://en.wikipedia.org/wiki/Comma-separated_values\"\u003eComma-Separated Value (CSV) format\u003c/a\u003e.  For that, we use the \u003ca href\u003d\"http://spark-packages.org/package/databricks/spark-csv\"\u003eCSV datasource for Spark\u003c/a\u003e, which creates a \u003ca href\u003d\"http://spark.apache.org/docs/latest/sql-programming-guide.html\"\u003eSpark DataFrame\u003c/a\u003e containing the dataset.  We also cache the data so that we only read it from disk once.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:53 AM",
+      "dateFinished": "Aug 30, 2017 10:25:53 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# We use the sqlContext.read method to read the data and set a few options:\n#  \u0027format\u0027: specifies the Spark CSV data source\n#  \u0027header\u0027: set to true to indicate that the first line of the CSV data file is a header\n# The file is called \u0027hour.csv\u0027.\nif sc.version \u003e\u003d \u00272.0\u0027:\n  # Spark 2.0+ includes CSV as a native Spark SQL datasource.\n  df \u003d sqlContext.read.format(\u0027csv\u0027).option(\"header\", \u0027true\u0027).load(\"/databricks-datasets/bikeSharing/data-001/hour.csv\")\nelse:\n  # Earlier Spark versions can use the Spark CSV package\n  df \u003d sqlContext.read.format(\u0027com.databricks.spark.csv\u0027).option(\"header\", \u0027true\u0027).load(\"/databricks-datasets/bikeSharing/data-001/hour.csv\")\n# Calling cache on the DataFrame will make sure we persist it in memory the first time it is used.\n# The following uses will be able to read from memory, instead of re-reading the data from disk.\ndf.cache()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740454_-1494365636",
+      "id": "20170830-102539-1269739024",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 2, in \u003cmodule\u003e\n  File \"/usr/lib/spark/python/pyspark/sql/readwriter.py\", line 149, in load\n    return self._df(self._jreader.load(path))\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py\", line 1133, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/usr/lib/spark/python/pyspark/sql/utils.py\", line 69, in deco\n    raise AnalysisException(s.split(\u0027: \u0027, 1)[1], stackTrace)\nAnalysisException: u\u0027Path does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/databricks-datasets/bikeSharing/data-001/hour.csv;\u0027\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:53 AM",
+      "dateFinished": "Aug 30, 2017 10:25:54 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n#### Data description\n\nFrom the [UCI ML Repository description](http://archive.ics.uci.edu/ml/datasets/Bike+Sharing+Dataset), we know that the columns have the following meanings.\n\n**Feature columns**:\n* dteday: date\n* season: season (1:spring, 2:summer, 3:fall, 4:winter)\n* yr: year (0:2011, 1:2012)\n* mnth: month (1 to 12)\n* hr: hour (0 to 23)\n* holiday: whether day is holiday or not\n* weekday: day of the week\n* workingday: if day is neither weekend nor holiday is 1, otherwise is 0.\n* weathersit: \n  * 1: Clear, Few clouds, Partly cloudy, Partly cloudy\n  * 2: Mist + Cloudy, Mist + Broken clouds, Mist + Few clouds, Mist\n  * 3: Light Snow, Light Rain + Thunderstorm + Scattered clouds, Light Rain + Scattered clouds\n  * 4: Heavy Rain + Ice Pallets + Thunderstorm + Mist, Snow + Fog\n* temp: Normalized temperature in Celsius. The values are derived via `(t-t_min)/(t_max-t_min)`, `t_min\u003d-8`, `t_max\u003d+39` (only in hourly scale)\n* atemp: Normalized feeling temperature in Celsius. The values are derived via `(t-t_min)/(t_max-t_min)`, `t_min\u003d-16`, `t_max\u003d+50` (only in hourly scale)\n* hum: Normalized humidity. The values are divided to 100 (max)\n* windspeed: Normalized wind speed. The values are divided to 67 (max)\n\n**Label columns**:\n* casual: count of casual users\n* registered: count of registered users\n* cnt: count of total rental bikes including both casual and registered\n\n**Extraneous columns**:\n* instant: record index\n\nFor example, the first row is a record of hour 0 on January 1, 2011---and apparently 16 people rented bikes around midnight!",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740454_-1494365636",
+      "id": "20170830-102539-788767932",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch4\u003eData description\u003c/h4\u003e\n\u003cp\u003eFrom the \u003ca href\u003d\"http://archive.ics.uci.edu/ml/datasets/Bike+Sharing+Dataset\"\u003eUCI ML Repository description\u003c/a\u003e, we know that the columns have the following meanings.\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eFeature columns\u003c/strong\u003e:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003edteday: date\u003c/li\u003e\n\u003cli\u003eseason: season (1:spring, 2:summer, 3:fall, 4:winter)\u003c/li\u003e\n\u003cli\u003eyr: year (0:2011, 1:2012)\u003c/li\u003e\n\u003cli\u003emnth: month (1 to 12)\u003c/li\u003e\n\u003cli\u003ehr: hour (0 to 23)\u003c/li\u003e\n\u003cli\u003eholiday: whether day is holiday or not\u003c/li\u003e\n\u003cli\u003eweekday: day of the week\u003c/li\u003e\n\u003cli\u003eworkingday: if day is neither weekend nor holiday is 1, otherwise is 0.\u003c/li\u003e\n\u003cli\u003eweathersit:\u003c/li\u003e\n\u003cli\u003e1: Clear, Few clouds, Partly cloudy, Partly cloudy\u003c/li\u003e\n\u003cli\u003e2: Mist + Cloudy, Mist + Broken clouds, Mist + Few clouds, Mist\u003c/li\u003e\n\u003cli\u003e3: Light Snow, Light Rain + Thunderstorm + Scattered clouds, Light Rain + Scattered clouds\u003c/li\u003e\n\u003cli\u003e4: Heavy Rain + Ice Pallets + Thunderstorm + Mist, Snow + Fog\u003c/li\u003e\n\u003cli\u003etemp: Normalized temperature in Celsius. The values are derived via \u003ccode\u003e(t-t_min)/(t_max-t_min)\u003c/code\u003e, \u003ccode\u003et_min\u003d-8\u003c/code\u003e, \u003ccode\u003et_max\u003d+39\u003c/code\u003e (only in hourly scale)\u003c/li\u003e\n\u003cli\u003eatemp: Normalized feeling temperature in Celsius. The values are derived via \u003ccode\u003e(t-t_min)/(t_max-t_min)\u003c/code\u003e, \u003ccode\u003et_min\u003d-16\u003c/code\u003e, \u003ccode\u003et_max\u003d+50\u003c/code\u003e (only in hourly scale)\u003c/li\u003e\n\u003cli\u003ehum: Normalized humidity. The values are divided to 100 (max)\u003c/li\u003e\n\u003cli\u003ewindspeed: Normalized wind speed. The values are divided to 67 (max)\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e\u003cstrong\u003eLabel columns\u003c/strong\u003e:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003ecasual: count of casual users\u003c/li\u003e\n\u003cli\u003eregistered: count of registered users\u003c/li\u003e\n\u003cli\u003ecnt: count of total rental bikes including both casual and registered\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e\u003cstrong\u003eExtraneous columns\u003c/strong\u003e:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003einstant: record index\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003eFor example, the first row is a record of hour 0 on January 1, 2011\u0026mdash;and apparently 16 people rented bikes around midnight!\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:53 AM",
+      "dateFinished": "Aug 30, 2017 10:25:53 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nWe can call `display()` on a DataFrame in Databricks to see a sample of the data.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740454_-1494365636",
+      "id": "20170830-102539-1139473080",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eWe can call \u003ccode\u003edisplay()\u003c/code\u003e on a DataFrame in Databricks to see a sample of the data.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:53 AM",
+      "dateFinished": "Aug 30, 2017 10:25:53 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ndisplay(df)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740454_-1494365636",
+      "id": "20170830-102539-501374869",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027display\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:53 AM",
+      "dateFinished": "Aug 30, 2017 10:25:54 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nThis dataset is nicely prepared for Machine Learning: values such as weekday are already indexed, and all of the columns except for the date (`dteday`) are numeric.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740454_-1494365636",
+      "id": "20170830-102539-101090338",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eThis dataset is nicely prepared for Machine Learning: values such as weekday are already indexed, and all of the columns except for the date (\u003ccode\u003edteday\u003c/code\u003e) are numeric.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:54 AM",
+      "dateFinished": "Aug 30, 2017 10:25:54 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nprint \"Our dataset has %d rows.\" % df.count()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:54 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740454_-1494365636",
+      "id": "20170830-102539-717092713",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027df\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:54 AM",
+      "dateFinished": "Aug 30, 2017 10:25:54 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Preprocess data\n\nSo what do we need to do to get our data ready for Machine Learning?\n\n*Recall our goal*: We want to learn to predict the count of bike rentals (the `cnt` column).  We refer to the count as our target \"label\".\n\n*Features*: What can we use as features (info describing each row) to predict the `cnt` label?  We can use the rest of the columns, with a few exceptions:\n* Some of the columns contain duplicate information.  For example, the `cnt` column we want to predict equals the sum of the `casual` + `registered` columns.  We will remove the `casual` and `registered` columns from the data to make sure we do not use them to predict `cnt`.  (*Warning: This is a danger in careless Machine Learning.  Make sure you do not \"cheat\" by using information you will not have when making predictions.  In this prediction task, we will not have `casual` or `registered` info available when we want to make predictions about the future.*)\n* date column `dteday`: We could keep it, but it is well-represented by the other date-related columns `season`, `yr`, `mnth`, and `weekday`.  We will discard it.\n* row index column `instant`: This is a useless column to us.\n\nTerminology: *Examples* are rows of our dataset.  Each example contains the label to predict, plus features describing it.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:54 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740454_-1494365636",
+      "id": "20170830-102539-638234175",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003ePreprocess data\u003c/h2\u003e\n\u003cp\u003eSo what do we need to do to get our data ready for Machine Learning?\u003c/p\u003e\n\u003cp\u003e\u003cem\u003eRecall our goal\u003c/em\u003e: We want to learn to predict the count of bike rentals (the \u003ccode\u003ecnt\u003c/code\u003e column).  We refer to the count as our target \u0026ldquo;label\u0026rdquo;.\u003c/p\u003e\n\u003cp\u003e\u003cem\u003eFeatures\u003c/em\u003e: What can we use as features (info describing each row) to predict the \u003ccode\u003ecnt\u003c/code\u003e label?  We can use the rest of the columns, with a few exceptions:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eSome of the columns contain duplicate information.  For example, the \u003ccode\u003ecnt\u003c/code\u003e column we want to predict equals the sum of the \u003ccode\u003ecasual\u003c/code\u003e + \u003ccode\u003eregistered\u003c/code\u003e columns.  We will remove the \u003ccode\u003ecasual\u003c/code\u003e and \u003ccode\u003eregistered\u003c/code\u003e columns from the data to make sure we do not use them to predict \u003ccode\u003ecnt\u003c/code\u003e.  (\u003cem\u003eWarning: This is a danger in careless Machine Learning.  Make sure you do not \u0026ldquo;cheat\u0026rdquo; by using information you will not have when making predictions.  In this prediction task, we will not have \u003ccode\u003ecasual\u003c/code\u003e or \u003ccode\u003eregistered\u003c/code\u003e info available when we want to make predictions about the future.\u003c/em\u003e)\u003c/li\u003e\n\u003cli\u003edate column \u003ccode\u003edteday\u003c/code\u003e: We could keep it, but it is well-represented by the other date-related columns \u003ccode\u003eseason\u003c/code\u003e, \u003ccode\u003eyr\u003c/code\u003e, \u003ccode\u003emnth\u003c/code\u003e, and \u003ccode\u003eweekday\u003c/code\u003e.  We will discard it.\u003c/li\u003e\n\u003cli\u003erow index column \u003ccode\u003einstant\u003c/code\u003e: This is a useless column to us.\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003eTerminology: \u003cem\u003eExamples\u003c/em\u003e are rows of our dataset.  Each example contains the label to predict, plus features describing it.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:54 AM",
+      "dateFinished": "Aug 30, 2017 10:25:54 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ndf \u003d df.drop(\"instant\").drop(\"dteday\").drop(\"casual\").drop(\"registered\")\ndisplay(df)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:54 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740454_-1494365636",
+      "id": "20170830-102539-1052222133",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027df\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:54 AM",
+      "dateFinished": "Aug 30, 2017 10:25:54 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nNow that we have the columns we care about, let\u0027s print the schema of our dataset to see the type of each column.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:54 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740454_-1494365636",
+      "id": "20170830-102539-813292201",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eNow that we have the columns we care about, let\u0027s print the schema of our dataset to see the type of each column.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:54 AM",
+      "dateFinished": "Aug 30, 2017 10:25:54 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ndf.printSchema()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:54 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740454_-1494365636",
+      "id": "20170830-102539-1158005771",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027df\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:54 AM",
+      "dateFinished": "Aug 30, 2017 10:25:54 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nThe DataFrame is currently using strings, but we know all columns are numeric.  Let\u0027s cast them.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:54 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740455_-1494750385",
+      "id": "20170830-102539-73950548",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eThe DataFrame is currently using strings, but we know all columns are numeric.  Let\u0027s cast them.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:54 AM",
+      "dateFinished": "Aug 30, 2017 10:25:54 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# The following call takes all columns (df.columns) and casts them using Spark SQL to a numeric type (DoubleType).\nfrom pyspark.sql.functions import col  # for indicating a column using a string in the line below\ndf \u003d df.select([col(c).cast(\"double\").alias(c) for c in df.columns])\ndf.printSchema()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:54 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740455_-1494750385",
+      "id": "20170830-102539-267258484",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 2, in \u003cmodule\u003e\nNameError: name \u0027df\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:54 AM",
+      "dateFinished": "Aug 30, 2017 10:25:54 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n#### Split data into training and test sets\n\nOur final data preparation step will split our dataset into separate training and test sets.  We can train and tune our model as much as we like on the training set, as long as we do not look at the test set.  After we have a good model (based on the training set), we can validate it on the held-out test set in order to know with high confidence our well our model will make predictions on future (unseen) data.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:54 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740455_-1494750385",
+      "id": "20170830-102539-272104470",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch4\u003eSplit data into training and test sets\u003c/h4\u003e\n\u003cp\u003eOur final data preparation step will split our dataset into separate training and test sets.  We can train and tune our model as much as we like on the training set, as long as we do not look at the test set.  After we have a good model (based on the training set), we can validate it on the held-out test set in order to know with high confidence our well our model will make predictions on future (unseen) data.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:54 AM",
+      "dateFinished": "Aug 30, 2017 10:25:54 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# Split the dataset randomly into 70% for training and 30% for testing.\ntrain, test \u003d df.randomSplit([0.7, 0.3])\nprint \"We have %d training examples and %d test examples.\" % (train.count(), test.count())",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:54 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740455_-1494750385",
+      "id": "20170830-102539-146384547",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027df\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:55 AM",
+      "dateFinished": "Aug 30, 2017 10:25:55 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n#### Visualize our data\n\nNow that we have preprocessed our features and prepared a training dataset, we can quickly visualize our data to get a sense of whether the features are meaningful.\n\nCalling `display()` on a DataFrame in Databricks and clicking the plot icon below the table will let you draw and pivot various plots.  See the [Visualizations section of the Databricks Guide](https://docs.databricks.com/user-guide/visualizations/index.html) for more ideas.\n\nIn the below plot, we compare bike rental counts versus hour of the day.  As one might expect, rentals are low during the night, and they peak in the morning (8am) and in the early evening (6pm).  This indicates the `hr` feature is useful and can help us predict our label `cnt`.  On your own, you can try visualizing other features to get a sense of how useful they are in this task.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:55 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740455_-1494750385",
+      "id": "20170830-102539-1028729973",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch4\u003eVisualize our data\u003c/h4\u003e\n\u003cp\u003eNow that we have preprocessed our features and prepared a training dataset, we can quickly visualize our data to get a sense of whether the features are meaningful.\u003c/p\u003e\n\u003cp\u003eCalling \u003ccode\u003edisplay()\u003c/code\u003e on a DataFrame in Databricks and clicking the plot icon below the table will let you draw and pivot various plots.  See the \u003ca href\u003d\"https://docs.databricks.com/user-guide/visualizations/index.html\"\u003eVisualizations section of the Databricks Guide\u003c/a\u003e for more ideas.\u003c/p\u003e\n\u003cp\u003eIn the below plot, we compare bike rental counts versus hour of the day.  As one might expect, rentals are low during the night, and they peak in the morning (8am) and in the early evening (6pm).  This indicates the \u003ccode\u003ehr\u003c/code\u003e feature is useful and can help us predict our label \u003ccode\u003ecnt\u003c/code\u003e.  On your own, you can try visualizing other features to get a sense of how useful they are in this task.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:55 AM",
+      "dateFinished": "Aug 30, 2017 10:25:55 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ndisplay(train.select(\"hr\", \"cnt\"))",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:55 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740455_-1494750385",
+      "id": "20170830-102539-1310952593",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027display\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:55 AM",
+      "dateFinished": "Aug 30, 2017 10:25:55 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Train a Machine Learning Pipeline\n\nNow that we have understood our data and prepared it as a DataFrame with numeric values, let\u0027s learn an ML model to predict bike sharing rentals in the future.  Most ML algorithms expect to predict a single \"label\" column (`cnt` for our dataset) using a single \"features\" column of feature vectors.  For each row in our data, the feature vector should describe what we know: weather, day of the week, etc., and the label should be what we want to predict (`cnt`).\n\nWe will put together a simple Pipeline with the following stages:\n* `VectorAssembler`: Assemble the feature columns into a feature vector.\n* `VectorIndexer`: Identify columns which should be treated as categorical.  This is done heuristically, identifying any column with a small number of distinct values as being categorical.  For us, this will be the `yr` (2 values), `season` (4 values), `holiday` (2 values), `workingday` (2 values), and `weathersit` (4 values).\n* `GBTRegressor`: This will use the [Gradient-Boosted Trees (GBT)](https://en.wikipedia.org/wiki/Gradient_boosting) algorithm to learn how to predict rental counts from the feature vectors.\n* `CrossValidator`: The GBT algorithm has several [hyperparameters](https://en.wikipedia.org/wiki/Hyperparameter_optimization), and tuning them to our data can improve accuracy.  We will do this tuning using Spark\u0027s [Cross Validation](https://en.wikipedia.org/wiki/Cross-validation_\u0026#40;statistics\u0026#41;) framework, which automatically tests a grid of hyperparameters and chooses the best.\n\n![Image of Pipeline](http://training.databricks.com/databricks_guide/1-init.png)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:55 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740455_-1494750385",
+      "id": "20170830-102539-1053209832",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eTrain a Machine Learning Pipeline\u003c/h2\u003e\n\u003cp\u003eNow that we have understood our data and prepared it as a DataFrame with numeric values, let\u0027s learn an ML model to predict bike sharing rentals in the future.  Most ML algorithms expect to predict a single \u0026ldquo;label\u0026rdquo; column (\u003ccode\u003ecnt\u003c/code\u003e for our dataset) using a single \u0026ldquo;features\u0026rdquo; column of feature vectors.  For each row in our data, the feature vector should describe what we know: weather, day of the week, etc., and the label should be what we want to predict (\u003ccode\u003ecnt\u003c/code\u003e).\u003c/p\u003e\n\u003cp\u003eWe will put together a simple Pipeline with the following stages:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ccode\u003eVectorAssembler\u003c/code\u003e: Assemble the feature columns into a feature vector.\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003eVectorIndexer\u003c/code\u003e: Identify columns which should be treated as categorical.  This is done heuristically, identifying any column with a small number of distinct values as being categorical.  For us, this will be the \u003ccode\u003eyr\u003c/code\u003e (2 values), \u003ccode\u003eseason\u003c/code\u003e (4 values), \u003ccode\u003eholiday\u003c/code\u003e (2 values), \u003ccode\u003eworkingday\u003c/code\u003e (2 values), and \u003ccode\u003eweathersit\u003c/code\u003e (4 values).\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003eGBTRegressor\u003c/code\u003e: This will use the \u003ca href\u003d\"https://en.wikipedia.org/wiki/Gradient_boosting\"\u003eGradient-Boosted Trees (GBT)\u003c/a\u003e algorithm to learn how to predict rental counts from the feature vectors.\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003eCrossValidator\u003c/code\u003e: The GBT algorithm has several \u003ca href\u003d\"https://en.wikipedia.org/wiki/Hyperparameter_optimization\"\u003ehyperparameters\u003c/a\u003e, and tuning them to our data can improve accuracy.  We will do this tuning using Spark\u0027s \u003ca href\u003d\"https://en.wikipedia.org/wiki/Cross-validation_\u0026amp;#40;statistics\u0026amp;#41;\"\u003eCross Validation\u003c/a\u003e framework, which automatically tests a grid of hyperparameters and chooses the best.\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e\u003cimg src\u003d\"http://training.databricks.com/databricks_guide/1-init.png\" alt\u003d\"Image of Pipeline\" /\u003e\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:55 AM",
+      "dateFinished": "Aug 30, 2017 10:25:55 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nFirst, we define the feature processing stages of the Pipeline:\n* Assemble feature columns into a feature vector.\n* Identify categorical features, and index them.\n\n![Image of feature processing](http://training.databricks.com/databricks_guide/2-features.png)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:55 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740455_-1494750385",
+      "id": "20170830-102539-177336510",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eFirst, we define the feature processing stages of the Pipeline:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eAssemble feature columns into a feature vector.\u003c/li\u003e\n\u003cli\u003eIdentify categorical features, and index them.\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e\u003cimg src\u003d\"http://training.databricks.com/databricks_guide/2-features.png\" alt\u003d\"Image of feature processing\" /\u003e\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:55 AM",
+      "dateFinished": "Aug 30, 2017 10:25:55 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nfrom pyspark.ml.feature import VectorAssembler, VectorIndexer\nfeaturesCols \u003d df.columns\nfeaturesCols.remove(\u0027cnt\u0027)\n# This concatenates all feature columns into a single feature vector in a new column \"rawFeatures\".\nvectorAssembler \u003d VectorAssembler(inputCols\u003dfeaturesCols, outputCol\u003d\"rawFeatures\")\n# This identifies categorical features and indexes them.\nvectorIndexer \u003d VectorIndexer(inputCol\u003d\"rawFeatures\", outputCol\u003d\"features\", maxCategories\u003d4)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:55 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740455_-1494750385",
+      "id": "20170830-102539-715939626",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 2, in \u003cmodule\u003e\nNameError: name \u0027df\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:55 AM",
+      "dateFinished": "Aug 30, 2017 10:25:55 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nSecond, we define the model training stage of the Pipeline. `GBTRegressor` takes feature vectors and labels as input and learns to predict labels of new examples.\n\n![RF image](http://training.databricks.com/databricks_guide/3-gbt.png)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:55 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740455_-1494750385",
+      "id": "20170830-102539-497705846",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eSecond, we define the model training stage of the Pipeline. \u003ccode\u003eGBTRegressor\u003c/code\u003e takes feature vectors and labels as input and learns to predict labels of new examples.\u003c/p\u003e\n\u003cp\u003e\u003cimg src\u003d\"http://training.databricks.com/databricks_guide/3-gbt.png\" alt\u003d\"RF image\" /\u003e\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:55 AM",
+      "dateFinished": "Aug 30, 2017 10:25:55 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nfrom pyspark.ml.regression import GBTRegressor\n# Takes the \"features\" column and learns to predict \"cnt\"\ngbt \u003d GBTRegressor(labelCol\u003d\"cnt\")",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:55 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740455_-1494750385",
+      "id": "20170830-102539-990701132",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:55 AM",
+      "dateFinished": "Aug 30, 2017 10:25:56 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nThird, we wrap the model training stage within a `CrossValidator` stage.  `CrossValidator` knows how to call the GBT algorithm with different hyperparameter settings.  It will train multiple models and choose the best one, based on minimizing some metric.  In this example, our metric is [Root Mean Squared Error (RMSE)](https://en.wikipedia.org/wiki/Root-mean-square_deviation).\n\n![Image of CV](http://training.databricks.com/databricks_guide/4-cv.png)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:55 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740455_-1494750385",
+      "id": "20170830-102539-243872387",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eThird, we wrap the model training stage within a \u003ccode\u003eCrossValidator\u003c/code\u003e stage.  \u003ccode\u003eCrossValidator\u003c/code\u003e knows how to call the GBT algorithm with different hyperparameter settings.  It will train multiple models and choose the best one, based on minimizing some metric.  In this example, our metric is \u003ca href\u003d\"https://en.wikipedia.org/wiki/Root-mean-square_deviation\"\u003eRoot Mean Squared Error (RMSE)\u003c/a\u003e.\u003c/p\u003e\n\u003cp\u003e\u003cimg src\u003d\"http://training.databricks.com/databricks_guide/4-cv.png\" alt\u003d\"Image of CV\" /\u003e\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:56 AM",
+      "dateFinished": "Aug 30, 2017 10:25:56 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nfrom pyspark.ml.tuning import CrossValidator, ParamGridBuilder\nfrom pyspark.ml.evaluation import RegressionEvaluator\n# Define a grid of hyperparameters to test:\n#  - maxDepth: max depth of each decision tree in the GBT ensemble\n#  - maxIter: iterations, i.e., number of trees in each GBT ensemble\n# In this example notebook, we keep these values small.  In practice, to get the highest accuracy, you would likely want to try deeper trees (10 or higher) and more trees in the ensemble (\u003e100).\nparamGrid \u003d ParamGridBuilder()\\\n  .addGrid(gbt.maxDepth, [2, 5])\\\n  .addGrid(gbt.maxIter, [10, 100])\\\n  .build()\n# We define an evaluation metric.  This tells CrossValidator how well we are doing by comparing the true labels with predictions.\nevaluator \u003d RegressionEvaluator(metricName\u003d\"rmse\", labelCol\u003dgbt.getLabelCol(), predictionCol\u003dgbt.getPredictionCol())\n# Declare the CrossValidator, which runs model tuning for us.\ncv \u003d CrossValidator(estimator\u003dgbt, evaluator\u003devaluator, estimatorParamMaps\u003dparamGrid)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:56 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740455_-1494750385",
+      "id": "20170830-102539-376431333",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:56 AM",
+      "dateFinished": "Aug 30, 2017 10:25:56 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nFinally, we can tie our feature processing and model training stages together into a single `Pipeline`.\n\n![Image of Pipeline](http://training.databricks.com/databricks_guide/5-pipeline.png)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:56 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740455_-1494750385",
+      "id": "20170830-102539-955667420",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eFinally, we can tie our feature processing and model training stages together into a single \u003ccode\u003ePipeline\u003c/code\u003e.\u003c/p\u003e\n\u003cp\u003e\u003cimg src\u003d\"http://training.databricks.com/databricks_guide/5-pipeline.png\" alt\u003d\"Image of Pipeline\" /\u003e\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:56 AM",
+      "dateFinished": "Aug 30, 2017 10:25:56 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nfrom pyspark.ml import Pipeline\npipeline \u003d Pipeline(stages\u003d[vectorAssembler, vectorIndexer, cv])",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:56 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740455_-1494750385",
+      "id": "20170830-102539-364169282",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 2, in \u003cmodule\u003e\nNameError: name \u0027vectorAssembler\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:56 AM",
+      "dateFinished": "Aug 30, 2017 10:25:56 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n#### Train the Pipeline!\n\nNow that we have set up our workflow, we can train the Pipeline in a single call.  Calling `fit()` will run feature processing, model tuning, and training in a single call.  We get back a fitted Pipeline with the best model found.\n\n***Note***: This next cell can take up to **10 minutes**.  This is because it is training *a lot* of trees:\n* For each random sample of data in Cross Validation,\n  * For each setting of the hyperparameters,\n    * `CrossValidator` is training a separate GBT ensemble which contains many Decision Trees.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:56 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740455_-1494750385",
+      "id": "20170830-102539-527003974",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch4\u003eTrain the Pipeline!\u003c/h4\u003e\n\u003cp\u003eNow that we have set up our workflow, we can train the Pipeline in a single call.  Calling \u003ccode\u003efit()\u003c/code\u003e will run feature processing, model tuning, and training in a single call.  We get back a fitted Pipeline with the best model found.\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003e\u003cem\u003eNote\u003c/em\u003e\u003c/strong\u003e: This next cell can take up to \u003cstrong\u003e10 minutes\u003c/strong\u003e.  This is because it is training \u003cem\u003ea lot\u003c/em\u003e of trees:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eFor each random sample of data in Cross Validation,\u003c/li\u003e\n\u003cli\u003eFor each setting of the hyperparameters,\u003cul\u003e\n\u003cli\u003e\u003ccode\u003eCrossValidator\u003c/code\u003e is training a separate GBT ensemble which contains many Decision Trees.\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:56 AM",
+      "dateFinished": "Aug 30, 2017 10:25:56 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\npipelineModel \u003d pipeline.fit(train)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:56 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740455_-1494750385",
+      "id": "20170830-102539-1233887317",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027pipeline\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:56 AM",
+      "dateFinished": "Aug 30, 2017 10:25:56 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Make predictions, and evaluate results\n\nOur final step will be to use our fitted model to make predictions on new data.  We will use our held-out test set, but you could also use this model to make predictions on completely new data.  For example, if we created some features data based on weather predictions for the next week, we could predict bike rentals expected during the next week!\n\nWe will also evaluate our predictions.  Computing evaluation metrics is important for understanding the quality of predictions, as well as for comparing models and tuning parameters.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:56 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740455_-1494750385",
+      "id": "20170830-102539-713199936",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eMake predictions, and evaluate results\u003c/h2\u003e\n\u003cp\u003eOur final step will be to use our fitted model to make predictions on new data.  We will use our held-out test set, but you could also use this model to make predictions on completely new data.  For example, if we created some features data based on weather predictions for the next week, we could predict bike rentals expected during the next week!\u003c/p\u003e\n\u003cp\u003eWe will also evaluate our predictions.  Computing evaluation metrics is important for understanding the quality of predictions, as well as for comparing models and tuning parameters.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:56 AM",
+      "dateFinished": "Aug 30, 2017 10:25:56 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nCalling `transform()` on a new dataset passes that data through feature processing and uses the fitted model to make predictions.  We get back a DataFrame with a new column `predictions` (as well as intermediate results such as our `rawFeatures` column from feature processing).",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:56 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740455_-1494750385",
+      "id": "20170830-102539-1047962242",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eCalling \u003ccode\u003etransform()\u003c/code\u003e on a new dataset passes that data through feature processing and uses the fitted model to make predictions.  We get back a DataFrame with a new column \u003ccode\u003epredictions\u003c/code\u003e (as well as intermediate results such as our \u003ccode\u003erawFeatures\u003c/code\u003e column from feature processing).\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:56 AM",
+      "dateFinished": "Aug 30, 2017 10:25:56 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\npredictions \u003d pipelineModel.transform(test)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:56 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740455_-1494750385",
+      "id": "20170830-102539-1157137213",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027pipelineModel\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:56 AM",
+      "dateFinished": "Aug 30, 2017 10:25:56 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nIt is easier to view the results when we limit the columns displayed to:\n* `cnt`: the true count of bike rentals\n* `prediction`: our predicted count of bike rentals\n* feature columns: our original (human-readable) feature columns",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:56 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740455_-1494750385",
+      "id": "20170830-102539-1056771588",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eIt is easier to view the results when we limit the columns displayed to:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ccode\u003ecnt\u003c/code\u003e: the true count of bike rentals\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003eprediction\u003c/code\u003e: our predicted count of bike rentals\u003c/li\u003e\n\u003cli\u003efeature columns: our original (human-readable) feature columns\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:57 AM",
+      "dateFinished": "Aug 30, 2017 10:25:57 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ndisplay(predictions.select(\"cnt\", \"prediction\", *featuresCols))",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:57 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740456_-1496674130",
+      "id": "20170830-102539-1180347771",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027display\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:57 AM",
+      "dateFinished": "Aug 30, 2017 10:25:57 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nAre these good results?  They are not perfect, but you can see correlation between the counts and predictions.  And there is room to improve---see the next section for ideas to take you further!\n\nBefore we continue, we give two tips on understanding results:\n\n**(1) Metrics**: Manually viewing the predictions gives intuition about accuracy, but it can be useful to have a more concrete metric.  Below, we compute an evaluation metric which tells us how well our model makes predictions on all of our data.  In this case (for [RMSE](https://en.wikipedia.org/wiki/Root-mean-square_deviation)), lower is better.  This metric does not mean much on its own, but it can be used to compare different models.  (This is what `CrossValidator` does internally.)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:57 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740456_-1496674130",
+      "id": "20170830-102539-160428484",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eAre these good results?  They are not perfect, but you can see correlation between the counts and predictions.  And there is room to improve\u0026mdash;see the next section for ideas to take you further!\u003c/p\u003e\n\u003cp\u003eBefore we continue, we give two tips on understanding results:\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003e(1) Metrics\u003c/strong\u003e: Manually viewing the predictions gives intuition about accuracy, but it can be useful to have a more concrete metric.  Below, we compute an evaluation metric which tells us how well our model makes predictions on all of our data.  In this case (for \u003ca href\u003d\"https://en.wikipedia.org/wiki/Root-mean-square_deviation\"\u003eRMSE\u003c/a\u003e), lower is better.  This metric does not mean much on its own, but it can be used to compare different models.  (This is what \u003ccode\u003eCrossValidator\u003c/code\u003e does internally.)\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:57 AM",
+      "dateFinished": "Aug 30, 2017 10:25:57 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nrmse \u003d evaluator.evaluate(predictions)\nprint \"RMSE on our test set: %g\" % rmse",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:57 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740456_-1496674130",
+      "id": "20170830-102539-595330752",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027predictions\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:57 AM",
+      "dateFinished": "Aug 30, 2017 10:25:57 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n**(2) Visualization**: Plotting predictions vs. features can help us make sure that the model \"understands\" the input features and is using them properly to make predictions.  Below, we can see that the model predictions are correlated with the hour of the day, just like the true labels were.\n\n*Note: For more expert ML usage, check out other Databricks guides on plotting residuals, which compare predictions vs. true labels.*",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:57 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740456_-1496674130",
+      "id": "20170830-102539-842448262",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003e\u003cstrong\u003e(2) Visualization\u003c/strong\u003e: Plotting predictions vs. features can help us make sure that the model \u0026ldquo;understands\u0026rdquo; the input features and is using them properly to make predictions.  Below, we can see that the model predictions are correlated with the hour of the day, just like the true labels were.\u003c/p\u003e\n\u003cp\u003e\u003cem\u003eNote: For more expert ML usage, check out other Databricks guides on plotting residuals, which compare predictions vs. true labels.\u003c/em\u003e\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:57 AM",
+      "dateFinished": "Aug 30, 2017 10:25:57 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ndisplay(predictions.select(\"hr\", \"prediction\"))",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:57 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740456_-1496674130",
+      "id": "20170830-102539-1280437611",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027display\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:57 AM",
+      "dateFinished": "Aug 30, 2017 10:25:57 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n#### Improving our model\n\nYou are not done yet!  This section describes how to take this notebook and improve the results even more.  Try copying this notebook into your Databricks account and extending it, and see how much you can improve the predictions.\n\nThere are several ways we could further improve our model:\n* **Expert knowledge**: We may not be experts on bike sharing programs, but we know a few things we can use:\n  * The count of rentals cannot be negative.  `GBTRegressor` does not know that, but we could threshold the predictions to be `\u003e\u003d 0` post-hoc.\n  * The count of rentals is the sum of `registered` and `casual` rentals.  These two counts may have different behavior.  (Frequent cyclists and casual cyclists probably rent bikes for different reasons.)  The best models for this dataset take this into account.  Try training one GBT model for `registered` and one for `casual`, and then add their predictions together to get the full prediction.\n* **Better tuning**: To make this notebook run quickly, we only tried a few hyperparameter settings.  To get the most out of our data, we should test more settings.  Start by increasing the number of trees in our GBT model by setting `maxIter\u003d200`; it will take longer to train but can be more accurate.\n* **Feature engineering**: We used the basic set of features given to us, but we could potentially improve them.  For example, we may guess that weather is more or less important depending on whether or not it is a workday vs. weekend.  To take advantage of that, we could build a few feature by combining those two base features.  MLlib provides a suite of feature transformers; find out more in the [ML guide](http://spark.apache.org/docs/latest/ml-features.html).\n\n*Good luck!*",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:57 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740456_-1496674130",
+      "id": "20170830-102539-592233765",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch4\u003eImproving our model\u003c/h4\u003e\n\u003cp\u003eYou are not done yet!  This section describes how to take this notebook and improve the results even more.  Try copying this notebook into your Databricks account and extending it, and see how much you can improve the predictions.\u003c/p\u003e\n\u003cp\u003eThere are several ways we could further improve our model:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003cstrong\u003eExpert knowledge\u003c/strong\u003e: We may not be experts on bike sharing programs, but we know a few things we can use:\u003c/li\u003e\n\u003cli\u003eThe count of rentals cannot be negative.  \u003ccode\u003eGBTRegressor\u003c/code\u003e does not know that, but we could threshold the predictions to be \u003ccode\u003e\u0026gt;\u003d 0\u003c/code\u003e post-hoc.\u003c/li\u003e\n\u003cli\u003eThe count of rentals is the sum of \u003ccode\u003eregistered\u003c/code\u003e and \u003ccode\u003ecasual\u003c/code\u003e rentals.  These two counts may have different behavior.  (Frequent cyclists and casual cyclists probably rent bikes for different reasons.)  The best models for this dataset take this into account.  Try training one GBT model for \u003ccode\u003eregistered\u003c/code\u003e and one for \u003ccode\u003ecasual\u003c/code\u003e, and then add their predictions together to get the full prediction.\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eBetter tuning\u003c/strong\u003e: To make this notebook run quickly, we only tried a few hyperparameter settings.  To get the most out of our data, we should test more settings.  Start by increasing the number of trees in our GBT model by setting \u003ccode\u003emaxIter\u003d200\u003c/code\u003e; it will take longer to train but can be more accurate.\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eFeature engineering\u003c/strong\u003e: We used the basic set of features given to us, but we could potentially improve them.  For example, we may guess that weather is more or less important depending on whether or not it is a workday vs. weekend.  To take advantage of that, we could build a few feature by combining those two base features.  MLlib provides a suite of feature transformers; find out more in the \u003ca href\u003d\"http://spark.apache.org/docs/latest/ml-features.html\"\u003eML guide\u003c/a\u003e.\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e\u003cem\u003eGood luck!\u003c/em\u003e\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:57 AM",
+      "dateFinished": "Aug 30, 2017 10:25:57 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n#### Learning more\n\nCheck out the other example notebooks in this guide for more ideas about Pipelines, working with datasets, and more. Here are some to start with:\n* [Full ML Workflow using Pipelines](https://docs.databricks.com/spark/latest/mllib/index.html)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:25:57 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088740456_-1496674130",
+      "id": "20170830-102539-903020675",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch4\u003eLearning more\u003c/h4\u003e\n\u003cp\u003eCheck out the other example notebooks in this guide for more ideas about Pipelines, working with datasets, and more. Here are some to start with:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ca href\u003d\"https://docs.databricks.com/spark/latest/mllib/index.html\"\u003eFull ML Workflow using Pipelines\u003c/a\u003e\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:25:40 AM",
+      "dateStarted": "Aug 30, 2017 10:25:57 AM",
+      "dateFinished": "Aug 30, 2017 10:25:57 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088757686_-336424689",
+      "id": "20170830-102557_600274716",
+      "dateCreated": "Aug 30, 2017 10:25:57 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "gbt-regression",
+  "id": "8YBA4WA8UE1504088739",
+  "angularObjects": {
+    "2CRCTH5N681503309548868:shared_process": [],
+    "2CRT9SRAF81503309548905:shared_process": [],
+    "2CTE9GBET81503309548913:shared_process": [],
+    "2CS1RRBTB81503309548897:shared_process": []
+  },
+  "config": {
+    "isDashboard": false
+  },
+  "info": {},
+  "source": "FCN"
+}
