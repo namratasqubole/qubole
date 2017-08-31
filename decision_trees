@@ -1,0 +1,983 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n**If you see ![](http://training.databricks.com/databricks_guide/ImportNotebookIcon3.png) at the top, click on the link to import this notebook in order to run it.** ",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:32 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539594_-1194321147",
+      "id": "20170830-102219-204953849",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003e\u003cstrong\u003eIf you see \u003cimg src\u003d\"http://training.databricks.com/databricks_guide/ImportNotebookIcon3.png\" alt\u003d\"\" /\u003e at the top, click on the link to import this notebook in order to run it.\u003c/strong\u003e\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:22:32 AM",
+      "dateFinished": "Aug 30, 2017 10:22:33 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# Decision Trees for handwritten digit recognition\n\nThis notebook demonstrates learning a [Decision Tree](https://en.wikipedia.org/wiki/Decision_tree_learning) using Spark\u0027s distributed implementation.  It gives the reader a better understanding of some critical [hyperparameters](https://en.wikipedia.org/wiki/Hyperparameter_optimization) for the tree learning algorithm, using examples to demonstrate how tuning the hyperparameters can improve accuracy.\n\n**Background**: To learn more about Decision Trees, check out the resources at the end of this notebook.  [The visual description of ML and Decision Trees](http://www.r2d3.us/visual-intro-to-machine-learning-part-1/) provides nice intuition helpful to understand this notebook, and [Wikipedia](https://en.wikipedia.org/wiki/Decision_tree_learning) gives lots of details.\n\n**Data**: We use the classic MNIST handwritten digit recognition dataset.  It is from LeCun et al. (1998) and may be found under [\"mnist\" at the LibSVM dataset page](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass.html#mnist).\n\n**Goal**: Our goal for our data is to learn how to recognize digits (0 - 9) from images of handwriting.  However, we will focus on understanding trees, not on this particular learning problem.\n\n**Takeaways**: Decision Trees take several hyperparameters which can affect the accuracy of the learned model.  There is no one \"best\" setting for these for all datasets.  To get the optimal accuracy, we need to tune these hyperparameters based on our data.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:32 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539594_-1194321147",
+      "id": "20170830-102219-975187549",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch1\u003eDecision Trees for handwritten digit recognition\u003c/h1\u003e\n\u003cp\u003eThis notebook demonstrates learning a \u003ca href\u003d\"https://en.wikipedia.org/wiki/Decision_tree_learning\"\u003eDecision Tree\u003c/a\u003e using Spark\u0027s distributed implementation.  It gives the reader a better understanding of some critical \u003ca href\u003d\"https://en.wikipedia.org/wiki/Hyperparameter_optimization\"\u003ehyperparameters\u003c/a\u003e for the tree learning algorithm, using examples to demonstrate how tuning the hyperparameters can improve accuracy.\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eBackground\u003c/strong\u003e: To learn more about Decision Trees, check out the resources at the end of this notebook.  \u003ca href\u003d\"http://www.r2d3.us/visual-intro-to-machine-learning-part-1/\"\u003eThe visual description of ML and Decision Trees\u003c/a\u003e provides nice intuition helpful to understand this notebook, and \u003ca href\u003d\"https://en.wikipedia.org/wiki/Decision_tree_learning\"\u003eWikipedia\u003c/a\u003e gives lots of details.\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eData\u003c/strong\u003e: We use the classic MNIST handwritten digit recognition dataset.  It is from LeCun et al. (1998) and may be found under \u003ca href\u003d\"https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass.html#mnist\"\u003e\u0026ldquo;mnist\u0026rdquo; at the LibSVM dataset page\u003c/a\u003e.\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eGoal\u003c/strong\u003e: Our goal for our data is to learn how to recognize digits (0 - 9) from images of handwriting.  However, we will focus on understanding trees, not on this particular learning problem.\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eTakeaways\u003c/strong\u003e: Decision Trees take several hyperparameters which can affect the accuracy of the learned model.  There is no one \u0026ldquo;best\u0026rdquo; setting for these for all datasets.  To get the optimal accuracy, we need to tune these hyperparameters based on our data.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:22:34 AM",
+      "dateFinished": "Aug 30, 2017 10:22:34 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:33 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539594_-1194321147",
+      "id": "20170830-102219-1202069523",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:22:33 AM",
+      "dateFinished": "Aug 30, 2017 10:23:07 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Load MNIST training and test datasets\n\nOur datasets are vectors of pixels representing images of handwritten digits.  For example:\n\n![Image of a digit](http://training.databricks.com/databricks_guide/digit.png)\n![Image of all 10 digits](http://training.databricks.com/databricks_guide/MNIST-small.png)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:33 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539594_-1194321147",
+      "id": "20170830-102219-177918207",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eLoad MNIST training and test datasets\u003c/h2\u003e\n\u003cp\u003eOur datasets are vectors of pixels representing images of handwritten digits.  For example:\u003c/p\u003e\n\u003cp\u003e\u003cimg src\u003d\"http://training.databricks.com/databricks_guide/digit.png\" alt\u003d\"Image of a digit\" /\u003e\n\u003cbr  /\u003e\u003cimg src\u003d\"http://training.databricks.com/databricks_guide/MNIST-small.png\" alt\u003d\"Image of all 10 digits\" /\u003e\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:22:35 AM",
+      "dateFinished": "Aug 30, 2017 10:22:35 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nThese datasets are stored in the popular LibSVM dataset format.  We will load them using MLlib\u0027s LibSVM dataset reader utility.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539594_-1194321147",
+      "id": "20170830-102219-1256431203",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eThese datasets are stored in the popular LibSVM dataset format.  We will load them using MLlib\u0027s LibSVM dataset reader utility.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:22:35 AM",
+      "dateFinished": "Aug 30, 2017 10:22:35 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nimport org.apache.spark.mllib.util.MLUtils\n// MLUtils.loadLibSVMFile returns an RDD.\nval trainingRDD \u003d MLUtils.loadLibSVMFile(sc, \"/databricks-datasets/mnist-digits/data-001/mnist-digits-train.txt\")\nval testRDD \u003d MLUtils.loadLibSVMFile(sc, \"/databricks-datasets/mnist-digits/data-001/mnist-digits-test.txt\")\n// We convert the RDDs to DataFrames to use with ML Pipelines.\nval training \u003d trainingRDD.toDF()\nval test \u003d testRDD.toDF()\n\n// Cache data for multiple uses.\ntraining.cache()\ntest.cache()\n\nprintln(s\"We have ${training.count} training images and ${test.count} test images.\")",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539594_-1194321147",
+      "id": "20170830-102219-1255113558",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nimport org.apache.spark.mllib.util.MLUtils\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\njava.io.FileNotFoundException: File does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/databricks-datasets/mnist-digits/data-001/mnist-digits-train.txt\n  at org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1122)\n  at org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1114)\n  at org.apache.hadoop.fs.FileSystemLinkResolver.resolve(FileSystemLinkResolver.java:81)\n  at org.apache.hadoop.hdfs.DistributedFileSystem.getFileStatus(DistributedFileSystem.java:1114)\n  at org.apache.hadoop.fs.FileSystem.resolvePath(FileSystem.java:756)\n  at org.apache.hadoop.hdfs.DistributedFileSystem$16.\u003cinit\u003e(DistributedFileSystem.java:779)\n  at org.apache.hadoop.hdfs.DistributedFileSystem.listLocatedStatus(DistributedFileSystem.java:770)\n  at org.apache.hadoop.mapred.InputPathProcessor.perPathComputation(InputPathProcessor.java:251)\n  at org.apache.hadoop.mapred.InputPathProcessor.access$000(InputPathProcessor.java:28)\n  at org.apache.hadoop.mapred.InputPathProcessor$2.run(InputPathProcessor.java:354)\n  at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n  at java.util.concurrent.FutureTask.run(FutureTask.java:262)\n  at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n  at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n  at java.lang.Thread.run(Thread.java:745)\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:22:35 AM",
+      "dateFinished": "Aug 30, 2017 10:23:09 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n*Note*: In Spark 1.6 and later versions, Spark SQL has a LibSVM data source.  The above cell can be simplified to:\n```\nval training \u003d sqlContext.read.format(\"libsvm\").load(\"/mnt/mllib/mnist-digits-csv/mnist-digits-train.txt\")\nval test \u003d sqlContext.read.format(\"libsvm\").load(\"/mnt/mllib/mnist-digits-csv/mnist-digits-test.txt\")\n```",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539594_-1194321147",
+      "id": "20170830-102219-456447056",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003e\u003cem\u003eNote\u003c/em\u003e: In Spark 1.6 and later versions, Spark SQL has a LibSVM data source.  The above cell can be simplified to:\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003eval training \u003d sqlContext.read.format(\"libsvm\").load(\"/mnt/mllib/mnist-digits-csv/mnist-digits-train.txt\")\nval test \u003d sqlContext.read.format(\"libsvm\").load(\"/mnt/mllib/mnist-digits-csv/mnist-digits-test.txt\")\n\u003c/code\u003e\u003c/pre\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:22:35 AM",
+      "dateFinished": "Aug 30, 2017 10:22:35 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nDisplay our data.  Each image has the true label (the `label` column) and a vector of `features` which represent pixel intensities.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539594_-1194321147",
+      "id": "20170830-102219-935495975",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eDisplay our data.  Each image has the true label (the \u003ccode\u003elabel\u003c/code\u003e column) and a vector of \u003ccode\u003efeatures\u003c/code\u003e which represent pixel intensities.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:22:35 AM",
+      "dateFinished": "Aug 30, 2017 10:22:35 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ndisplay(training)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539594_-1194321147",
+      "id": "20170830-102219-441271727",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:27: error: not found: value display\n       display(training)\n       ^\n\n\n\n\u003cconsole\u003e:27: error: not found: value training\n       display(training)\n               ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:23:07 AM",
+      "dateFinished": "Aug 30, 2017 10:23:09 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Train a Decision Tree\n\nWe begin by training a decision tree using the default settings.  Before training, we want to tell the algorithm that the labels are categories 0-9, rather than continuous values.  We use the `StringIndexer` class to do this.  We tie this feature preprocessing together with the tree algorithm using a `Pipeline`.  ML Pipelines are tools Spark provides for piecing together Machine Learning algorithms into workflows.  To learn more about Pipelines, check out other ML example notebooks in Databricks and the [ML Pipelines user guide](http://spark.apache.org/docs/latest/ml-guide.html).",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539594_-1194321147",
+      "id": "20170830-102219-339169807",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eTrain a Decision Tree\u003c/h2\u003e\n\u003cp\u003eWe begin by training a decision tree using the default settings.  Before training, we want to tell the algorithm that the labels are categories 0-9, rather than continuous values.  We use the \u003ccode\u003eStringIndexer\u003c/code\u003e class to do this.  We tie this feature preprocessing together with the tree algorithm using a \u003ccode\u003ePipeline\u003c/code\u003e.  ML Pipelines are tools Spark provides for piecing together Machine Learning algorithms into workflows.  To learn more about Pipelines, check out other ML example notebooks in Databricks and the \u003ca href\u003d\"http://spark.apache.org/docs/latest/ml-guide.html\"\u003eML Pipelines user guide\u003c/a\u003e.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:22:35 AM",
+      "dateFinished": "Aug 30, 2017 10:22:35 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// StringIndexer: Read input column \"label\" (digits) and annotate them as categorical values.\nval indexer \u003d new StringIndexer().setInputCol(\"label\").setOutputCol(\"indexedLabel\")\n// DecisionTreeClassifier: Learn to predict column \"indexedLabel\" using the \"features\" column.\nval dtc \u003d new DecisionTreeClassifier().setLabelCol(\"indexedLabel\")\n// Chain indexer + dtc together into a single ML Pipeline.\nval pipeline \u003d new Pipeline().setStages(Array(indexer, dtc))",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539594_-1194321147",
+      "id": "20170830-102219-967511864",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:27: error: not found: type StringIndexer\n       val indexer \u003d new StringIndexer().setInputCol(\"label\").setOutputCol(\"indexedLabel\")\n                         ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:23:09 AM",
+      "dateFinished": "Aug 30, 2017 10:23:09 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Import the ML algorithms we will use.\nimport org.apache.spark.ml.classification.{DecisionTreeClassifier, DecisionTreeClassificationModel}\nimport org.apache.spark.ml.feature.StringIndexer\nimport org.apache.spark.ml.Pipeline",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539594_-1194321147",
+      "id": "20170830-102219-1029770079",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\nimport org.apache.spark.ml.classification.{DecisionTreeClassifier, DecisionTreeClassificationModel}\n\nimport org.apache.spark.ml.feature.StringIndexer\n\nimport org.apache.spark.ml.Pipeline\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:23:09 AM",
+      "dateFinished": "Aug 30, 2017 10:23:10 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Exploring \"maxDepth\": training trees of different sizes\n\nIn this section, we test tuning a single hyperparameter `maxDepth`, which determines how deep (and large) the tree can be.  We will train trees at varying depths and see how it affects the accuracy on our held-out test set.\n\n*Note: The next cell can take about 1 minute to run since it is training several trees which get deeper and deeper.*",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539594_-1194321147",
+      "id": "20170830-102219-236875292",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eExploring \u0026ldquo;maxDepth\u0026rdquo;: training trees of different sizes\u003c/h2\u003e\n\u003cp\u003eIn this section, we test tuning a single hyperparameter \u003ccode\u003emaxDepth\u003c/code\u003e, which determines how deep (and large) the tree can be.  We will train trees at varying depths and see how it affects the accuracy on our held-out test set.\u003c/p\u003e\n\u003cp\u003e\u003cem\u003eNote: The next cell can take about 1 minute to run since it is training several trees which get deeper and deeper.\u003c/em\u003e\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:22:35 AM",
+      "dateFinished": "Aug 30, 2017 10:22:35 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nAbove, we can see how the tree makes predictions.  When classifying a new example, the tree starts at the \"root\" node (at the top).  Each tree node tests a pixel value and goes either left or right.  At the bottom \"leaf\" nodes, the tree predicts a digit as the image\u0027s label.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539594_-1194321147",
+      "id": "20170830-102219-846798927",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eAbove, we can see how the tree makes predictions.  When classifying a new example, the tree starts at the \u0026ldquo;root\u0026rdquo; node (at the top).  Each tree node tests a pixel value and goes either left or right.  At the bottom \u0026ldquo;leaf\u0026rdquo; nodes, the tree predicts a digit as the image\u0027s label.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:22:36 AM",
+      "dateFinished": "Aug 30, 2017 10:22:36 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Define an evaluation metric.  In this case, we will use \"precision,\" which is equivalent to 0-1 accuracy.\nimport org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator\nval evaluator \u003d new MulticlassClassificationEvaluator().setLabelCol(\"indexedLabel\").setMetricName(\"precision\")",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:36 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539594_-1194321147",
+      "id": "20170830-102219-388300899",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nimport org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator\n\n\n\n\n\n\n\n\njava.lang.IllegalArgumentException: mcEval_be908e13f810 parameter metricName given invalid value precision.\n  at org.apache.spark.ml.param.Param.validate(params.scala:77)\n  at org.apache.spark.ml.param.ParamPair.\u003cinit\u003e(params.scala:528)\n  at org.apache.spark.ml.param.Param.$minus$greater(params.scala:87)\n  at org.apache.spark.ml.param.Params$class.set(params.scala:609)\n  at org.apache.spark.ml.evaluation.Evaluator.set(Evaluator.scala:30)\n  at org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator.setMetricName(MulticlassClassificationEvaluator.scala:60)\n  ... 46 elided\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:23:09 AM",
+      "dateFinished": "Aug 30, 2017 10:23:11 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nval variedMaxDepthModels \u003d (0 until 8).map { maxDepth \u003d\u003e\n  // For this setting of maxDepth, learn a decision tree.\n  dtc.setMaxDepth(maxDepth)\n  // Create a Pipeline with our feature processing stage (indexer) plus the tree algorithm\n  val pipeline \u003d new Pipeline().setStages(Array(indexer, dtc))\n  // Run the ML Pipeline to learn a tree.\n  pipeline.fit(training)\n}",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:36 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539594_-1194321147",
+      "id": "20170830-102219-1307808528",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:32: error: not found: value dtc\n         dtc.setMaxDepth(maxDepth)\n         ^\n\n\n\n\u003cconsole\u003e:34: error: not found: value indexer\n         val pipeline \u003d new Pipeline().setStages(Array(indexer, dtc))\n                                                       ^\n\n\n\n\u003cconsole\u003e:34: error: not found: value dtc\n         val pipeline \u003d new Pipeline().setStages(Array(indexer, dtc))\n                                                                ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:23:10 AM",
+      "dateFinished": "Aug 30, 2017 10:23:11 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nval model \u003d pipeline.fit(training)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:36 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539594_-1194321147",
+      "id": "20170830-102219-778785287",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:30: error: not found: value pipeline\n       val model \u003d pipeline.fit(training)\n                   ^\n\n\n\n\u003cconsole\u003e:30: error: not found: value training\n       val model \u003d pipeline.fit(training)\n                                ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:23:11 AM",
+      "dateFinished": "Aug 30, 2017 10:23:11 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nNow, let\u0027s fit a model to our data.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:36 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539595_-1194705895",
+      "id": "20170830-102219-909554150",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eNow, let\u0027s fit a model to our data.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:22:36 AM",
+      "dateFinished": "Aug 30, 2017 10:22:36 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// The tree is the last stage of the Pipeline.  Display it!\nval tree \u003d model.stages.last.asInstanceOf[DecisionTreeClassificationModel]\ndisplay(tree)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:36 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539595_-1194705895",
+      "id": "20170830-102219-1082256011",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:31: error: not found: value model\n       val tree \u003d model.stages.last.asInstanceOf[DecisionTreeClassificationModel]\n                  ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:23:11 AM",
+      "dateFinished": "Aug 30, 2017 10:23:11 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nWe can inspect the learned tree by displaying it using Databricks ML visualization.  (Visualization is available for several but not all models.)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:36 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539595_-1194705895",
+      "id": "20170830-102219-826286204",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eWe can inspect the learned tree by displaying it using Databricks ML visualization.  (Visualization is available for several but not all models.)\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:22:36 AM",
+      "dateFinished": "Aug 30, 2017 10:22:36 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ndtc.setMaxDepth(6) // Set maxDepth to a reasonable value.\nval accuracies \u003d Seq(2, 4, 8, 16, 32).map { case maxBins \u003d\u003e\n  // For this value of maxBins, learn a tree.\n  dtc.setMaxBins(maxBins)\n  val pipeline \u003d new Pipeline().setStages(Array(indexer, dtc))\n  val model \u003d pipeline.fit(training)\n  // Make predictions on test data, and compute accuracy.\n  val predictions \u003d model.transform(test)\n  (maxBins, evaluator.evaluate(predictions))\n}.toDF(\"maxBins\", \"accuracy\")\ndisplay(accuracies)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:36 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539595_-1194705895",
+      "id": "20170830-102219-1391597759",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:31: error: not found: value dtc\n       dtc.setMaxDepth(6) // Set maxDepth to a reasonable value.\n       ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:23:11 AM",
+      "dateFinished": "Aug 30, 2017 10:23:11 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Exploring \"maxBins\": discretization for efficient distributed computing\n\nThis section explores a more expert-level setting `maxBins`.  For efficient distributed training of Decision Trees, Spark and most other libraries discretize (or \"bin\") continuous features (such as pixel values) into a finite number of values.  This is an important step for the distributed implementation, but it introduces a tradeoff: Larger `maxBins` mean your data will be more accurately represented, but it will also mean more communication (and slower training).\n\nThe default value of `maxBins` generally works, but it is interesting to explore on our handwritten digit dataset.  Remember our digit image from above:\n\n![Image of a digit](http://training.databricks.com/databricks_guide/digit.png)\n\nIt is grayscale.  But if we set `maxBins \u003d 2`, then we are effectively making it a black-and-white image, not grayscale.  Will that affect the accuracy of our model?  Let\u0027s see!\n\n*Note: The next cell can take about 35 seconds to run since it trains several trees.*",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:36 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539595_-1194705895",
+      "id": "20170830-102219-1396534135",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eExploring \u0026ldquo;maxBins\u0026rdquo;: discretization for efficient distributed computing\u003c/h2\u003e\n\u003cp\u003eThis section explores a more expert-level setting \u003ccode\u003emaxBins\u003c/code\u003e.  For efficient distributed training of Decision Trees, Spark and most other libraries discretize (or \u0026ldquo;bin\u0026rdquo;) continuous features (such as pixel values) into a finite number of values.  This is an important step for the distributed implementation, but it introduces a tradeoff: Larger \u003ccode\u003emaxBins\u003c/code\u003e mean your data will be more accurately represented, but it will also mean more communication (and slower training).\u003c/p\u003e\n\u003cp\u003eThe default value of \u003ccode\u003emaxBins\u003c/code\u003e generally works, but it is interesting to explore on our handwritten digit dataset.  Remember our digit image from above:\u003c/p\u003e\n\u003cp\u003e\u003cimg src\u003d\"http://training.databricks.com/databricks_guide/digit.png\" alt\u003d\"Image of a digit\" /\u003e\u003c/p\u003e\n\u003cp\u003eIt is grayscale.  But if we set \u003ccode\u003emaxBins \u003d 2\u003c/code\u003e, then we are effectively making it a black-and-white image, not grayscale.  Will that affect the accuracy of our model?  Let\u0027s see!\u003c/p\u003e\n\u003cp\u003e\u003cem\u003eNote: The next cell can take about 35 seconds to run since it trains several trees.\u003c/em\u003e\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:22:36 AM",
+      "dateFinished": "Aug 30, 2017 10:22:36 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n#### What\u0027s next?\n\n* **Explore**: Try out tuning other parameters of trees---or even ensembles like [Random Forests or Gradient-Boosted Trees](http://spark.apache.org/docs/latest/ml-classification-regression.html#tree-ensembles).\n* **Automated tuning**: This type of tuning does not have to be done by hand.  (We did it by hand here to show the effects of tuning in detail.)  MLlib provides automated tuning functionality via `CrossValidator`.  Check out the other Databricks ML Pipeline guides or the [Spark ML user guide](http://spark.apache.org/docs/latest/ml-guide.html) for details.\n\n**Resources**\n\nIf you are interested in learning more on these topics, these resources can get you started:\n* [Excellent visual description of Machine Learning and Decision Trees](http://www.r2d3.us/visual-intro-to-machine-learning-part-1/)\n  * *This gives an intuitive visual explanation of ML, decision trees, overfitting, and more.*\n* [Blog post on MLlib Random Forests and Gradient-Boosted Trees](https://databricks.com/blog/2015/01/21/random-forests-and-boosting-in-mllib.html)\n  * *Random Forests and Gradient-Boosted Trees combine many trees into more powerful ensemble models.  This is the original post describing MLlib\u0027s forest and GBT implementations.*\n* Wikipedia\n  * [Decision tree learning](https://en.wikipedia.org/wiki/Decision_tree_learning)\n  * [Overfitting](https://en.wikipedia.org/wiki/Overfitting)\n  * [Hyperparameter tuning](https://en.wikipedia.org/wiki/Hyperparameter_optimization)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:36 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539595_-1194705895",
+      "id": "20170830-102219-687985453",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch4\u003eWhat\u0027s next?\u003c/h4\u003e\n\u003cul\u003e\n\u003cli\u003e\u003cstrong\u003eExplore\u003c/strong\u003e: Try out tuning other parameters of trees\u0026mdash;or even ensembles like \u003ca href\u003d\"http://spark.apache.org/docs/latest/ml-classification-regression.html#tree-ensembles\"\u003eRandom Forests or Gradient-Boosted Trees\u003c/a\u003e.\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eAutomated tuning\u003c/strong\u003e: This type of tuning does not have to be done by hand.  (We did it by hand here to show the effects of tuning in detail.)  MLlib provides automated tuning functionality via \u003ccode\u003eCrossValidator\u003c/code\u003e.  Check out the other Databricks ML Pipeline guides or the \u003ca href\u003d\"http://spark.apache.org/docs/latest/ml-guide.html\"\u003eSpark ML user guide\u003c/a\u003e for details.\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e\u003cstrong\u003eResources\u003c/strong\u003e\u003c/p\u003e\n\u003cp\u003eIf you are interested in learning more on these topics, these resources can get you started:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ca href\u003d\"http://www.r2d3.us/visual-intro-to-machine-learning-part-1/\"\u003eExcellent visual description of Machine Learning and Decision Trees\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003cem\u003eThis gives an intuitive visual explanation of ML, decision trees, overfitting, and more.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href\u003d\"https://databricks.com/blog/2015/01/21/random-forests-and-boosting-in-mllib.html\"\u003eBlog post on MLlib Random Forests and Gradient-Boosted Trees\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003cem\u003eRandom Forests and Gradient-Boosted Trees combine many trees into more powerful ensemble models.  This is the original post describing MLlib\u0027s forest and GBT implementations.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003eWikipedia\u003c/li\u003e\n\u003cli\u003e\u003ca href\u003d\"https://en.wikipedia.org/wiki/Decision_tree_learning\"\u003eDecision tree learning\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href\u003d\"https://en.wikipedia.org/wiki/Overfitting\"\u003eOverfitting\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href\u003d\"https://en.wikipedia.org/wiki/Hyperparameter_optimization\"\u003eHyperparameter tuning\u003c/a\u003e\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:22:36 AM",
+      "dateFinished": "Aug 30, 2017 10:22:36 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nWe can see that extreme discretization (black and white) hurts accuracy, but only a bit.  Using more bins increases the accuracy (but also makes learning more costly).",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:36 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539595_-1194705895",
+      "id": "20170830-102219-876052760",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eWe can see that extreme discretization (black and white) hurts accuracy, but only a bit.  Using more bins increases the accuracy (but also makes learning more costly).\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:22:36 AM",
+      "dateFinished": "Aug 30, 2017 10:22:36 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nWe can display our accuracy results and see immediately that deeper, larger trees are more powerful classifiers, achieving higher accuracies.\n\n*Note:* When you run `display()`, you will get a table.  Click on the plot icon below the table to create a plot, and use \"Plot Options\" to adjust what is displayed.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:36 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539595_-1194705895",
+      "id": "20170830-102219-970275027",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eWe can display our accuracy results and see immediately that deeper, larger trees are more powerful classifiers, achieving higher accuracies.\u003c/p\u003e\n\u003cp\u003e\u003cem\u003eNote:\u003c/em\u003e When you run \u003ccode\u003edisplay()\u003c/code\u003e, you will get a table.  Click on the plot icon below the table to create a plot, and use \u0026ldquo;Plot Options\u0026rdquo; to adjust what is displayed.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:22:36 AM",
+      "dateFinished": "Aug 30, 2017 10:22:36 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// For each maxDepth setting, make predictions on the test data, and compute the accuracy metric.\nval accuracies \u003d (0 until 8).map { maxDepth \u003d\u003e\n  val model \u003d variedMaxDepthModels(maxDepth)\n  // Calling transform() on the test set runs the fitted pipeline.\n  // The learned model makes predictions on each test example.\n  val predictions \u003d model.transform(test)\n  // Calling evaluate() on the predictions DataFrame computes our accuracy metric.\n  (maxDepth, evaluator.evaluate(predictions))\n}.toDF(\"maxDepth\", \"accuracy\")",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:36 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539595_-1194705895",
+      "id": "20170830-102219-550598062",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:32: error: not found: value variedMaxDepthModels\n         val model \u003d variedMaxDepthModels(maxDepth)\n                     ^\n\n\n\n\u003cconsole\u003e:37: error: not found: value evaluator\n         (maxDepth, evaluator.evaluate(predictions))\n                    ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:23:11 AM",
+      "dateFinished": "Aug 30, 2017 10:23:12 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nEven though deeper trees are more powerful, they are not always better.  If we kept increasing the depth, training would take longer and longer.  We also might risk [overfitting](https://en.wikipedia.org/wiki/Overfitting) (fitting the training data so well that our predictions get worse on test data); it is important to tune parameters *based on [held-out data](https://en.wikipedia.org/wiki/Test_set)* to prevent overfitting.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:37 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539595_-1194705895",
+      "id": "20170830-102219-20012895",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eEven though deeper trees are more powerful, they are not always better.  If we kept increasing the depth, training would take longer and longer.  We also might risk \u003ca href\u003d\"https://en.wikipedia.org/wiki/Overfitting\"\u003eoverfitting\u003c/a\u003e (fitting the training data so well that our predictions get worse on test data); it is important to tune parameters \u003cem\u003ebased on \u003ca href\u003d\"https://en.wikipedia.org/wiki/Test_set\"\u003eheld-out data\u003c/a\u003e\u003c/em\u003e to prevent overfitting.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:22:37 AM",
+      "dateFinished": "Aug 30, 2017 10:22:37 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ndisplay(accuracies)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 10:22:37 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088539595_-1194705895",
+      "id": "20170830-102219-273230857",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:31: error: not found: value display\n       display(accuracies)\n       ^\n\n\n\n\u003cconsole\u003e:31: error: not found: value accuracies\n       display(accuracies)\n               ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 10:22:19 AM",
+      "dateStarted": "Aug 30, 2017 10:23:12 AM",
+      "dateFinished": "Aug 30, 2017 10:23:12 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504088557117_-740855435",
+      "id": "20170830-102237_1392464622",
+      "dateCreated": "Aug 30, 2017 10:22:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "DecisionTrees",
+  "id": "HKVFRMPKD21504088538",
+  "angularObjects": {
+    "2CRCTH5N681503309548868:shared_process": [],
+    "2CRT9SRAF81503309548905:shared_process": [],
+    "2CTE9GBET81503309548913:shared_process": [],
+    "2CS1RRBTB81503309548897:shared_process": []
+  },
+  "config": {
+    "isDashboard": false
+  },
+  "info": {},
+  "source": "FCN"
+}
