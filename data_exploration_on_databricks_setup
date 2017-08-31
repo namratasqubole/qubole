@@ -1,0 +1,484 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n# Data Exploration on Databricks (Setup)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 8:53:34 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083190095_164578105",
+      "id": "20170830-085309-1417467661",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch1\u003eData Exploration on Databricks (Setup)\u003c/h1\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 8:53:10 AM",
+      "dateStarted": "Aug 30, 2017 8:53:34 AM",
+      "dateFinished": "Aug 30, 2017 8:53:36 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Parsing weblogs with regular expressions to create a table\n\n* Original Format: %s %s %s [%s] \\\"%s %s HTTP/1.1\\\" %s %s\n* Example Web Log Row \n * 10.0.0.213 - 2185662 [14/Aug/2015:00:05:15 -0800] \"GET /Hurricane+Ridge/rss.xml HTTP/1.1\" 200 288",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 8:53:40 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083190095_164578105",
+      "id": "20170830-085309-1384776080",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eParsing weblogs with regular expressions to create a table\u003c/h3\u003e\n\u003cul\u003e\n\u003cli\u003eOriginal Format: %s %s %s [%s] \"%s %s HTTP/1.1\" %s %s\u003c/li\u003e\n\u003cli\u003eExample Web Log Row\u003c/li\u003e\n\u003cli\u003e10.0.0.213 - 2185662 [14/Aug/2015:00:05:15 -0800] \u0026ldquo;GET /Hurricane+Ridge/rss.xml HTTP/1.1\u0026rdquo; 200 288\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 8:53:10 AM",
+      "dateStarted": "Aug 30, 2017 8:53:40 AM",
+      "dateFinished": "Aug 30, 2017 8:53:40 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Setup Instructions\n* Please refer to the Data Exploration on Databricks How-To Guide for the location of the source files to import for this notebook.\n* Please refer to the Databricks Data Import How-To Guide on how to import data into S3 for use with Databricks notebooks.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 8:53:47 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083190096_174966325",
+      "id": "20170830-085309-764172141",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eSetup Instructions\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003ePlease refer to the Data Exploration on Databricks How-To Guide for the location of the source files to import for this notebook.\u003c/li\u003e\n\u003cli\u003ePlease refer to the Databricks Data Import How-To Guide on how to import data into S3 for use with Databricks notebooks.\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 8:53:10 AM",
+      "dateStarted": "Aug 30, 2017 8:53:47 AM",
+      "dateFinished": "Aug 30, 2017 8:53:47 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nimport urllib\nACCESS_KEY \u003d \"[REPLACE_WITH_ACCESS_KEY]\"\nSECRET_KEY \u003d \"[REPLACE_WITH_SECRET_KEY]\"\nENCODED_SECRET_KEY \u003d urllib.quote(SECRET_KEY, \"\")\nAWS_BUCKET_NAME \u003d \"my-data-for-databricks\"\nMOUNT_NAME \u003d \"my-data\"",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:03:04 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083190096_174966325",
+      "id": "20170830-085309-1079948572",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 30, 2017 8:53:10 AM",
+      "dateStarted": "Aug 30, 2017 9:00:43 AM",
+      "dateFinished": "Aug 30, 2017 9:00:43 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Sample Apache Access Web Logs",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 8:54:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083190096_174966325",
+      "id": "20170830-085309-105435768",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eSample Apache Access Web Logs\u003c/h2\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 8:53:10 AM",
+      "dateStarted": "Aug 30, 2017 8:54:18 AM",
+      "dateFinished": "Aug 30, 2017 8:54:18 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ndisplay(dbutils.fs.ls(\"/mnt/my-data/apache\"))",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:00:51 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083190096_174966325",
+      "id": "20170830-085309-1163617244",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027display\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 8:53:10 AM",
+      "dateStarted": "Aug 30, 2017 9:00:51 AM",
+      "dateFinished": "Aug 30, 2017 9:00:51 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nmyApacheLogs \u003d sc.textFile(\"/mnt/my-data/apache\")\nmyApacheLogs.take(10)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 8:56:45 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083190096_174966325",
+      "id": "20170830-085309-1306407190",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 2, in \u003cmodule\u003e\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 1312, in take\n    totalParts \u003d self.getNumPartitions()\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 384, in getNumPartitions\n    return self._jrdd.partitions().size()\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py\", line 1133, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/usr/lib/spark/python/pyspark/sql/utils.py\", line 63, in deco\n    return f(*a, **kw)\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/protocol.py\", line 319, in get_return_value\n    format(target_id, \".\", name), value)\nPy4JJavaError: An error occurred while calling o126.partitions.\n: java.io.FileNotFoundException: File does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/mnt/my-data/apache\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1122)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystemLinkResolver.resolve(FileSystemLinkResolver.java:81)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.getFileStatus(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystem.resolvePath(FileSystem.java:756)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$16.\u003cinit\u003e(DistributedFileSystem.java:779)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.listLocatedStatus(DistributedFileSystem.java:770)\n\tat org.apache.hadoop.mapred.InputPathProcessor.perPathComputation(InputPathProcessor.java:251)\n\tat org.apache.hadoop.mapred.InputPathProcessor.access$000(InputPathProcessor.java:28)\n\tat org.apache.hadoop.mapred.InputPathProcessor$2.run(InputPathProcessor.java:354)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 8:53:10 AM",
+      "dateStarted": "Aug 30, 2017 8:56:45 AM",
+      "dateFinished": "Aug 30, 2017 8:56:45 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Sample Web Response Codes",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 8:57:01 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083190096_174966325",
+      "id": "20170830-085309-1151790153",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eSample Web Response Codes\u003c/h2\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 8:53:10 AM",
+      "dateStarted": "Aug 30, 2017 8:57:01 AM",
+      "dateFinished": "Aug 30, 2017 8:57:01 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ndisplay(dbutils.fs.ls(\"/mnt/my-data/response\"))",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 8:57:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083190096_174966325",
+      "id": "20170830-085309-426758508",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027display\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 8:53:10 AM",
+      "dateStarted": "Aug 30, 2017 8:57:05 AM",
+      "dateFinished": "Aug 30, 2017 8:57:05 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nmyResponseCodes \u003d sc.textFile(\"/mnt/my-data/response\")\nmyResponseCodes.take(10)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:03:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083190096_174966325",
+      "id": "20170830-085309-90219609",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 2, in \u003cmodule\u003e\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 1312, in take\n    totalParts \u003d self.getNumPartitions()\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 384, in getNumPartitions\n    return self._jrdd.partitions().size()\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py\", line 1133, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/usr/lib/spark/python/pyspark/sql/utils.py\", line 63, in deco\n    return f(*a, **kw)\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/protocol.py\", line 319, in get_return_value\n    format(target_id, \".\", name), value)\nPy4JJavaError: An error occurred while calling o149.partitions.\n: java.io.FileNotFoundException: File does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/mnt/my-data/response\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1122)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystemLinkResolver.resolve(FileSystemLinkResolver.java:81)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.getFileStatus(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystem.resolvePath(FileSystem.java:756)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$16.\u003cinit\u003e(DistributedFileSystem.java:779)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.listLocatedStatus(DistributedFileSystem.java:770)\n\tat org.apache.hadoop.mapred.InputPathProcessor.perPathComputation(InputPathProcessor.java:251)\n\tat org.apache.hadoop.mapred.InputPathProcessor.access$000(InputPathProcessor.java:28)\n\tat org.apache.hadoop.mapred.InputPathProcessor$2.run(InputPathProcessor.java:354)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 8:53:10 AM",
+      "dateStarted": "Aug 30, 2017 9:03:05 AM",
+      "dateFinished": "Aug 30, 2017 9:03:06 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Sample Mapping between IP Address and Geography\n* Note, this mapping is generated for the above web logs",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:03:12 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083190096_174966325",
+      "id": "20170830-085309-717067974",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eSample Mapping between IP Address and Geography\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003eNote, this mapping is generated for the above web logs\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 8:53:10 AM",
+      "dateStarted": "Aug 30, 2017 9:03:12 AM",
+      "dateFinished": "Aug 30, 2017 9:03:12 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ndisplay(dbutils.fs.ls(\"/mnt/my-data/map\"))",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083190096_174966325",
+      "id": "20170830-085309-1222284585",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027display\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 8:53:10 AM",
+      "dateStarted": "Aug 30, 2017 9:03:18 AM",
+      "dateFinished": "Aug 30, 2017 9:03:18 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nmyIPtoGeo \u003d sc.textFile(\"/mnt/my-data/map\")\nmyIPtoGeo.take(10)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:03:24 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083190096_174966325",
+      "id": "20170830-085309-1240951752",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-4038791439788475294.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 2, in \u003cmodule\u003e\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 1312, in take\n    totalParts \u003d self.getNumPartitions()\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 384, in getNumPartitions\n    return self._jrdd.partitions().size()\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py\", line 1133, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/usr/lib/spark/python/pyspark/sql/utils.py\", line 63, in deco\n    return f(*a, **kw)\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/protocol.py\", line 319, in get_return_value\n    format(target_id, \".\", name), value)\nPy4JJavaError: An error occurred while calling o170.partitions.\n: java.io.FileNotFoundException: File does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/mnt/my-data/map\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1122)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystemLinkResolver.resolve(FileSystemLinkResolver.java:81)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.getFileStatus(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystem.resolvePath(FileSystem.java:756)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$16.\u003cinit\u003e(DistributedFileSystem.java:779)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.listLocatedStatus(DistributedFileSystem.java:770)\n\tat org.apache.hadoop.mapred.InputPathProcessor.perPathComputation(InputPathProcessor.java:251)\n\tat org.apache.hadoop.mapred.InputPathProcessor.access$000(InputPathProcessor.java:28)\n\tat org.apache.hadoop.mapred.InputPathProcessor$2.run(InputPathProcessor.java:354)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 8:53:10 AM",
+      "dateStarted": "Aug 30, 2017 9:03:24 AM",
+      "dateFinished": "Aug 30, 2017 9:03:24 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083804144_142324489",
+      "id": "20170830-090324_2068087423",
+      "dateCreated": "Aug 30, 2017 9:03:24 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Data Exploration on Databricks Setup",
+  "id": "12GPYZPM4E1504083189",
+  "angularObjects": {
+    "2CRCTH5N681503309548868:shared_process": [],
+    "2CRT9SRAF81503309548905:shared_process": [],
+    "2CTE9GBET81503309548913:shared_process": [],
+    "2CS1RRBTB81503309548897:shared_process": []
+  },
+  "config": {
+    "isDashboard": false
+  },
+  "info": {},
+  "source": "FCN"
+}
