@@ -1,0 +1,823 @@
+{
+  "paragraphs": [
+    {
+      "text": "%spark\nspark",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838337_-1003238337",
+      "id": "20170830-110037-100571218",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\nres84: org.apache.spark.sql.SparkSession \u003d org.apache.spark.sql.SparkSession@7450fb7c\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:18 AM",
+      "dateFinished": "Aug 30, 2017 11:58:19 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nIn Databricks notebooks and Spark REPL, the SparkSession has been created automatically and assigned to variable \"spark\".",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838337_-1003238337",
+      "id": "20170830-110037-1067849436",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eIn Databricks notebooks and Spark REPL, the SparkSession has been created automatically and assigned to variable \u0026ldquo;spark\u0026rdquo;.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:18 AM",
+      "dateFinished": "Aug 30, 2017 11:58:18 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nval jsonData \u003d spark.read.json(\"/home/webinar/person.json\")",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838337_-1003238337",
+      "id": "20170830-110037-1370064613",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\n\n\n\n\n\n\n\n\n\norg.apache.spark.sql.AnalysisException: Path does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/home/webinar/person.json;\n  at org.apache.spark.sql.execution.datasources.DataSource$$anonfun$14.apply(DataSource.scala:382)\n  at org.apache.spark.sql.execution.datasources.DataSource$$anonfun$14.apply(DataSource.scala:370)\n  at scala.collection.TraversableLike$$anonfun$flatMap$1.apply(TraversableLike.scala:241)\n  at scala.collection.TraversableLike$$anonfun$flatMap$1.apply(TraversableLike.scala:241)\n  at scala.collection.immutable.List.foreach(List.scala:381)\n  at scala.collection.TraversableLike$class.flatMap(TraversableLike.scala:241)\n  at scala.collection.immutable.List.flatMap(List.scala:344)\n  at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:370)\n  at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:152)\n  at org.apache.spark.sql.DataFrameReader.json(DataFrameReader.scala:298)\n  at org.apache.spark.sql.DataFrameReader.json(DataFrameReader.scala:251)\n  ... 54 elided\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:18 AM",
+      "dateFinished": "Aug 30, 2017 11:58:19 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Unified entry point for reading data\n\nSparkSession is the entry point for reading data, similar to the old SQLContext.read.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838337_-1003238337",
+      "id": "20170830-110037-449961468",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eUnified entry point for reading data\u003c/h3\u003e\n\u003cp\u003eSparkSession is the entry point for reading data, similar to the old SQLContext.read.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:18 AM",
+      "dateFinished": "Aug 30, 2017 11:58:18 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# SparkSession - a new entry point\n\nWe have been getting a lot of questions about thre relationship between SparkContext, SQLContext, and HiveContext in Spark 1.x. It was really strange to have \"HiveContext\" as an entry point when people want to use the DataFrame API. In Spark 2.0, we are introducing SparkSession, a new entry point that subsumes SQLContext and HiveContext. For backward compatibiilty, the two are preserved. SparkSession has many features, and here we demonstrate some of the more important ones.\n\nWhile this notebook is written in Scala, similar (actually almost identical) APIs exist in Python and Java.\n\nTo read the companion blog post, click here: https://databricks.com/blog/2016/05/11/spark-2-0-technical-preview-easier-faster-and-smarter.html",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838337_-1003238337",
+      "id": "20170830-110037-1482302325",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch1\u003eSparkSession - a new entry point\u003c/h1\u003e\n\u003cp\u003eWe have been getting a lot of questions about thre relationship between SparkContext, SQLContext, and HiveContext in Spark 1.x. It was really strange to have \u0026ldquo;HiveContext\u0026rdquo; as an entry point when people want to use the DataFrame API. In Spark 2.0, we are introducing SparkSession, a new entry point that subsumes SQLContext and HiveContext. For backward compatibiilty, the two are preserved. SparkSession has many features, and here we demonstrate some of the more important ones.\u003c/p\u003e\n\u003cp\u003eWhile this notebook is written in Scala, similar (actually almost identical) APIs exist in Python and Java.\u003c/p\u003e\n\u003cp\u003eTo read the companion blog post, click here: https://databricks.com/blog/2016/05/11/spark-2-0-technical-preview-easier-faster-and-smarter.html\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:18 AM",
+      "dateFinished": "Aug 30, 2017 11:58:18 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// A SparkSession can be created using a builder pattern\nimport org.apache.spark.sql.SparkSession\nval sparkSession \u003d SparkSession.builder\n  .master(\"local\")\n  .appName(\"my-spark-app\")\n  .config(\"spark.some.config.option\", \"config-value\")\n  .getOrCreate()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838337_-1003238337",
+      "id": "20170830-110037-1161916620",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\nimport org.apache.spark.sql.SparkSession\n\nsparkSession: org.apache.spark.sql.SparkSession \u003d org.apache.spark.sql.SparkSession@7450fb7c\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:19 AM",
+      "dateFinished": "Aug 30, 2017 11:58:20 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Creating a SparkSession\n\nA SparkSession can be created using a builder pattern. The builder will automatically reuse an existing SparkContext if one exists; and create a SparkContext if it does not exist. Configuration options set in the builder are automatically propagated over to Spark and Hadoop during I/O.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838337_-1003238337",
+      "id": "20170830-110037-653371017",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eCreating a SparkSession\u003c/h3\u003e\n\u003cp\u003eA SparkSession can be created using a builder pattern. The builder will automatically reuse an existing SparkContext if one exists; and create a SparkContext if it does not exist. Configuration options set in the builder are automatically propagated over to Spark and Hadoop during I/O.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:18 AM",
+      "dateFinished": "Aug 30, 2017 11:58:18 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nspark.conf.get(\"spark.some.config\")",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838338_-1002084090",
+      "id": "20170830-110037-191117552",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\n\n\n\njava.util.NoSuchElementException: spark.some.config\n  at org.apache.spark.sql.internal.SQLConf$$anonfun$getConfString$2.apply(SQLConf.scala:895)\n  at org.apache.spark.sql.internal.SQLConf$$anonfun$getConfString$2.apply(SQLConf.scala:895)\n  at scala.Option.getOrElse(Option.scala:121)\n  at org.apache.spark.sql.internal.SQLConf.getConfString(SQLConf.scala:895)\n  at org.apache.spark.sql.RuntimeConfig.get(RuntimeConfig.scala:74)\n  ... 54 elided\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:20 AM",
+      "dateFinished": "Aug 30, 2017 11:58:21 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nspark.conf.set(\"spark.some.config\", \"abcd\")",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838338_-1002084090",
+      "id": "20170830-110037-894626049",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:20 AM",
+      "dateFinished": "Aug 30, 2017 11:58:21 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect \"${spark.some.config}\"",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {
+          "spark.some.config": {
+            "name": "spark.some.config",
+            "defaultValue": "",
+            "hidden": false
+          }
+        }
+      },
+      "jobName": "paragraph_1504090838338_-1002084090",
+      "id": "20170830-110037-1225405681",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TABLE",
+        "msg": "\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:21 AM",
+      "dateFinished": "Aug 30, 2017 11:58:22 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nAnd config options set can also be used in SQL using variable substitution.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838338_-1002084090",
+      "id": "20170830-110037-929230146",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eAnd config options set can also be used in SQL using variable substitution.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:18 AM",
+      "dateFinished": "Aug 30, 2017 11:58:18 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Running SQL queries\n\nSparkSession can be used to execute SQL queries over data, getting the results back as a DataFrame (i.e. Dataset[Row]).",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838338_-1002084090",
+      "id": "20170830-110037-1135887748",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eRunning SQL queries\u003c/h3\u003e\n\u003cp\u003eSparkSession can be used to execute SQL queries over data, getting the results back as a DataFrame (i.e. Dataset[Row]).\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:19 AM",
+      "dateFinished": "Aug 30, 2017 11:58:19 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ndisplay(jsonData)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838338_-1002084090",
+      "id": "20170830-110037-580007001",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:64: error: not found: value display\n       display(jsonData)\n       ^\n\n\n\n\u003cconsole\u003e:64: error: not found: value jsonData\n       display(jsonData)\n               ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:22 AM",
+      "dateFinished": "Aug 30, 2017 11:58:22 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Working with config options\n\nSparkSession can also be used to set runtime configuration options, which can toggle optimizer behavior or I/O (i.e. Hadoop) behavior.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838338_-1002084090",
+      "id": "20170830-110037-1030277129",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eWorking with config options\u003c/h3\u003e\n\u003cp\u003eSparkSession can also be used to set runtime configuration options, which can toggle optimizer behavior or I/O (i.e. Hadoop) behavior.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:19 AM",
+      "dateFinished": "Aug 30, 2017 11:58:19 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ndisplay(spark.sql(\"select * from person\"))",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838338_-1002084090",
+      "id": "20170830-110037-486882922",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:64: error: not found: value display\n       display(spark.sql(\"select * from person\"))\n       ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:22 AM",
+      "dateFinished": "Aug 30, 2017 11:58:22 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Access to the underlying SparkContext\n\nSparkSession.sparkContext returns the underlying SparkContext, used for creating RDDs as well as managing cluster resources.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838338_-1002084090",
+      "id": "20170830-110037-833237222",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eAccess to the underlying SparkContext\u003c/h3\u003e\n\u003cp\u003eSparkSession.sparkContext returns the underlying SparkContext, used for creating RDDs as well as managing cluster resources.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:19 AM",
+      "dateFinished": "Aug 30, 2017 11:58:19 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Get the list of columns for a table\ndisplay(spark.catalog.listColumns(\"smart\"))",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838338_-1002084090",
+      "id": "20170830-110037-1227911096",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:65: error: not found: value display\n       display(spark.catalog.listColumns(\"smart\"))\n       ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:22 AM",
+      "dateFinished": "Aug 30, 2017 11:58:22 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\nAgain, to read the companion blog post, click here: https://databricks.com/blog/2016/05/11/spark-2-0-technical-preview-easier-faster-and-smarter.html",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838338_-1002084090",
+      "id": "20170830-110037-1092825403",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cp\u003eAgain, to read the companion blog post, click here: https://databricks.com/blog/2016/05/11/spark-2-0-technical-preview-easier-faster-and-smarter.html\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:19 AM",
+      "dateFinished": "Aug 30, 2017 11:58:19 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nspark.sparkContext",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838338_-1002084090",
+      "id": "20170830-110037-1202043158",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\nres95: org.apache.spark.SparkContext \u003d org.apache.spark.SparkContext@56fbca18\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:22 AM",
+      "dateFinished": "Aug 30, 2017 11:58:23 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// To get a list of tables in the current database\nval tables \u003d spark.catalog.listTables()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838338_-1002084090",
+      "id": "20170830-110037-946904976",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\ntables: org.apache.spark.sql.Dataset[org.apache.spark.sql.catalog.Table] \u003d [name: string, database: string ... 3 more fields]\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:23 AM",
+      "dateFinished": "Aug 30, 2017 11:58:24 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Working with metadata directly\n\nSparkSession also includes a \"catalog\" method that contains methods to work with the metastore (i.e. data catalog). Methods there return Datasets so you can use the same Dataset API to play with them.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838338_-1002084090",
+      "id": "20170830-110037-1148290273",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eWorking with metadata directly\u003c/h3\u003e\n\u003cp\u003eSparkSession also includes a \u0026ldquo;catalog\u0026rdquo; method that contains methods to work with the metastore (i.e. data catalog). Methods there return Datasets so you can use the same Dataset API to play with them.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:19 AM",
+      "dateFinished": "Aug 30, 2017 11:58:19 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Use the Dataset API to filter on names\ndisplay(tables.filter(_.name contains \"son\"))",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838338_-1002084090",
+      "id": "20170830-110037-707323319",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:67: error: not found: value display\n       display(tables.filter(_.name contains \"son\"))\n       ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:23 AM",
+      "dateFinished": "Aug 30, 2017 11:58:25 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ndisplay(tables)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:58:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504090838338_-1002084090",
+      "id": "20170830-110037-1168508980",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:66: error: not found: value display\n       display(tables)\n       ^\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:00:38 AM",
+      "dateStarted": "Aug 30, 2017 11:58:24 AM",
+      "dateFinished": "Aug 30, 2017 11:58:25 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504094299627_-1798443976",
+      "id": "20170830-115819_633919213",
+      "dateCreated": "Aug 30, 2017 11:58:19 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "SparkSession",
+  "id": "FZX385XCM61504090837",
+  "angularObjects": {
+    "2CRCTH5N681503309548868:shared_process": [],
+    "2CRT9SRAF81503309548905:shared_process": [],
+    "2CTE9GBET81503309548913:shared_process": [],
+    "2CS1RRBTB81503309548897:shared_process": []
+  },
+  "config": {
+    "isDashboard": false
+  },
+  "info": {},
+  "source": "FCN"
+}
