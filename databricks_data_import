@@ -1,0 +1,580 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n# Databricks Data Import\nThis is the companion notebook for the Databricks Data Import How-To Guide",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:19:01 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091910940_1251350823",
+      "id": "20170830-111830-197307194",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch1\u003eDatabricks Data Import\u003c/h1\u003e\n\u003cp\u003eThis is the companion notebook for the Databricks Data Import How-To Guide\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:18:30 AM",
+      "dateStarted": "Aug 30, 2017 11:19:01 AM",
+      "dateFinished": "Aug 30, 2017 11:19:01 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Enter your AWS access keys here\nImportant: After setting the mount, remove or obfuscate this section so you are not saving access keys in clear text.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:19:01 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091910940_1251350823",
+      "id": "20170830-111830-1166763303",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eEnter your AWS access keys here\u003c/h2\u003e\n\u003cp\u003eImportant: After setting the mount, remove or obfuscate this section so you are not saving access keys in clear text.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:18:30 AM",
+      "dateStarted": "Aug 30, 2017 11:19:01 AM",
+      "dateFinished": "Aug 30, 2017 11:19:01 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n#### Configure your AWS key settings",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:19:01 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091910940_1251350823",
+      "id": "20170830-111830-1233892043",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch4\u003eConfigure your AWS key settings\u003c/h4\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:18:30 AM",
+      "dateStarted": "Aug 30, 2017 11:19:01 AM",
+      "dateFinished": "Aug 30, 2017 11:19:01 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nimport urllib\nACCESS_KEY \u003d \"XHFKDFAEHFKASHFFDFAE\"\nSECRET_KEY \u003d \"XDNn42u2-8a+rlkje597kd0937f3fcasdaqrjgya\"\nENCODED_SECRET_KEY \u003d urllib.quote(SECRET_KEY, \"\")\nAWS_BUCKET_NAME \u003d \"my-data-for-databricks\"\nMOUNT_NAME \u003d \"my-data\"",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:19:01 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091910940_1251350823",
+      "id": "20170830-111830-835684576",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 30, 2017 11:18:30 AM",
+      "dateStarted": "Aug 30, 2017 11:19:01 AM",
+      "dateFinished": "Aug 30, 2017 11:19:02 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n#### Mount your bucket",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:19:01 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091910940_1251350823",
+      "id": "20170830-111830-1296976217",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch4\u003eMount your bucket\u003c/h4\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:18:30 AM",
+      "dateStarted": "Aug 30, 2017 11:19:02 AM",
+      "dateFinished": "Aug 30, 2017 11:19:02 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ndbutils.fs.mount(\"s3n://%s:%s@%s\" % (ACCESS_KEY, ENCODED_SECRET_KEY, AWS_BUCKET_NAME), \"/mnt/%s\" % MOUNT_NAME)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:19:02 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091910940_1251350823",
+      "id": "20170830-111830-656443709",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027dbutils\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:18:30 AM",
+      "dateStarted": "Aug 30, 2017 11:19:02 AM",
+      "dateFinished": "Aug 30, 2017 11:19:02 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# Access your Data\nUsing *dbutils* you can access your files",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:19:02 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091910940_1251350823",
+      "id": "20170830-111830-158765899",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch1\u003eAccess your Data\u003c/h1\u003e\n\u003cp\u003eUsing \u003cem\u003edbutils\u003c/em\u003e you can access your files\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:18:30 AM",
+      "dateStarted": "Aug 30, 2017 11:19:02 AM",
+      "dateFinished": "Aug 30, 2017 11:19:02 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ndisplay(dbutils.fs.ls(\"/mnt/my-data\"))",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:19:02 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091910941_1250966074",
+      "id": "20170830-111830-1321062035",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nNameError: name \u0027display\u0027 is not defined\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:18:30 AM",
+      "dateStarted": "Aug 30, 2017 11:19:02 AM",
+      "dateFinished": "Aug 30, 2017 11:19:02 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n#### Count the number of rows in all of the files in your Apache Access Web Logs folder",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:19:02 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091910941_1250966074",
+      "id": "20170830-111830-280559087",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch4\u003eCount the number of rows in all of the files in your Apache Access Web Logs folder\u003c/h4\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:18:30 AM",
+      "dateStarted": "Aug 30, 2017 11:19:02 AM",
+      "dateFinished": "Aug 30, 2017 11:19:02 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nmyApacheLogs \u003d sc.textFile(\"/mnt/my-data/apache\")\nmyApacheLogs.count()",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:19:02 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091910941_1250966074",
+      "id": "20170830-111830-680774188",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 2, in \u003cmodule\u003e\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 1040, in count\n    return self.mapPartitions(lambda i: [sum(1 for _ in i)]).sum()\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 1031, in sum\n    return self.mapPartitions(lambda x: [sum(x)]).fold(0, operator.add)\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 905, in fold\n    vals \u003d self.mapPartitions(func).collect()\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 808, in collect\n    port \u003d self.ctx._jvm.PythonRDD.collectAndServe(self._jrdd.rdd())\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py\", line 1133, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/usr/lib/spark/python/pyspark/sql/utils.py\", line 63, in deco\n    return f(*a, **kw)\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/protocol.py\", line 319, in get_return_value\n    format(target_id, \".\", name), value)\nPy4JJavaError: An error occurred while calling z:org.apache.spark.api.python.PythonRDD.collectAndServe.\n: java.io.FileNotFoundException: File does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/mnt/my-data/apache\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1122)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystemLinkResolver.resolve(FileSystemLinkResolver.java:81)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.getFileStatus(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystem.resolvePath(FileSystem.java:756)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$16.\u003cinit\u003e(DistributedFileSystem.java:779)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.listLocatedStatus(DistributedFileSystem.java:770)\n\tat org.apache.hadoop.mapred.InputPathProcessor.perPathComputation(InputPathProcessor.java:251)\n\tat org.apache.hadoop.mapred.InputPathProcessor.access$000(InputPathProcessor.java:28)\n\tat org.apache.hadoop.mapred.InputPathProcessor$2.run(InputPathProcessor.java:354)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:18:30 AM",
+      "dateStarted": "Aug 30, 2017 11:19:02 AM",
+      "dateFinished": "Aug 30, 2017 11:19:03 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n#### Review ten rows from your Apache Access web logs",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:19:02 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091910941_1250966074",
+      "id": "20170830-111830-838252707",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch4\u003eReview ten rows from your Apache Access web logs\u003c/h4\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:18:30 AM",
+      "dateStarted": "Aug 30, 2017 11:19:02 AM",
+      "dateFinished": "Aug 30, 2017 11:19:02 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nmyApacheLogs.take(10)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:19:02 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091910941_1250966074",
+      "id": "20170830-111830-41095230",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 1312, in take\n    totalParts \u003d self.getNumPartitions()\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 384, in getNumPartitions\n    return self._jrdd.partitions().size()\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py\", line 1133, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/usr/lib/spark/python/pyspark/sql/utils.py\", line 63, in deco\n    return f(*a, **kw)\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/protocol.py\", line 319, in get_return_value\n    format(target_id, \".\", name), value)\nPy4JJavaError: An error occurred while calling o152.partitions.\n: java.io.FileNotFoundException: File does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/mnt/my-data/apache\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1122)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystemLinkResolver.resolve(FileSystemLinkResolver.java:81)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.getFileStatus(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystem.resolvePath(FileSystem.java:756)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$16.\u003cinit\u003e(DistributedFileSystem.java:779)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.listLocatedStatus(DistributedFileSystem.java:770)\n\tat org.apache.hadoop.mapred.InputPathProcessor.perPathComputation(InputPathProcessor.java:251)\n\tat org.apache.hadoop.mapred.InputPathProcessor.access$000(InputPathProcessor.java:28)\n\tat org.apache.hadoop.mapred.InputPathProcessor$2.run(InputPathProcessor.java:354)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:18:30 AM",
+      "dateStarted": "Aug 30, 2017 11:19:03 AM",
+      "dateFinished": "Aug 30, 2017 11:19:03 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# Setup Apache Access Log DataFrame",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:19:02 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091910941_1250966074",
+      "id": "20170830-111830-424177543",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch1\u003eSetup Apache Access Log DataFrame\u003c/h1\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:18:30 AM",
+      "dateStarted": "Aug 30, 2017 11:19:02 AM",
+      "dateFinished": "Aug 30, 2017 11:19:02 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# sc is an existing SparkContext.\nfrom pyspark.sql import SQLContext, Row\n\n# Load the space-delimited web logs (text files)\nparts \u003d myApacheLogs.map(lambda l: l.split(\" \"))\napachelogs \u003d parts.map(lambda p: Row(ipaddress\u003dp[0], clientidentd\u003dp[1], userid\u003dp[2], datetime\u003dp[3], tmz\u003dp[4], method\u003dp[5], endpoint\u003dp[6], protocol\u003dp[7], responseCode\u003dp[8], contentSize\u003dp[9]))",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:19:02 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091910941_1250966074",
+      "id": "20170830-111830-607181337",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 30, 2017 11:18:30 AM",
+      "dateStarted": "Aug 30, 2017 11:19:03 AM",
+      "dateFinished": "Aug 30, 2017 11:19:03 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# Infer the schema, and register the DataFrame as a table.\nschemaApacheLogs \u003d sqlContext.createDataFrame(apachelogs)\nschemaApacheLogs.registerTempTable(\"apachelogs\")",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:19:02 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091910941_1250966074",
+      "id": "20170830-111830-747248353",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 272, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\n  File \"/usr/lib/spark/python/pyspark/sql/context.py\", line 333, in createDataFrame\n    return self.sparkSession.createDataFrame(data, schema, samplingRatio, verifySchema)\n  File \"/usr/lib/spark/python/pyspark/sql/session.py\", line 524, in createDataFrame\n    rdd, schema \u003d self._createFromRDD(data.map(prepare), schema, samplingRatio)\n  File \"/usr/lib/spark/python/pyspark/sql/session.py\", line 364, in _createFromRDD\n    struct \u003d self._inferSchema(rdd, samplingRatio)\n  File \"/usr/lib/spark/python/pyspark/sql/session.py\", line 335, in _inferSchema\n    first \u003d rdd.first()\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 1360, in first\n    rs \u003d self.take(1)\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 1312, in take\n    totalParts \u003d self.getNumPartitions()\n  File \"/usr/lib/spark/python/pyspark/rdd.py\", line 2425, in getNumPartitions\n    return self._prev_jrdd.partitions().size()\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py\", line 1133, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/usr/lib/spark/python/pyspark/sql/utils.py\", line 63, in deco\n    return f(*a, **kw)\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/protocol.py\", line 319, in get_return_value\n    format(target_id, \".\", name), value)\nPy4JJavaError: An error occurred while calling o152.partitions.\n: java.io.FileNotFoundException: File does not exist: hdfs://ec2-54-92-246-60.compute-1.amazonaws.com:9000/mnt/my-data/apache\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1122)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$18.doCall(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystemLinkResolver.resolve(FileSystemLinkResolver.java:81)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.getFileStatus(DistributedFileSystem.java:1114)\n\tat org.apache.hadoop.fs.FileSystem.resolvePath(FileSystem.java:756)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem$16.\u003cinit\u003e(DistributedFileSystem.java:779)\n\tat org.apache.hadoop.hdfs.DistributedFileSystem.listLocatedStatus(DistributedFileSystem.java:770)\n\tat org.apache.hadoop.mapred.InputPathProcessor.perPathComputation(InputPathProcessor.java:251)\n\tat org.apache.hadoop.mapred.InputPathProcessor.access$000(InputPathProcessor.java:28)\n\tat org.apache.hadoop.mapred.InputPathProcessor$2.run(InputPathProcessor.java:354)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:18:30 AM",
+      "dateStarted": "Aug 30, 2017 11:19:03 AM",
+      "dateFinished": "Aug 30, 2017 11:19:03 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# Access the table using Spark SQL within the sqlContext\nsqlContext.sql(\"select ipaddress, endpoint from apachelogs\").take(10)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 11:19:02 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091910941_1250966074",
+      "id": "20170830-111830-847067313",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 279, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-55386255110567693.py\", line 277, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\n  File \"/usr/lib/spark/python/pyspark/sql/context.py\", line 384, in sql\n    return self.sparkSession.sql(sqlQuery)\n  File \"/usr/lib/spark/python/pyspark/sql/session.py\", line 545, in sql\n    return DataFrame(self._jsparkSession.sql(sqlQuery), self._wrapped)\n  File \"/usr/lib/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py\", line 1133, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/usr/lib/spark/python/pyspark/sql/utils.py\", line 69, in deco\n    raise AnalysisException(s.split(\u0027: \u0027, 1)[1], stackTrace)\nAnalysisException: u\u0027Table or view not found: apachelogs; line 1 pos 32\u0027\n\n"
+      },
+      "dateCreated": "Aug 30, 2017 11:18:30 AM",
+      "dateStarted": "Aug 30, 2017 11:19:03 AM",
+      "dateFinished": "Aug 30, 2017 11:19:04 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504091942582_289139796",
+      "id": "20170830-111902_445000294",
+      "dateCreated": "Aug 30, 2017 11:19:02 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Databricks Data Import",
+  "id": "GN3WKTR85N1504091910",
+  "angularObjects": {
+    "2CRCTH5N681503309548868:shared_process": [],
+    "2CRT9SRAF81503309548905:shared_process": [],
+    "2CTE9GBET81503309548913:shared_process": [],
+    "2CS1RRBTB81503309548897:shared_process": []
+  },
+  "config": {
+    "isDashboard": false
+  },
+  "info": {},
+  "source": "FCN"
+}
