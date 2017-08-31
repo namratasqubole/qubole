@@ -1,0 +1,733 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n# Data Exploration on Databricks",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:03:59 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829404_-1616316761",
+      "id": "20170830-090348-188663161",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch1\u003eData Exploration on Databricks\u003c/h1\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "dateStarted": "Aug 30, 2017 9:03:59 AM",
+      "dateFinished": "Aug 30, 2017 9:03:59 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Parsing weblogs with regular expressions to create a table\n\n* Original Format: %s %s %s [%s] \\\"%s %s HTTP/1.1\\\" %s %s\n* Example Web Log Row \n * 10.0.0.213 - 2185662 [14/Aug/2015:00:05:15 -0800] \"GET /Hurricane+Ridge/rss.xml HTTP/1.1\" 200 288",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:04:03 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829404_-1616316761",
+      "id": "20170830-090348-1477991674",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eParsing weblogs with regular expressions to create a table\u003c/h3\u003e\n\u003cul\u003e\n\u003cli\u003eOriginal Format: %s %s %s [%s] \"%s %s HTTP/1.1\" %s %s\u003c/li\u003e\n\u003cli\u003eExample Web Log Row\u003c/li\u003e\n\u003cli\u003e10.0.0.213 - 2185662 [14/Aug/2015:00:05:15 -0800] \u0026ldquo;GET /Hurricane+Ridge/rss.xml HTTP/1.1\u0026rdquo; 200 288\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "dateStarted": "Aug 30, 2017 9:04:03 AM",
+      "dateFinished": "Aug 30, 2017 9:04:03 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Create External Table\nCreate an external table against the weblog data where we define a regular expression format as part of the serializer/deserializer (SerDe) definition.  Instead of writing ETL logic to do this, our table definition handles this.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:04:10 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829404_-1616316761",
+      "id": "20170830-090348-1191169010",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eCreate External Table\u003c/h2\u003e\n\u003cp\u003eCreate an external table against the weblog data where we define a regular expression format as part of the serializer/deserializer (SerDe) definition.  Instead of writing ETL logic to do this, our table definition handles this.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "dateStarted": "Aug 30, 2017 9:04:10 AM",
+      "dateFinished": "Aug 30, 2017 9:04:10 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nDROP TABLE IF EXISTS weblog;\nCREATE EXTERNAL TABLE weblog (\n  ipaddress STRING,\n  clientidentd STRING,\n  userid STRING,\n  datetime STRING,\n  method STRING,\n  endpoint STRING,\n  protocol STRING,\n  responseCode INT,\n  contentSize BIGINT\n)\nROW FORMAT\n  SERDE \u0027org.apache.hadoop.hive.serde2.RegexSerDe\u0027\nWITH SERDEPROPERTIES (\n  \"input.regex\" \u003d \u0027^(\\\\S+) (\\\\S+) (\\\\S+) \\\\[([\\\\w:/]+\\\\s[+\\\\-]\\\\d{4})\\\\] \\\\\"(\\\\S+) (\\\\S+) (\\\\S+)\\\\\" (\\\\d{3}) (\\\\d+)\u0027\n)\nLOCATION \n  \"/mnt/my-data/apache\"",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:04:14 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829404_-1616316761",
+      "id": "20170830-090348-729059968",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nmismatched input \u0027;\u0027 expecting \u003cEOF\u003e(line 1, pos 27)\n\n\u003d\u003d SQL \u003d\u003d\nDROP TABLE IF EXISTS weblog;\n---------------------------^^^\nCREATE EXTERNAL TABLE weblog (\n  ipaddress STRING,\n  clientidentd STRING,\n  userid STRING,\n  datetime STRING,\n  method STRING,\n  endpoint STRING,\n  protocol STRING,\n  responseCode INT,\n  contentSize BIGINT\n)\nROW FORMAT\n  SERDE \u0027org.apache.hadoop.hive.serde2.RegexSerDe\u0027\nWITH SERDEPROPERTIES (\n  \"input.regex\" \u003d \u0027^(\\\\S+) (\\\\S+) (\\\\S+) \\\\[([\\\\w:/]+\\\\s[+\\\\-]\\\\d{4})\\\\] \\\\\"(\\\\S+) (\\\\S+) (\\\\S+)\\\\\" (\\\\d{3}) (\\\\d+)\u0027\n)\nLOCATION \n  \"/mnt/my-data/apache\"\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "dateStarted": "Aug 30, 2017 9:04:14 AM",
+      "dateFinished": "Aug 30, 2017 9:04:14 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n#### Note: You can run a CACHE TABLE statement to  help speed up the performance of the table you query regularly.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:07:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829404_-1616316761",
+      "id": "20170830-090348-1267324317",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch4\u003eNote: You can run a CACHE TABLE statement to  help speed up the performance of the table you query regularly.\u003c/h4\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "dateStarted": "Aug 30, 2017 9:07:35 AM",
+      "dateFinished": "Aug 30, 2017 9:07:35 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nCACHE TABLE weblog;",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:07:33 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829404_-1616316761",
+      "id": "20170830-090348-731911164",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nextraneous input \u0027;\u0027 expecting \u003cEOF\u003e(line 1, pos 18)\n\n\u003d\u003d SQL \u003d\u003d\nCACHE TABLE weblog;\n------------------^^^\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "dateStarted": "Aug 30, 2017 9:07:33 AM",
+      "dateFinished": "Aug 30, 2017 9:07:33 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Query your weblogs using Spark SQL\nInstead of parsing and extracting out the datetime, method, endpoint, and protocol columns; the external table has already done this for you.  Now you can treat your weblog data similar to how you would treat any other structured dataset and write Spark SQL against the table.\n",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:06:06 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829405_-1616701510",
+      "id": "20170830-090348-1358618523",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eQuery your weblogs using Spark SQL\u003c/h2\u003e\n\u003cp\u003eInstead of parsing and extracting out the datetime, method, endpoint, and protocol columns; the external table has already done this for you.  Now you can treat your weblog data similar to how you would treat any other structured dataset and write Spark SQL against the table.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "dateStarted": "Aug 30, 2017 9:06:06 AM",
+      "dateFinished": "Aug 30, 2017 9:06:06 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect * from weblog limit 10;",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:06:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829405_-1616701510",
+      "id": "20170830-090348-642291128",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nextraneous input \u0027;\u0027 expecting {\u003cEOF\u003e, \u0027.\u0027, \u0027[\u0027, \u0027OR\u0027, \u0027AND\u0027, \u0027IN\u0027, NOT, \u0027BETWEEN\u0027, \u0027LIKE\u0027, RLIKE, \u0027IS\u0027, EQ, \u0027\u003c\u003d\u003e\u0027, \u0027\u003c\u003e\u0027, \u0027!\u003d\u0027, \u0027\u003c\u0027, LTE, \u0027\u003e\u0027, GTE, \u0027+\u0027, \u0027-\u0027, \u0027*\u0027, \u0027/\u0027, \u0027%\u0027, \u0027DIV\u0027, \u0027\u0026\u0027, \u0027|\u0027, \u0027^\u0027}(line 1, pos 29)\n\n\u003d\u003d SQL \u003d\u003d\nselect * from weblog limit 10;\n-----------------------------^^^\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "dateStarted": "Aug 30, 2017 9:06:18 AM",
+      "dateFinished": "Aug 30, 2017 9:06:18 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect count(1) from weblog;",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:06:16 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829405_-1616701510",
+      "id": "20170830-090348-535556026",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nextraneous input \u0027;\u0027 expecting {\u003cEOF\u003e, \u0027,\u0027, \u0027SELECT\u0027, \u0027FROM\u0027, \u0027ADD\u0027, \u0027AS\u0027, \u0027ALL\u0027, \u0027DISTINCT\u0027, \u0027WHERE\u0027, \u0027GROUP\u0027, \u0027BY\u0027, \u0027GROUPING\u0027, \u0027SETS\u0027, \u0027CUBE\u0027, \u0027ROLLUP\u0027, \u0027ORDER\u0027, \u0027HAVING\u0027, \u0027LIMIT\u0027, \u0027AT\u0027, \u0027OR\u0027, \u0027AND\u0027, \u0027IN\u0027, NOT, \u0027NO\u0027, \u0027EXISTS\u0027, \u0027BETWEEN\u0027, \u0027LIKE\u0027, RLIKE, \u0027IS\u0027, \u0027NULL\u0027, \u0027TRUE\u0027, \u0027FALSE\u0027, \u0027NULLS\u0027, \u0027ASC\u0027, \u0027DESC\u0027, \u0027FOR\u0027, \u0027INTERVAL\u0027, \u0027CASE\u0027, \u0027WHEN\u0027, \u0027THEN\u0027, \u0027ELSE\u0027, \u0027END\u0027, \u0027JOIN\u0027, \u0027CROSS\u0027, \u0027OUTER\u0027, \u0027INNER\u0027, \u0027LEFT\u0027, \u0027RIGHT\u0027, \u0027FULL\u0027, \u0027NATURAL\u0027, \u0027LATERAL\u0027, \u0027WINDOW\u0027, \u0027OVER\u0027, \u0027PARTITION\u0027, \u0027RANGE\u0027, \u0027ROWS\u0027, \u0027UNBOUNDED\u0027, \u0027PRECEDING\u0027, \u0027FOLLOWING\u0027, \u0027CURRENT\u0027, \u0027FIRST\u0027, \u0027LAST\u0027, \u0027ROW\u0027, \u0027WITH\u0027, \u0027VALUES\u0027, \u0027CREATE\u0027, \u0027TABLE\u0027, \u0027VIEW\u0027, \u0027REPLACE\u0027, \u0027INSERT\u0027, \u0027DELETE\u0027, \u0027INTO\u0027, \u0027DESCRIBE\u0027, \u0027EXPLAIN\u0027, \u0027FORMAT\u0027, \u0027LOGICAL\u0027, \u0027CODEGEN\u0027, \u0027CAST\u0027, \u0027SHOW\u0027, \u0027TABLES\u0027, \u0027COLUMNS\u0027, \u0027COLUMN\u0027, \u0027USE\u0027, \u0027PARTITIONS\u0027, \u0027FUNCTIONS\u0027, \u0027DROP\u0027, \u0027UNION\u0027, \u0027EXCEPT\u0027, \u0027MINUS\u0027, \u0027INTERSECT\u0027, \u0027TO\u0027, \u0027TABLESAMPLE\u0027, \u0027STRATIFY\u0027, \u0027ALTER\u0027, \u0027RENAME\u0027, \u0027ARRAY\u0027, \u0027MAP\u0027, \u0027STRUCT\u0027, \u0027COMMENT\u0027, \u0027SET\u0027, \u0027RESET\u0027, \u0027DATA\u0027, \u0027START\u0027, \u0027TRANSACTION\u0027, \u0027COMMIT\u0027, \u0027ROLLBACK\u0027, \u0027MACRO\u0027, \u0027IF\u0027, \u0027DIV\u0027, \u0027PERCENT\u0027, \u0027BUCKET\u0027, \u0027OUT\u0027, \u0027OF\u0027, \u0027SORT\u0027, \u0027CLUSTER\u0027, \u0027DISTRIBUTE\u0027, \u0027OVERWRITE\u0027, \u0027TRANSFORM\u0027, \u0027REDUCE\u0027, \u0027USING\u0027, \u0027SERDE\u0027, \u0027SERDEPROPERTIES\u0027, \u0027RECORDREADER\u0027, \u0027RECORDWRITER\u0027, \u0027DELIMITED\u0027, \u0027FIELDS\u0027, \u0027TERMINATED\u0027, \u0027COLLECTION\u0027, \u0027ITEMS\u0027, \u0027KEYS\u0027, \u0027ESCAPED\u0027, \u0027LINES\u0027, \u0027SEPARATED\u0027, \u0027FUNCTION\u0027, \u0027EXTENDED\u0027, \u0027REFRESH\u0027, \u0027CLEAR\u0027, \u0027CACHE\u0027, \u0027UNCACHE\u0027, \u0027LAZY\u0027, \u0027FORMATTED\u0027, \u0027GLOBAL\u0027, TEMPORARY, \u0027OPTIONS\u0027, \u0027UNSET\u0027, \u0027TBLPROPERTIES\u0027, \u0027DBPROPERTIES\u0027, \u0027BUCKETS\u0027, \u0027SKEWED\u0027, \u0027STORED\u0027, \u0027DIRECTORIES\u0027, \u0027LOCATION\u0027, \u0027EXCHANGE\u0027, \u0027ARCHIVE\u0027, \u0027UNARCHIVE\u0027, \u0027FILEFORMAT\u0027, \u0027TOUCH\u0027, \u0027COMPACT\u0027, \u0027CONCATENATE\u0027, \u0027CHANGE\u0027, \u0027CASCADE\u0027, \u0027RESTRICT\u0027, \u0027CLUSTERED\u0027, \u0027SORTED\u0027, \u0027PURGE\u0027, \u0027INPUTFORMAT\u0027, \u0027OUTPUTFORMAT\u0027, DATABASE, DATABASES, \u0027DFS\u0027, \u0027TRUNCATE\u0027, \u0027ANALYZE\u0027, \u0027COMPUTE\u0027, \u0027LIST\u0027, \u0027STATISTICS\u0027, \u0027PARTITIONED\u0027, \u0027EXTERNAL\u0027, \u0027DEFINED\u0027, \u0027REVOKE\u0027, \u0027GRANT\u0027, \u0027LOCK\u0027, \u0027UNLOCK\u0027, \u0027MSCK\u0027, \u0027REPAIR\u0027, \u0027RECOVER\u0027, \u0027EXPORT\u0027, \u0027IMPORT\u0027, \u0027LOAD\u0027, \u0027ROLE\u0027, \u0027ROLES\u0027, \u0027COMPACTIONS\u0027, \u0027PRINCIPALS\u0027, \u0027TRANSACTIONS\u0027, \u0027INDEX\u0027, \u0027INDEXES\u0027, \u0027LOCKS\u0027, \u0027OPTION\u0027, \u0027ANTI\u0027, \u0027LOCAL\u0027, \u0027INPATH\u0027, \u0027CURRENT_DATE\u0027, \u0027CURRENT_TIMESTAMP\u0027, IDENTIFIER, BACKQUOTED_IDENTIFIER}(line 1, pos 27)\n\n\u003d\u003d SQL \u003d\u003d\nselect count(1) from weblog;\n---------------------------^^^\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "dateStarted": "Aug 30, 2017 9:06:16 AM",
+      "dateFinished": "Aug 30, 2017 9:06:16 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Enhanced Spark SQL queries\nAt this point, we can quickly write SQL group by statements to understand which web page in the logs has the most number of events. But notice that there is a hierarchy of pages within the endpoint column.  We just want want to understand the top level hierarchy - which area such as the Olympics, Casacdes, or Rainier are more popular",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829405_-1616701510",
+      "id": "20170830-090348-469759356",
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect endpoint, count(1) as Events\n  from weblog \n group by endpoint\n order by Events desc ",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829405_-1616701510",
+      "id": "20170830-090348-53702820",
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n#### To extract out the top level hierarchy within the same Spark SQL, we can write a nested SQL statement with regular expressions and split statements\n* Click on the table and chart icon below the results to switch between table and bar graph.",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829405_-1616701510",
+      "id": "20170830-090348-473517555",
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect TaggedEndPoints, NumHits\n  from (\n    select regexp_replace(split(endpoint, \"/\")[1], \"index.html\", \"Home\") as TaggedEndPoints, count(1) as NumHits\n      from weblog \n     group by regexp_replace(split(endpoint, \"/\")[1], \"index.html\", \"Home\")\n  ) a\n where TaggedEndPoints not in (\u0027index.html\u0027, \u0027msgs\u0027, \u0027tags\u0027, \u0027Home\u0027, \u0027search\u0027)\n order by NumHits desc",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:06:24 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829405_-1616701510",
+      "id": "20170830-090348-396873469",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Table or view not found: weblog; line 4 pos 11\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "dateStarted": "Aug 30, 2017 9:06:24 AM",
+      "dateFinished": "Aug 30, 2017 9:06:24 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Making sense of web site response codes\nTaking a step back, let\u0027s also look at how well the site is working by reviewing the response codes with a group by statement",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:06:37 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829405_-1616701510",
+      "id": "20170830-090348-1485276452",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eMaking sense of web site response codes\u003c/h2\u003e\n\u003cp\u003eTaking a step back, let\u0027s also look at how well the site is working by reviewing the response codes with a group by statement\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "dateStarted": "Aug 30, 2017 9:06:37 AM",
+      "dateFinished": "Aug 30, 2017 9:06:37 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n select responsecode, count(1) as responses \n   from weblog \n  group by responsecode\n  ",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:06:35 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829405_-1616701510",
+      "id": "20170830-090348-787517467",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Table or view not found: weblog; line 2 pos 8\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "dateStarted": "Aug 30, 2017 9:06:35 AM",
+      "dateFinished": "Aug 30, 2017 9:06:35 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n#### But it would be better to view this data using the response text instead of the just the codes.  So let\u0027s\n* Create a response description table \n* Re-write the above SQL statement to join to this table",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:06:49 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829405_-1616701510",
+      "id": "20170830-090348-1329113184",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch4\u003eBut it would be better to view this data using the response text instead of the just the codes.  So let\u0027s\u003c/h4\u003e\n\u003cul\u003e\n\u003cli\u003eCreate a response description table\u003c/li\u003e\n\u003cli\u003eRe-write the above SQL statement to join to this table\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "dateStarted": "Aug 30, 2017 9:06:49 AM",
+      "dateFinished": "Aug 30, 2017 9:06:49 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n-- Create Response Codes table\nDROP TABLE IF EXISTS response_codes;\nCREATE EXTERNAL TABLE response_codes (\n  ResponseCode INT,\n  ResponseDesc STRING\n)\nROW FORMAT DELIMITED FIELDS TERMINATED by \u0027\\t\u0027\nLOCATION \n  \"/mnt/my-data/response\";\nCACHE TABLE response_codes;",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:06:44 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829405_-1616701510",
+      "id": "20170830-090348-306151636",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nmismatched input \u0027;\u0027 expecting \u003cEOF\u003e(line 2, pos 35)\n\n\u003d\u003d SQL \u003d\u003d\n-- Create Response Codes table\nDROP TABLE IF EXISTS response_codes;\n-----------------------------------^^^\nCREATE EXTERNAL TABLE response_codes (\n  ResponseCode INT,\n  ResponseDesc STRING\n)\nROW FORMAT DELIMITED FIELDS TERMINATED by \u0027\\t\u0027\nLOCATION \n  \"/mnt/my-data/response\";\nCACHE TABLE response_codes;\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "dateStarted": "Aug 30, 2017 9:06:44 AM",
+      "dateFinished": "Aug 30, 2017 9:06:44 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n-- Join to the response codes table\n-- Switch to pie chart using the chart button below the results\nselect r.responsedesc, count(1) as responses\n  from weblog f\n    inner join response_codes r\n      on r.responsecode \u003d f.responsecode\n group by r.responsedesc\n order by responses desc",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:07:15 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829406_-1615547263",
+      "id": "20170830-090348-597287937",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Table or view not found: weblog; line 4 pos 7\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "dateStarted": "Aug 30, 2017 9:07:15 AM",
+      "dateFinished": "Aug 30, 2017 9:07:15 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Exploring your Data\nLet\u0027s expand on our exploration by seeing where the users and sessions are coming from within our web logs.  To do this, we will create mapping table between the web logs IP address to ISO-3166-1 3-letter country codes.",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:07:11 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829406_-1615547263",
+      "id": "20170830-090348-644895382",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eExploring your Data\u003c/h2\u003e\n\u003cp\u003eLet\u0027s expand on our exploration by seeing where the users and sessions are coming from within our web logs.  To do this, we will create mapping table between the web logs IP address to ISO-3166-1 3-letter country codes.\u003c/p\u003e\n"
+      },
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "dateStarted": "Aug 30, 2017 9:07:11 AM",
+      "dateFinished": "Aug 30, 2017 9:07:11 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n-- Create IP address to country mapping table\nDROP TABLE IF EXISTS map_weblog_geo;\nCREATE EXTERNAL TABLE map_weblog_geo (\n  ipaddress STRING,\n  CountryName STRING,\n  CountryCode2 STRING,\n  CountryCode3 STRING\n)\nROW FORMAT DELIMITED FIELDS TERMINATED by \u0027\\t\u0027\nLOCATION \n  \"/mnt/my-data/map\";\nCACHE TABLE map_weblog_geo;",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:07:08 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829406_-1615547263",
+      "id": "20170830-090348-226424067",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nmismatched input \u0027;\u0027 expecting \u003cEOF\u003e(line 2, pos 35)\n\n\u003d\u003d SQL \u003d\u003d\n-- Create IP address to country mapping table\nDROP TABLE IF EXISTS map_weblog_geo;\n-----------------------------------^^^\nCREATE EXTERNAL TABLE map_weblog_geo (\n  ipaddress STRING,\n  CountryName STRING,\n  CountryCode2 STRING,\n  CountryCode3 STRING\n)\nROW FORMAT DELIMITED FIELDS TERMINATED by \u0027\\t\u0027\nLOCATION \n  \"/mnt/my-data/map\";\nCACHE TABLE map_weblog_geo;\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "dateStarted": "Aug 30, 2017 9:07:08 AM",
+      "dateFinished": "Aug 30, 2017 9:07:08 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n-- View a sample of the map_weblog_geo table\nselect * from map_weblog_geo limit 10;",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:07:03 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829406_-1615547263",
+      "id": "20170830-090348-1161707987",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nextraneous input \u0027;\u0027 expecting {\u003cEOF\u003e, \u0027.\u0027, \u0027[\u0027, \u0027OR\u0027, \u0027AND\u0027, \u0027IN\u0027, NOT, \u0027BETWEEN\u0027, \u0027LIKE\u0027, RLIKE, \u0027IS\u0027, EQ, \u0027\u003c\u003d\u003e\u0027, \u0027\u003c\u003e\u0027, \u0027!\u003d\u0027, \u0027\u003c\u0027, LTE, \u0027\u003e\u0027, GTE, \u0027+\u0027, \u0027-\u0027, \u0027*\u0027, \u0027/\u0027, \u0027%\u0027, \u0027DIV\u0027, \u0027\u0026\u0027, \u0027|\u0027, \u0027^\u0027}(line 2, pos 37)\n\n\u003d\u003d SQL \u003d\u003d\n-- View a sample of the map_weblog_geo table\nselect * from map_weblog_geo limit 10;\n-------------------------------------^^^\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "dateStarted": "Aug 30, 2017 9:07:03 AM",
+      "dateFinished": "Aug 30, 2017 9:07:03 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n-- Query the weblogs joining to the IP-to-country mapping table\n-- as well as running distinct count calculations\nselect m.countrycode3, count(1) as Events, count(distinct UserID) as Users\n  from weblog f\n    inner join map_weblog_geo m \n       on m.ipaddress \u003d f.ipaddress\n group by m.countrycode3\n order by users desc",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Aug 30, 2017 9:06:56 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504083829406_-1615547263",
+      "id": "20170830-090348-1188198121",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Table or view not found: weblog; line 4 pos 7\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Aug 30, 2017 9:03:49 AM",
+      "dateStarted": "Aug 30, 2017 9:06:56 AM",
+      "dateFinished": "Aug 30, 2017 9:06:56 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504084016485_1047728951",
+      "id": "20170830-090656_1112043389",
+      "dateCreated": "Aug 30, 2017 9:06:56 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Data Exploration on Databricks",
+  "id": "6Z7PHHFYB91504083828",
+  "angularObjects": {
+    "2CRCTH5N681503309548868:shared_process": [],
+    "2CRT9SRAF81503309548905:shared_process": [],
+    "2CTE9GBET81503309548913:shared_process": [],
+    "2CS1RRBTB81503309548897:shared_process": []
+  },
+  "config": {
+    "isDashboard": false
+  },
+  "info": {},
+  "source": "FCN"
+}
