@@ -1,0 +1,464 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n## Streaming and DataFrames\nThis is the second notebook of the **Streaming Meetup RSVPs** set of notebooks.  The purpose of this notebook is to connect to the [Meetup Streaming API](http://www.meetup.com/meetup_api/docs/stream/2/rsvps/) and execute a streaming notebook.\n\n*Meetup Sources*\n* Based off of the [Meetup RSVP Ticker](http://meetup.github.io/stream/rsvpTicker/)\n* Reference: [Meetup Streaming API \u003e RSVPs](http://www.meetup.com/meetup_api/docs/stream/2/rsvps/)",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617235_648486842",
+      "id": "20170901-113336-1277910534",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Attributions\nVarious references utilized through this example\n* [Spark Streaming Programming Guide](https://people.apache.org/~pwendell/spark-nightly/spark-1.6-docs/latest/streaming-programming-guide.html)\n* [Streaming Word Count](https://demo.cloud.databricks.com/#notebook/146957) and [Twitter Hashtag Count](https://demo.cloud.databricks.com/#notebook/147068) notebooks\n* Spark Examples [NetworkWordCount.scala](https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/spark/examples/streaming/NetworkWordCount.scala)\n* [Meetup-Stream MeetupReceiver](https://github.com/actions/meetup-stream/blob/master/src/main/scala/receiver/MeetupReceiver.scala)\n* [Killrweather KafkaStreamingJson.scala](https://github.com/killrweather/killrweather/blob/master/killrweather-examples/src/main/scala/com/datastax/killrweather/KafkaStreamingJson.scala)",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617235_648486842",
+      "id": "20170901-113336-530271806",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617235_648486842",
+      "id": "20170901-113336-1131954867",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Imports\nVarious packages required for this streaming example. \n\n* The Spark Streaming imports\n* The AsyncHTTP Client to connect to the Meetup API ",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617235_648486842",
+      "id": "20170901-113336-1494987360",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Spark Streaming\nimport org.apache.spark._\nimport org.apache.spark.storage._\nimport org.apache.spark.streaming._\n\n// AsyncHTTP Client\nimport com.ning.http.client._\nimport com.ning.http.client.AsyncHttpClientConfig\n",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 4, 2017 9:24:57 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617235_648486842",
+      "id": "20170901-113336-1460379231",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nimport org.apache.spark._\n\nimport org.apache.spark.storage._\n\nimport org.apache.spark.streaming._\n\n\n\n\u003cconsole\u003e:34: error: object http is not a member of package com.ning\n       import com.ning.http.client._\n                       ^\n"
+      },
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "dateStarted": "Sep 4, 2017 9:24:58 AM",
+      "dateFinished": "Sep 4, 2017 9:26:06 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617235_648486842",
+      "id": "20170901-113336-713129589",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Configurations\n* Configurations for this streaming application",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617235_648486842",
+      "id": "20170901-113336-232238454",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// \u003d\u003d\u003d Configuration to control the flow of the application \u003d\u003d\u003d\nval stopActiveContext \u003d true\t \n// \"true\"  \u003d stop if any existing StreamingContext is running;              \n// \"false\" \u003d dont stop, and let it run undisturbed, but your latest code may not be used\n\n// \u003d\u003d\u003d Configurations for Spark Streaming \u003d\u003d\u003d\nval batchIntervalSeconds \u003d 1 \n",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617235_648486842",
+      "id": "20170901-113336-1358639099",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617235_648486842",
+      "id": "20170901-113336-129444131",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Setup: Define the function that sets up the StreamingContext\n* Create persistent table `meetup_stream` to store meetup data\n* Create MeetupReciever \n * Source: [MeetupReceiver.scala](https://github.com/actions/meetup-stream/blob/master/src/main/scala/receiver/MeetupReceiver.scala)\n * Install the Async-HTTP-Client Library \n   * [Async-HTTP-Client Library Source](http://mvnrepository.com/artifact/com.ning/async-http-client/1.9.31)\n   * Follow the Install Library Notebook for steps to install external Scala / Java JARs\n* Define the function that creates and sets up the streaming computation (this is the main logic)",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617235_648486842",
+      "id": "20170901-113336-1278143808",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n\n-- meetup_stream\n--   This table will persist the meetup data\n\nDROP TABLE IF EXISTS meetup_stream\nCREATE TABLE IF NOT EXISTS meetup_stream (\n  group_country STRING,\n  group_state STRING,\n  group_name STRING,\n  event_name STRING,\n  member_id BIGINT,\n  response STRING\n)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 4, 2017 7:41:27 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617235_648486842",
+      "id": "20170901-113336-423460220",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nmismatched input \u0027CREATE\u0027 expecting \u003cEOF\u003e(line 5, pos 0)\n\n\u003d\u003d SQL \u003d\u003d\n-- meetup_stream\n--   This table will persist the meetup data\n\nDROP TABLE IF EXISTS meetup_stream\nCREATE TABLE IF NOT EXISTS meetup_stream (\n^^^\n  group_country STRING,\n  group_state STRING,\n  group_name STRING,\n  event_name STRING,\n  member_id BIGINT,\n  response STRING\n)\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "dateStarted": "Sep 4, 2017 7:41:27 AM",
+      "dateFinished": "Sep 4, 2017 7:41:27 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617235_648486842",
+      "id": "20170901-113336-1283530986",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n/**\n * MeetupReceiver.scala\n *   @author szelvenskiy\n *   Source: https://github.com/actions/meetup-stream/blob/master/src/main/scala/receiver/MeetupReceiver.scala\n *   Uses http://mvnrepository.com/artifact/com.ning/async-http-client/1.9.31\n */\n\nimport org.apache.spark.streaming.receiver.Receiver\nimport org.apache.spark.storage.StorageLevel\nimport org.apache.spark.Logging\nimport com.ning.http.client.AsyncHttpClientConfig\nimport com.ning.http.client._\nimport scala.collection.mutable.ArrayBuffer\nimport java.io.OutputStream\nimport java.io.ByteArrayInputStream\nimport java.io.InputStreamReader\nimport java.io.BufferedReader\nimport java.io.InputStream\nimport java.io.PipedInputStream\nimport java.io.PipedOutputStream\n\nclass MeetupReceiver(url: String) extends Receiver[String](StorageLevel.MEMORY_AND_DISK_2) with Logging {\n  \n  @transient var client: AsyncHttpClient \u003d _\n  \n  @transient var inputPipe: PipedInputStream \u003d _\n  @transient var outputPipe: PipedOutputStream \u003d _  \n       \n  def onStart() {    \n    val cf \u003d new AsyncHttpClientConfig.Builder()\n    cf.setRequestTimeout(Integer.MAX_VALUE)\n    cf.setReadTimeout(Integer.MAX_VALUE)\n    cf.setPooledConnectionIdleTimeout(Integer.MAX_VALUE)      \n    client\u003d new AsyncHttpClient(cf.build())\n    \n    inputPipe \u003d new PipedInputStream(1024 * 1024)\n    outputPipe \u003d new PipedOutputStream(inputPipe)\n    val producerThread \u003d new Thread(new DataConsumer(inputPipe))\n    producerThread.start()\n    \n    client.prepareGet(url).execute(new AsyncHandler[Unit]{\n        \n      def onBodyPartReceived(bodyPart: HttpResponseBodyPart) \u003d {\n        bodyPart.writeTo(outputPipe)\n        AsyncHandler.STATE.CONTINUE        \n      }\n      \n      def onStatusReceived(status: HttpResponseStatus) \u003d {\n        AsyncHandler.STATE.CONTINUE\n      }\n      \n      def onHeadersReceived(headers: HttpResponseHeaders) \u003d {\n        AsyncHandler.STATE.CONTINUE\n      }\n            \n      def onCompleted \u003d {\n        println(\"completed\")\n      }\n      \n      \n      def onThrowable(t: Throwable)\u003d{\n        t.printStackTrace()\n      }\n        \n    })    \n    \n    \n  }\n\n  def onStop() {\n    if (Option(client).isDefined) client.close()\n    if (Option(outputPipe).isDefined) {\n     outputPipe.flush()\n     outputPipe.close() \n    }\n    if (Option(inputPipe).isDefined) {\n     inputPipe.close() \n    }    \n  }\n  \n  class DataConsumer(inputStream: InputStream) extends Runnable \n  {\n       \n      override\n      def run()\n      {        \n        val bufferedReader \u003d new BufferedReader( new InputStreamReader( inputStream ))\n        var input\u003dbufferedReader.readLine()\n        while(input!\u003dnull){          \n          store(input)\n          input\u003dbufferedReader.readLine()\n        }            \n      }  \n      \n  }\n\n}",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617235_648486842",
+      "id": "20170901-113336-648840305",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617235_648486842",
+      "id": "20170901-113336-523459192",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n/**\n * creatingFunc()\n *   Defines the Streaming Context function\n *   Creates `meetup_stream_json` temporary table\n */\n\n// Flag to detect whether new context was created or not\nvar newContextCreated \u003d false\n\n// Function to create a new StreamingContext and set it up\ndef creatingFunc(): StreamingContext \u003d {\n    \n  // Create a StreamingContext\n  val ssc \u003d new StreamingContext(sc, Seconds(batchIntervalSeconds))\n  \n  // Create a stream that connects to the MeetupReceiver\n  val stream \u003d ssc.receiverStream(new MeetupReceiver(\"http://stream.meetup.com/2/rsvps\"))\n  \n  // Create temp table at every batch interval\n  stream.foreachRDD { rdd \u003d\u003e \n    if (rdd.toLocalIterator.nonEmpty) {\n      // Create Streaming DataFrame by reading the data within the RDD\n      val sdf \u003d sqlContext.read.json(rdd)\n      \n      // Register `meetup_stream_json` table\n      sdf.select(sdf(\"group.group_country\"), sdf(\"group.group_state\"), sdf(\"group.group_name\"), sdf(\"event.event_name\"), sdf(\"member.member_id\"), sdf(\"response\")).registerTempTable(\"meetup_stream_json\")      \n      \n      // Populate `meetup_stream` table\n      sqlContext.sql(\"insert into meetup_stream select * from meetup_stream_json\")\n    }\n  }\n  \n  ssc.remember(Minutes(5))  // To make sure data is not deleted by the time we query it interactively\n  \n  println(\"Creating function called to create new StreamingContext\")\n  newContextCreated \u003d true  \n  ssc\n}  ",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617235_648486842",
+      "id": "20170901-113336-700906778",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617235_648486842",
+      "id": "20170901-113336-949653960",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Start Streaming Job\n* Stop existing StreamingContext if any and start/restart the new one\n* Here we are going to use the configurations at the top of the notebook to decide whether to:\n * stop any existing StreamingContext, and start a new one, \n * or recover one from existing checkpoints.",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617235_648486842",
+      "id": "20170901-113336-1487539241",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n// Stop any existing StreamingContext \nif (stopActiveContext) {\t\n  StreamingContext.getActive.foreach { _.stop(stopSparkContext \u003d false) }\n} \n\n// Get or create a streaming context\nval ssc \u003d StreamingContext.getActiveOrCreate(creatingFunc)\nif (newContextCreated) {\n  println(\"New context created from currently defined creating function\") \n} else {\n  println(\"Existing context running or recovered from checkpoint, may not be running currently defined creating function\")\n}\n\n// Start the streaming context in the background.\nssc.start()\n\n// This is to ensure that we wait for some time before the background streaming job starts. This will put this cell on hold for 5 times the batchIntervalSeconds.\nssc.awaitTerminationOrTimeout(batchIntervalSeconds * 5 * 1000)",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617235_648486842",
+      "id": "20170901-113336-127333159",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617235_646563098",
+      "id": "20170901-113336-1339685699",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Interactive Querying\n* Now let\u0027s try querying the table\n* You can run this command again and again, you will find the meetup information changing.",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617236_646563098",
+      "id": "20170901-113336-988240496",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\ninsert into meetup_stream select * from meetup_stream_json",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617236_646563098",
+      "id": "20170901-113336-555232608",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n\n-- Query temporary table (updated every `batchIntervalSeconds`)\nselect * from meetup_stream_json limit 20",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617236_646563098",
+      "id": "20170901-113336-827884984",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n\n-- Query count from persistent table\nselect count(1) from meetup_stream",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617236_646563098",
+      "id": "20170901-113336-231141278",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n\n-- Query persistent table \nselect * from meetup_stream limit 10",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617236_646563098",
+      "id": "20170901-113336-1265920428",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617236_646563098",
+      "id": "20170901-113336-1285879300",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Review Reports and Spark UI\nAs this streaming application is running, check the following:\n* View the **Reports and Dashboards** to watch the reports change on refresh\n* Spark UI for the cluster: note the increasing in scheduling delays due to inserting data into the `meetup_stream` table ",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617236_646563098",
+      "id": "20170901-113336-1145539281",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617236_646563098",
+      "id": "20170901-113336-230932879",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Stop Streaming Job\n* To stop the StreamingContext, uncomment below and execute ",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617236_646563098",
+      "id": "20170901-113336-979738903",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nStreamingContext.getActive.foreach { _.stop(stopSparkContext \u003d false) }",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617236_646563098",
+      "id": "20170901-113336-411162170",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617236_646563098",
+      "id": "20170901-113336-1408221134",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504265617236_646563098",
+      "id": "20170901-113336-133838203",
+      "dateCreated": "Sep 1, 2017 11:33:37 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "streaming_and_dataframes - Clone",
+  "id": "9EJ744XE711504510933",
+  "angularObjects": {
+    "2CPEQV35Dnull1500544457631:shared_process": [],
+    "2CPKSJT5Xnull1500544457627:shared_process": [],
+    "2CQNVVBP2null1500544457635:shared_process": [],
+    "2CTA95ARW312391504176906306:shared_process": []
+  },
+  "config": {
+    "isDashboard": false
+  },
+  "info": {},
+  "source": "FCN"
+}
