@@ -2,60 +2,148 @@
   "paragraphs": [
     {
       "text": "%md\n## Streaming and DataFrames\nThis is the second notebook of the **Streaming Meetup RSVPs** set of notebooks.  The purpose of this notebook is to connect to the [Meetup Streaming API](http://www.meetup.com/meetup_api/docs/stream/2/rsvps/) and execute a streaming notebook.\n\n*Meetup Sources*\n* Based off of the [Meetup RSVP Ticker](http://meetup.github.io/stream/rsvpTicker/)\n* Reference: [Meetup Streaming API \u003e RSVPs](http://www.meetup.com/meetup_api/docs/stream/2/rsvps/)",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:17 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617235_648486842",
       "id": "20170901-113336-1277910534",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eStreaming and DataFrames\u003c/h2\u003e\n\u003cp\u003eThis is the second notebook of the \u003cstrong\u003eStreaming Meetup RSVPs\u003c/strong\u003e set of notebooks.  The purpose of this notebook is to connect to the \u003ca href\u003d\"http://www.meetup.com/meetup_api/docs/stream/2/rsvps/\"\u003eMeetup Streaming API\u003c/a\u003e and execute a streaming notebook.\u003c/p\u003e\n\u003cp\u003e\u003cem\u003eMeetup Sources\u003c/em\u003e\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eBased off of the \u003ca href\u003d\"http://meetup.github.io/stream/rsvpTicker/\"\u003eMeetup RSVP Ticker\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003eReference: \u003ca href\u003d\"http://www.meetup.com/meetup_api/docs/stream/2/rsvps/\"\u003eMeetup Streaming API \u003e RSVPs\u003c/a\u003e\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:17 AM",
+      "dateFinished": "Sep 5, 2017 6:03:18 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%md\n### Attributions\nVarious references utilized through this example\n* [Spark Streaming Programming Guide](https://people.apache.org/~pwendell/spark-nightly/spark-1.6-docs/latest/streaming-programming-guide.html)\n* [Streaming Word Count](https://demo.cloud.databricks.com/#notebook/146957) and [Twitter Hashtag Count](https://demo.cloud.databricks.com/#notebook/147068) notebooks\n* Spark Examples [NetworkWordCount.scala](https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/spark/examples/streaming/NetworkWordCount.scala)\n* [Meetup-Stream MeetupReceiver](https://github.com/actions/meetup-stream/blob/master/src/main/scala/receiver/MeetupReceiver.scala)\n* [Killrweather KafkaStreamingJson.scala](https://github.com/killrweather/killrweather/blob/master/killrweather-examples/src/main/scala/com/datastax/killrweather/KafkaStreamingJson.scala)",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:17 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617235_648486842",
       "id": "20170901-113336-530271806",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eAttributions\u003c/h3\u003e\n\u003cp\u003eVarious references utilized through this example\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ca href\u003d\"https://people.apache.org/~pwendell/spark-nightly/spark-1.6-docs/latest/streaming-programming-guide.html\"\u003eSpark Streaming Programming Guide\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href\u003d\"https://demo.cloud.databricks.com/#notebook/146957\"\u003eStreaming Word Count\u003c/a\u003e and \u003ca href\u003d\"https://demo.cloud.databricks.com/#notebook/147068\"\u003eTwitter Hashtag Count\u003c/a\u003e notebooks\u003c/li\u003e\n\u003cli\u003eSpark Examples \u003ca href\u003d\"https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/spark/examples/streaming/NetworkWordCount.scala\"\u003eNetworkWordCount.scala\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href\u003d\"https://github.com/actions/meetup-stream/blob/master/src/main/scala/receiver/MeetupReceiver.scala\"\u003eMeetup-Stream MeetupReceiver\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href\u003d\"https://github.com/killrweather/killrweather/blob/master/killrweather-examples/src/main/scala/com/datastax/killrweather/KafkaStreamingJson.scala\"\u003eKillrweather KafkaStreamingJson.scala\u003c/a\u003e\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:18 AM",
+      "dateFinished": "Sep 5, 2017 6:03:18 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark\n",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617235_648486842",
       "id": "20170901-113336-1131954867",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:18 AM",
+      "dateFinished": "Sep 5, 2017 6:03:18 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%md\n### Imports\nVarious packages required for this streaming example. \n\n* The Spark Streaming imports\n* The AsyncHTTP Client to connect to the Meetup API ",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617235_648486842",
       "id": "20170901-113336-1494987360",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eImports\u003c/h3\u003e\n\u003cp\u003eVarious packages required for this streaming example.\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eThe Spark Streaming imports\u003c/li\u003e\n\u003cli\u003eThe AsyncHTTP Client to connect to the Meetup API\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:18 AM",
+      "dateFinished": "Sep 5, 2017 6:03:18 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark\n// Spark Streaming\nimport org.apache.spark._\nimport org.apache.spark.storage._\nimport org.apache.spark.streaming._\n\n// AsyncHTTP Client\nimport com.ning.http.client._\nimport com.ning.http.client.AsyncHttpClientConfig\n",
       "user": "namratas@qubole.com",
-      "dateUpdated": "Sep 4, 2017 9:24:57 AM",
+      "dateUpdated": "Sep 5, 2017 6:03:18 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -77,85 +165,195 @@
       "jobName": "paragraph_1504265617235_648486842",
       "id": "20170901-113336-1460379231",
       "result": {
-        "code": "ERROR",
+        "code": "SUCCESS",
         "type": "TEXT",
-        "msg": "\nimport org.apache.spark._\n\nimport org.apache.spark.storage._\n\nimport org.apache.spark.streaming._\n\n\n\n\u003cconsole\u003e:34: error: object http is not a member of package com.ning\n       import com.ning.http.client._\n                       ^\n"
+        "msg": "\nimport org.apache.spark._\n\nimport org.apache.spark.storage._\n\nimport org.apache.spark.streaming._\n\nimport com.ning.http.client._\n\nimport com.ning.http.client.AsyncHttpClientConfig\n"
       },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "dateStarted": "Sep 4, 2017 9:24:58 AM",
-      "dateFinished": "Sep 4, 2017 9:26:06 AM",
-      "status": "ERROR",
+      "dateStarted": "Sep 5, 2017 6:03:18 AM",
+      "dateFinished": "Sep 5, 2017 6:03:21 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark\n",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617235_648486842",
       "id": "20170901-113336-713129589",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:18 AM",
+      "dateFinished": "Sep 5, 2017 6:03:21 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%md\n### Configurations\n* Configurations for this streaming application",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617235_648486842",
       "id": "20170901-113336-232238454",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eConfigurations\u003c/h3\u003e\n\u003cul\u003e\n\u003cli\u003eConfigurations for this streaming application\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:18 AM",
+      "dateFinished": "Sep 5, 2017 6:03:18 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark\n// \u003d\u003d\u003d Configuration to control the flow of the application \u003d\u003d\u003d\nval stopActiveContext \u003d true\t \n// \"true\"  \u003d stop if any existing StreamingContext is running;              \n// \"false\" \u003d dont stop, and let it run undisturbed, but your latest code may not be used\n\n// \u003d\u003d\u003d Configurations for Spark Streaming \u003d\u003d\u003d\nval batchIntervalSeconds \u003d 1 \n",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617235_648486842",
       "id": "20170901-113336-1358639099",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\nstopActiveContext: Boolean \u003d true\n\nbatchIntervalSeconds: Int \u003d 1\n"
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:21 AM",
+      "dateFinished": "Sep 5, 2017 6:03:23 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark\n",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617235_648486842",
       "id": "20170901-113336-129444131",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:22 AM",
+      "dateFinished": "Sep 5, 2017 6:03:23 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%md\n### Setup: Define the function that sets up the StreamingContext\n* Create persistent table `meetup_stream` to store meetup data\n* Create MeetupReciever \n * Source: [MeetupReceiver.scala](https://github.com/actions/meetup-stream/blob/master/src/main/scala/receiver/MeetupReceiver.scala)\n * Install the Async-HTTP-Client Library \n   * [Async-HTTP-Client Library Source](http://mvnrepository.com/artifact/com.ning/async-http-client/1.9.31)\n   * Follow the Install Library Notebook for steps to install external Scala / Java JARs\n* Define the function that creates and sets up the streaming computation (this is the main logic)",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617235_648486842",
       "id": "20170901-113336-1278143808",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eSetup: Define the function that sets up the StreamingContext\u003c/h3\u003e\n\u003cul\u003e\n\u003cli\u003eCreate persistent table \u003ccode\u003emeetup_stream\u003c/code\u003e to store meetup data\u003c/li\u003e\n\u003cli\u003eCreate MeetupReciever\u003c/li\u003e\n\u003cli\u003eSource: \u003ca href\u003d\"https://github.com/actions/meetup-stream/blob/master/src/main/scala/receiver/MeetupReceiver.scala\"\u003eMeetupReceiver.scala\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003eInstall the Async-HTTP-Client Library\u003c/li\u003e\n\u003cli\u003e\u003ca href\u003d\"http://mvnrepository.com/artifact/com.ning/async-http-client/1.9.31\"\u003eAsync-HTTP-Client Library Source\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003eFollow the Install Library Notebook for steps to install external Scala / Java JARs\u003c/li\u003e\n\u003cli\u003eDefine the function that creates and sets up the streaming computation (this is the main logic)\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:18 AM",
+      "dateFinished": "Sep 5, 2017 6:03:18 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "%sql\n\n-- meetup_stream\n--   This table will persist the meetup data\n\nDROP TABLE IF EXISTS meetup_stream\nCREATE TABLE IF NOT EXISTS meetup_stream (\n  group_country STRING,\n  group_state STRING,\n  group_name STRING,\n  event_name STRING,\n  member_id BIGINT,\n  response STRING\n)",
+      "text": "%sql\n\n-- meetup_stream\n--   This table will persist the meetup data\n\nDROP TABLE IF EXISTS meetup_stream\n",
       "user": "namratas@qubole.com",
-      "dateUpdated": "Sep 4, 2017 7:41:27 AM",
+      "dateUpdated": "Sep 5, 2017 6:03:18 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -174,277 +372,822 @@
         "params": {},
         "forms": {}
       },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "JOB UI",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "https://api.qubole.com/cluster-proxy?encodedUrl\u003dhttp%3A%2F%2Fec2-54-156-155-129.compute-1.amazonaws.com%3A8088%2Fproxy%2Fapplication_1504586450314_0002/jobs/job?spark\u003dtrue\u0026id\u003d2"
+          ],
+          "interpreterSettingId": "2CTA95ARW312391504176906306"
+        }
+      },
       "jobName": "paragraph_1504265617235_648486842",
       "id": "20170901-113336-423460220",
       "result": {
-        "code": "ERROR",
+        "code": "SUCCESS",
         "type": "TEXT",
-        "msg": "\nmismatched input \u0027CREATE\u0027 expecting \u003cEOF\u003e(line 5, pos 0)\n\n\u003d\u003d SQL \u003d\u003d\n-- meetup_stream\n--   This table will persist the meetup data\n\nDROP TABLE IF EXISTS meetup_stream\nCREATE TABLE IF NOT EXISTS meetup_stream (\n^^^\n  group_country STRING,\n  group_state STRING,\n  group_name STRING,\n  event_name STRING,\n  member_id BIGINT,\n  response STRING\n)\n\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+        "msg": ""
       },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "dateStarted": "Sep 4, 2017 7:41:27 AM",
-      "dateFinished": "Sep 4, 2017 7:41:27 AM",
-      "status": "ERROR",
+      "dateStarted": "Sep 5, 2017 6:03:23 AM",
+      "dateFinished": "Sep 5, 2017 6:03:25 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nCREATE TABLE IF NOT EXISTS meetup_stream (\n  group_country STRING,\n  group_state STRING,\n  group_name STRING,\n  event_name STRING,\n  member_id BIGINT,\n  response STRING\n)",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "JOB UI",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "https://api.qubole.com/cluster-proxy?encodedUrl\u003dhttp%3A%2F%2Fec2-54-156-155-129.compute-1.amazonaws.com%3A8088%2Fproxy%2Fapplication_1504586450314_0002/jobs/job?spark\u003dtrue\u0026id\u003d3"
+          ],
+          "interpreterSettingId": "2CTA95ARW312391504176906306"
+        }
+      },
+      "jobName": "paragraph_1504590366004_-1949542719",
+      "id": "20170905-054606_134276265",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 5, 2017 5:46:06 AM",
+      "dateStarted": "Sep 5, 2017 6:03:23 AM",
+      "dateFinished": "Sep 5, 2017 6:03:26 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark\n",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617235_648486842",
       "id": "20170901-113336-1283530986",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:26 AM",
+      "dateFinished": "Sep 5, 2017 6:03:26 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "%spark\n/**\n * MeetupReceiver.scala\n *   @author szelvenskiy\n *   Source: https://github.com/actions/meetup-stream/blob/master/src/main/scala/receiver/MeetupReceiver.scala\n *   Uses http://mvnrepository.com/artifact/com.ning/async-http-client/1.9.31\n */\n\nimport org.apache.spark.streaming.receiver.Receiver\nimport org.apache.spark.storage.StorageLevel\nimport org.apache.spark.Logging\nimport com.ning.http.client.AsyncHttpClientConfig\nimport com.ning.http.client._\nimport scala.collection.mutable.ArrayBuffer\nimport java.io.OutputStream\nimport java.io.ByteArrayInputStream\nimport java.io.InputStreamReader\nimport java.io.BufferedReader\nimport java.io.InputStream\nimport java.io.PipedInputStream\nimport java.io.PipedOutputStream\n\nclass MeetupReceiver(url: String) extends Receiver[String](StorageLevel.MEMORY_AND_DISK_2) with Logging {\n  \n  @transient var client: AsyncHttpClient \u003d _\n  \n  @transient var inputPipe: PipedInputStream \u003d _\n  @transient var outputPipe: PipedOutputStream \u003d _  \n       \n  def onStart() {    \n    val cf \u003d new AsyncHttpClientConfig.Builder()\n    cf.setRequestTimeout(Integer.MAX_VALUE)\n    cf.setReadTimeout(Integer.MAX_VALUE)\n    cf.setPooledConnectionIdleTimeout(Integer.MAX_VALUE)      \n    client\u003d new AsyncHttpClient(cf.build())\n    \n    inputPipe \u003d new PipedInputStream(1024 * 1024)\n    outputPipe \u003d new PipedOutputStream(inputPipe)\n    val producerThread \u003d new Thread(new DataConsumer(inputPipe))\n    producerThread.start()\n    \n    client.prepareGet(url).execute(new AsyncHandler[Unit]{\n        \n      def onBodyPartReceived(bodyPart: HttpResponseBodyPart) \u003d {\n        bodyPart.writeTo(outputPipe)\n        AsyncHandler.STATE.CONTINUE        \n      }\n      \n      def onStatusReceived(status: HttpResponseStatus) \u003d {\n        AsyncHandler.STATE.CONTINUE\n      }\n      \n      def onHeadersReceived(headers: HttpResponseHeaders) \u003d {\n        AsyncHandler.STATE.CONTINUE\n      }\n            \n      def onCompleted \u003d {\n        println(\"completed\")\n      }\n      \n      \n      def onThrowable(t: Throwable)\u003d{\n        t.printStackTrace()\n      }\n        \n    })    \n    \n    \n  }\n\n  def onStop() {\n    if (Option(client).isDefined) client.close()\n    if (Option(outputPipe).isDefined) {\n     outputPipe.flush()\n     outputPipe.close() \n    }\n    if (Option(inputPipe).isDefined) {\n     inputPipe.close() \n    }    \n  }\n  \n  class DataConsumer(inputStream: InputStream) extends Runnable \n  {\n       \n      override\n      def run()\n      {        \n        val bufferedReader \u003d new BufferedReader( new InputStreamReader( inputStream ))\n        var input\u003dbufferedReader.readLine()\n        while(input!\u003dnull){          \n          store(input)\n          input\u003dbufferedReader.readLine()\n        }            \n      }  \n      \n  }\n\n}",
-      "config": {},
+      "text": "%spark\n/**\n * MeetupReceiver.scala\n *   @author szelvenskiy\n *   Source: https://github.com/actions/meetup-stream/blob/master/src/main/scala/receiver/MeetupReceiver.scala\n *   Uses http://mvnrepository.com/artifact/com.ning/async-http-client/1.9.31\n */\n\nimport org.apache.spark.streaming.receiver.Receiver\nimport org.apache.spark.storage.StorageLevel\nimport org.apache.spark.internal.Logging\nimport com.ning.http.client.AsyncHttpClientConfig\nimport com.ning.http.client._\nimport scala.collection.mutable.ArrayBuffer\nimport java.io.OutputStream\nimport java.io.ByteArrayInputStream\nimport java.io.InputStreamReader\nimport java.io.BufferedReader\nimport java.io.InputStream\nimport java.io.PipedInputStream\nimport java.io.PipedOutputStream\n\nclass MeetupReceiver(url: String) extends Receiver[String](StorageLevel.MEMORY_AND_DISK_2) with Logging {\n  \n  @transient var client: AsyncHttpClient \u003d _\n  \n  @transient var inputPipe: PipedInputStream \u003d _\n  @transient var outputPipe: PipedOutputStream \u003d _  \n       \n  def onStart() {    \n    val cf \u003d new AsyncHttpClientConfig.Builder()\n    cf.setRequestTimeout(Integer.MAX_VALUE)\n    cf.setReadTimeout(Integer.MAX_VALUE)\n    cf.setPooledConnectionIdleTimeout(Integer.MAX_VALUE)      \n    client\u003d new AsyncHttpClient(cf.build())\n    \n    inputPipe \u003d new PipedInputStream(1024 * 1024)\n    outputPipe \u003d new PipedOutputStream(inputPipe)\n    val producerThread \u003d new Thread(new DataConsumer(inputPipe))\n    producerThread.start()\n    \n    client.prepareGet(url).execute(new AsyncHandler[Unit]{\n        \n      def onBodyPartReceived(bodyPart: HttpResponseBodyPart) \u003d {\n        bodyPart.writeTo(outputPipe)\n        AsyncHandler.STATE.CONTINUE        \n      }\n      \n      def onStatusReceived(status: HttpResponseStatus) \u003d {\n        AsyncHandler.STATE.CONTINUE\n      }\n      \n      def onHeadersReceived(headers: HttpResponseHeaders) \u003d {\n        AsyncHandler.STATE.CONTINUE\n      }\n            \n      def onCompleted \u003d {\n        println(\"completed\")\n      }\n      \n      \n      def onThrowable(t: Throwable)\u003d{\n        t.printStackTrace()\n      }\n        \n    })    \n    \n    \n  }\n\n  def onStop() {\n    if (Option(client).isDefined) client.close()\n    if (Option(outputPipe).isDefined) {\n     outputPipe.flush()\n     outputPipe.close() \n    }\n    if (Option(inputPipe).isDefined) {\n     inputPipe.close() \n    }    \n  }\n  \n  class DataConsumer(inputStream: InputStream) extends Runnable \n  {\n       \n      override\n      def run()\n      {        \n        val bufferedReader \u003d new BufferedReader( new InputStreamReader( inputStream ))\n        var input\u003dbufferedReader.readLine()\n        while(input!\u003dnull){          \n          store(input)\n          input\u003dbufferedReader.readLine()\n        }            \n      }  \n      \n  }\n\n}",
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:18:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617235_648486842",
       "id": "20170901-113336-648840305",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nimport org.apache.spark.streaming.receiver.Receiver\n\nimport org.apache.spark.storage.StorageLevel\n\nimport org.apache.spark.internal.Logging\n\nimport com.ning.http.client.AsyncHttpClientConfig\n\nimport com.ning.http.client._\n\nimport scala.collection.mutable.ArrayBuffer\n\nimport java.io.OutputStream\n\nimport java.io.ByteArrayInputStream\n\nimport java.io.InputStreamReader\n\nimport java.io.BufferedReader\n\nimport java.io.InputStream\n\nimport java.io.PipedInputStream\n\nimport java.io.PipedOutputStream\n\n\n\n\u003cconsole\u003e:11: error: not found: type Receiver\n       class MeetupReceiver(url: String) extends Receiver[String](StorageLevel.MEMORY_AND_DISK_2) with Logging {\n                                                 ^\n\n\n\n\u003cconsole\u003e:11: error: not found: type Logging\n       class MeetupReceiver(url: String) extends Receiver[String](StorageLevel.MEMORY_AND_DISK_2) with Logging {\n                                                                                                       ^\n\n\n\n\u003cconsole\u003e:13: error: not found: type AsyncHttpClient\n         @transient var client: AsyncHttpClient \u003d _\n                                ^\n\n\n\n\u003cconsole\u003e:15: error: not found: type PipedInputStream\n         @transient var inputPipe: PipedInputStream \u003d _\n                                   ^\n\n\n\n\u003cconsole\u003e:16: error: not found: type PipedOutputStream\n         @transient var outputPipe: PipedOutputStream \u003d _\n                                    ^\n\n\n\n\u003cconsole\u003e:19: error: not found: value AsyncHttpClientConfig\n           val cf \u003d new AsyncHttpClientConfig.Builder()\n                        ^\n\n\n\n\u003cconsole\u003e:23: error: not found: type AsyncHttpClient\n           client\u003d new AsyncHttpClient(cf.build())\n                       ^\n\n\n\n\u003cconsole\u003e:25: error: not found: type PipedInputStream\n           inputPipe \u003d new PipedInputStream(1024 * 1024)\n                           ^\n\n\n\n\u003cconsole\u003e:26: error: not found: type PipedOutputStream\n           outputPipe \u003d new PipedOutputStream(inputPipe)\n                            ^\n\n\n\n\u003cconsole\u003e:70: error: not found: type InputStream\n         class DataConsumer(inputStream: InputStream) extends Runnable\n                                         ^\n\n\n\n\u003cconsole\u003e:76: error: not found: type BufferedReader\n               val bufferedReader \u003d new BufferedReader( new InputStreamReader( inputStream ))\n                                        ^\n\n\n\n\u003cconsole\u003e:76: error: not found: type InputStreamReader\n               val bufferedReader \u003d new BufferedReader( new InputStreamReader( inputStream ))\n                                                            ^\n\n\n\n\u003cconsole\u003e:79: error: not found: value store\n                 store(input)\n                 ^\n"
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:18:53 AM",
+      "dateFinished": "Sep 5, 2017 6:18:59 AM",
+      "status": "ERROR",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark\n",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617235_648486842",
       "id": "20170901-113336-523459192",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:27 AM",
+      "dateFinished": "Sep 5, 2017 6:03:27 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark\n/**\n * creatingFunc()\n *   Defines the Streaming Context function\n *   Creates `meetup_stream_json` temporary table\n */\n\n// Flag to detect whether new context was created or not\nvar newContextCreated \u003d false\n\n// Function to create a new StreamingContext and set it up\ndef creatingFunc(): StreamingContext \u003d {\n    \n  // Create a StreamingContext\n  val ssc \u003d new StreamingContext(sc, Seconds(batchIntervalSeconds))\n  \n  // Create a stream that connects to the MeetupReceiver\n  val stream \u003d ssc.receiverStream(new MeetupReceiver(\"http://stream.meetup.com/2/rsvps\"))\n  \n  // Create temp table at every batch interval\n  stream.foreachRDD { rdd \u003d\u003e \n    if (rdd.toLocalIterator.nonEmpty) {\n      // Create Streaming DataFrame by reading the data within the RDD\n      val sdf \u003d sqlContext.read.json(rdd)\n      \n      // Register `meetup_stream_json` table\n      sdf.select(sdf(\"group.group_country\"), sdf(\"group.group_state\"), sdf(\"group.group_name\"), sdf(\"event.event_name\"), sdf(\"member.member_id\"), sdf(\"response\")).registerTempTable(\"meetup_stream_json\")      \n      \n      // Populate `meetup_stream` table\n      sqlContext.sql(\"insert into meetup_stream select * from meetup_stream_json\")\n    }\n  }\n  \n  ssc.remember(Minutes(5))  // To make sure data is not deleted by the time we query it interactively\n  \n  println(\"Creating function called to create new StreamingContext\")\n  newContextCreated \u003d true  \n  ssc\n}  ",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617235_648486842",
       "id": "20170901-113336-700906778",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nnewContextCreated: Boolean \u003d false\n\n\n\n\u003cconsole\u003e:84: error: not found: type MeetupReceiver\n         val stream \u003d ssc.receiverStream(new MeetupReceiver(\"http://stream.meetup.com/2/rsvps\"))\n                                             ^\n"
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:27 AM",
+      "dateFinished": "Sep 5, 2017 6:03:28 AM",
+      "status": "ERROR",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark\n",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617235_648486842",
       "id": "20170901-113336-949653960",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:28 AM",
+      "dateFinished": "Sep 5, 2017 6:03:28 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%md\n### Start Streaming Job\n* Stop existing StreamingContext if any and start/restart the new one\n* Here we are going to use the configurations at the top of the notebook to decide whether to:\n * stop any existing StreamingContext, and start a new one, \n * or recover one from existing checkpoints.",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617235_648486842",
       "id": "20170901-113336-1487539241",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eStart Streaming Job\u003c/h3\u003e\n\u003cul\u003e\n\u003cli\u003eStop existing StreamingContext if any and start/restart the new one\u003c/li\u003e\n\u003cli\u003eHere we are going to use the configurations at the top of the notebook to decide whether to:\u003c/li\u003e\n\u003cli\u003estop any existing StreamingContext, and start a new one,\u003c/li\u003e\n\u003cli\u003eor recover one from existing checkpoints.\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:19 AM",
+      "dateFinished": "Sep 5, 2017 6:03:19 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark\n// Stop any existing StreamingContext \nif (stopActiveContext) {\t\n  StreamingContext.getActive.foreach { _.stop(stopSparkContext \u003d false) }\n} \n\n// Get or create a streaming context\nval ssc \u003d StreamingContext.getActiveOrCreate(creatingFunc)\nif (newContextCreated) {\n  println(\"New context created from currently defined creating function\") \n} else {\n  println(\"Existing context running or recovered from checkpoint, may not be running currently defined creating function\")\n}\n\n// Start the streaming context in the background.\nssc.start()\n\n// This is to ensure that we wait for some time before the background streaming job starts. This will put this cell on hold for 5 times the batchIntervalSeconds.\nssc.awaitTerminationOrTimeout(batchIntervalSeconds * 5 * 1000)",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617235_648486842",
       "id": "20170901-113336-127333159",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\n\n\n\u003cconsole\u003e:70: error: not found: value creatingFunc\n       val ssc \u003d StreamingContext.getActiveOrCreate(creatingFunc)\n                                                    ^\n"
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:28 AM",
+      "dateFinished": "Sep 5, 2017 6:03:29 AM",
+      "status": "ERROR",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark\n",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617235_646563098",
       "id": "20170901-113336-1339685699",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:29 AM",
+      "dateFinished": "Sep 5, 2017 6:03:29 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%md\n### Interactive Querying\n* Now let\u0027s try querying the table\n* You can run this command again and again, you will find the meetup information changing.",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617236_646563098",
       "id": "20170901-113336-988240496",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eInteractive Querying\u003c/h3\u003e\n\u003cul\u003e\n\u003cli\u003eNow let\u0027s try querying the table\u003c/li\u003e\n\u003cli\u003eYou can run this command again and again, you will find the meetup information changing.\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:19 AM",
+      "dateFinished": "Sep 5, 2017 6:03:19 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%sql\ninsert into meetup_stream select * from meetup_stream_json",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sql"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617236_646563098",
       "id": "20170901-113336-555232608",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Table or view not found: meetup_stream_json; line 1 pos 40\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:29 AM",
+      "dateFinished": "Sep 5, 2017 6:03:29 AM",
+      "status": "ERROR",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%sql\n\n-- Query temporary table (updated every `batchIntervalSeconds`)\nselect * from meetup_stream_json limit 20",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sql"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617236_646563098",
       "id": "20170901-113336-827884984",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Table or view not found: meetup_stream_json; line 2 pos 14\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:29 AM",
+      "dateFinished": "Sep 5, 2017 6:03:29 AM",
+      "status": "ERROR",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%sql\n\n-- Query count from persistent table\nselect count(1) from meetup_stream",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sql"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "JOB UI",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "https://api.qubole.com/cluster-proxy?encodedUrl\u003dhttp%3A%2F%2Fec2-54-156-155-129.compute-1.amazonaws.com%3A8088%2Fproxy%2Fapplication_1504586450314_0002/jobs/job?spark\u003dtrue\u0026id\u003d4"
+          ],
+          "interpreterSettingId": "2CTA95ARW312391504176906306"
+        }
+      },
       "jobName": "paragraph_1504265617236_646563098",
       "id": "20170901-113336-231141278",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TABLE",
+        "msg": "count(1)\n0\n"
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:29 AM",
+      "dateFinished": "Sep 5, 2017 6:03:32 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%sql\n\n-- Query persistent table \nselect * from meetup_stream limit 10",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:20 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sql"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617236_646563098",
       "id": "20170901-113336-1265920428",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TABLE",
+        "msg": "group_country\tgroup_state\tgroup_name\tevent_name\tmember_id\tresponse\n"
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:30 AM",
+      "dateFinished": "Sep 5, 2017 6:03:33 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark\n",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:20 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617236_646563098",
       "id": "20170901-113336-1285879300",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:33 AM",
+      "dateFinished": "Sep 5, 2017 6:03:33 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%md\n### Review Reports and Spark UI\nAs this streaming application is running, check the following:\n* View the **Reports and Dashboards** to watch the reports change on refresh\n* Spark UI for the cluster: note the increasing in scheduling delays due to inserting data into the `meetup_stream` table ",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:20 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617236_646563098",
       "id": "20170901-113336-1145539281",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eReview Reports and Spark UI\u003c/h3\u003e\n\u003cp\u003eAs this streaming application is running, check the following:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eView the \u003cstrong\u003eReports and Dashboards\u003c/strong\u003e to watch the reports change on refresh\u003c/li\u003e\n\u003cli\u003eSpark UI for the cluster: note the increasing in scheduling delays due to inserting data into the \u003ccode\u003emeetup_stream\u003c/code\u003e table\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:20 AM",
+      "dateFinished": "Sep 5, 2017 6:03:20 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark\n",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:20 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617236_646563098",
       "id": "20170901-113336-230932879",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:33 AM",
+      "dateFinished": "Sep 5, 2017 6:03:33 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%md\n### Stop Streaming Job\n* To stop the StreamingContext, uncomment below and execute ",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:20 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617236_646563098",
       "id": "20170901-113336-979738903",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eStop Streaming Job\u003c/h3\u003e\n\u003cul\u003e\n\u003cli\u003eTo stop the StreamingContext, uncomment below and execute\u003c/li\u003e\n\u003c/ul\u003e\n"
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:20 AM",
+      "dateFinished": "Sep 5, 2017 6:03:20 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark\nStreamingContext.getActive.foreach { _.stop(stopSparkContext \u003d false) }",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:20 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617236_646563098",
       "id": "20170901-113336-411162170",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:33 AM",
+      "dateFinished": "Sep 5, 2017 6:03:34 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark\n",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:20 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617236_646563098",
       "id": "20170901-113336-1408221134",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:33 AM",
+      "dateFinished": "Sep 5, 2017 6:03:34 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark\n",
-      "config": {},
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:20 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
       "settings": {
         "params": {},
         "forms": {}
       },
       "jobName": "paragraph_1504265617236_646563098",
       "id": "20170901-113336-133838203",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
       "dateCreated": "Sep 1, 2017 11:33:37 AM",
-      "status": "READY",
+      "dateStarted": "Sep 5, 2017 6:03:34 AM",
+      "dateFinished": "Sep 5, 2017 6:03:34 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "namratas@qubole.com",
+      "dateUpdated": "Sep 5, 2017 6:03:20 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1504589316957_-1479862835",
+      "id": "20170905-052836_50857202",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 5, 2017 5:28:36 AM",
+      "dateStarted": "Sep 5, 2017 6:03:34 AM",
+      "dateFinished": "Sep 5, 2017 6:03:34 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     }
   ],
